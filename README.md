@@ -1,6 +1,7 @@
 # ProjectSwiper
 class KlassNamn
 {
+
     public int _variabelNamn
 
     public int skojSak
