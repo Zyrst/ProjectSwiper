@@ -4,6 +4,7 @@ using System.Collections;
 public class Game : MonoBehaviour {
 
     public GameObject _combat;
+    public GameObject _player;
 
     public int _level = 1;
 
@@ -21,6 +22,7 @@ public class Game : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         GameObject.Instantiate(_combat);
+        GameObject.Instantiate(_player);
         SaveManager.Load();
 	}
 	
