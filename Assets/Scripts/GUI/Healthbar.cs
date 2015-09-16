@@ -28,6 +28,6 @@ public class Healthbar : MonoBehaviour {
         transform.LookAt(Camera.main.transform);
         
         if (enemy != null)
-            _foreground.transform.localScale = new Vector3(enemy._maxHealth / enemy._health, 1, 1);
+            _foreground.transform.localScale = new Vector3(enemy._health / enemy._maxHealth, 1, 1);
     }
 }
