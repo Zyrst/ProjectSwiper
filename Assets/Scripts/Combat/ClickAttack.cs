@@ -5,14 +5,18 @@ using System.Linq;
 public class ClickAttack : MonoBehaviour {
 
     public Collider _lastHit = null;
+    public Character _lastCharacter = null;
 
     private bool newHit = false;
 
-    public bool getNewHit()
+    public Character getNewHit()
     {
-        bool temp = newHit;
-        newHit = false;
-        return temp;
+        if (newHit)
+        {
+            newHit = false;
+            return _lastCharacter;   
+        }
+        return null;
     }
 
 	// Use this for initialization
@@ -33,6 +37,7 @@ public class ClickAttack : MonoBehaviour {
                     if (_lastHit != tempCol)
                     {
                         _lastHit = tempCol;
+                        _lastCharacter = _lastHit.gameObject.GetComponent<Character>();
                         Debug.Log("<color=blue>HITTADE EN FIENDE</color>");
 
                         newHit = true;

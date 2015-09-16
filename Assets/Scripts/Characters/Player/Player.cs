@@ -9,7 +9,8 @@ public class Player : Character {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (GetComponent<ClickAttack>().getNewHit())
+        Character charHit = GetComponent<ClickAttack>().getNewHit();
+	    if (charHit != null)
         {
 
         }
