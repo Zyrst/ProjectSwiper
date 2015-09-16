@@ -5,6 +5,19 @@ using System.Linq;
 public class ClickAttack : MonoBehaviour {
 
     public Collider _lastHit = null;
+    public Character _lastCharacter = null;
+
+    private bool newHit = false;
+
+    public Character getNewHit()
+    {
+        if (newHit)
+        {
+            newHit = false;
+            return _lastCharacter;   
+        }
+        return null;
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +37,10 @@ public class ClickAttack : MonoBehaviour {
                     if (_lastHit != tempCol)
                     {
                         _lastHit = tempCol;
+                        _lastCharacter = _lastHit.gameObject.GetComponent<Character>();
                         Debug.Log("<color=blue>HITTADE EN FIENDE</color>");
+
+                        newHit = true;
 
                         _lastHit.gameObject.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                     }
