@@ -17,11 +17,11 @@ public class Character : MonoBehaviour {
 	    
 	}
 
-    public void TakeDamage(float damage_)
+    public void Damage(float damage_)
     {
         _health -= Mathf.Abs(damage_);
 
-        if(_health <= 0)
+        if (_health <= 0)
         {
             Die();
         }
