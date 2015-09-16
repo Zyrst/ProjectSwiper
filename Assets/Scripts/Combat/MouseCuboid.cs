@@ -54,7 +54,7 @@ public class MouseCuboid : MonoBehaviour
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-            Debug.Log(angle);
+            //Debug.Log(angle);
 
             Vector3 scale = Vector3.one;//midPoint.transform.localScale;
             float distance = Vector3.Distance(lastPoint, transform.position);

@@ -20,7 +20,11 @@ public static class SaveManager {
     public static void Save()
     {
         _info._level = Game.Instance._level;
+        _info._damage = Game.Instance._player.GetComponent<Player>()._damage;
+        _info._maxHealth = Game.Instance._player.GetComponent<Player>()._maxHealth;
+
         Debug.Log(_info._level);
+
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGame.dfq");
         bf.Serialize(file, _info);
@@ -37,6 +41,7 @@ public static class SaveManager {
             _info = (GameInfo)bf.Deserialize(file);
             file.Close();
             Debug.Log(_info._level);
+            Debug.Log(Application.persistentDataPath);
         }
 
     }
