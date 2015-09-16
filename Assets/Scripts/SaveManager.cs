@@ -38,6 +38,7 @@ public static class SaveManager {
             file.Close();
             Debug.Log(_info._level);
         }
+
     }
     
 }

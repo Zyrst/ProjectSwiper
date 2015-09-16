@@ -17,6 +17,8 @@ public class Enemy : Character {
     {
         base.Die();
 
+        Debug.Log(gameObject.GetInstanceID() + " avled tragiskt");
+
         Destroy(gameObject);
     }
 }
