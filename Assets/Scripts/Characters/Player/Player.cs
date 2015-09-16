@@ -12,7 +12,7 @@ public class Player : Character {
         Character charHit = GetComponent<ClickAttack>().getNewHit();
 	    if (charHit != null)
         {
-
+            charHit.Damage(_damage);
         }
 	}
 
