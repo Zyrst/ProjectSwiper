@@ -48,10 +48,10 @@ public class MouseCuboid : MonoBehaviour
             midPoint.transform.localScale = transform.localScale;
 
             Vector3 scale = midPoint.transform.localScale;
-            scale.x *= Vector3.Distance(lastPoint, transform.position) > scale.x ? Vector3.Distance(lastPoint, transform.position) : scale.x;
+            float distance = Vector3.Distance(lastPoint, transform.position);
+            scale.x *= distance > scale.x ? distance : scale.x;
 
             if (scale.x <= 0.5f)    scale.x = 0.5f;
-            
             midPoint.transform.localScale = scale;
 
             midPoint.GetComponent<Collider>().enabled = false;

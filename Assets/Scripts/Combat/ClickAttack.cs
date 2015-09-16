@@ -6,6 +6,15 @@ public class ClickAttack : MonoBehaviour {
 
     public Collider _lastHit = null;
 
+    private bool newHit = false;
+
+    public bool getNewHit()
+    {
+        bool temp = newHit;
+        newHit = false;
+        return temp;
+    }
+
 	// Use this for initialization
 	void Start () {
 	
@@ -25,6 +34,8 @@ public class ClickAttack : MonoBehaviour {
                     {
                         _lastHit = tempCol;
                         Debug.Log("<color=blue>HITTADE EN FIENDE</color>");
+
+                        newHit = true;
 
                         _lastHit.gameObject.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                     }
