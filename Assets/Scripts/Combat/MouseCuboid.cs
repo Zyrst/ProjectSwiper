@@ -53,10 +53,8 @@ public class MouseCuboid : MonoBehaviour
             Vector3 dir = transform.position - lastPoint;
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
-            Debug.Log(angle);
-
             Vector3 scale = Vector3.one;//midPoint.transform.localScale;
+            scale.z = 20;
             float distance = Vector3.Distance(lastPoint, transform.position);
             scale.x *= distance * 2 > scale.x ? distance * 2 : scale.x;
 
