@@ -47,12 +47,24 @@ public class MouseCuboid : MonoBehaviour
             midPoint.transform.position = pos;
             midPoint.transform.localScale = transform.localScale;
 
-            Vector3 scale = midPoint.transform.localScale;
+
+            midPoint.transform.rotation = transform.rotation;
+
+            Vector3 dir = transform.position - lastPoint;
+
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            Debug.Log(angle);
+
+            Vector3 scale = Vector3.one;//midPoint.transform.localScale;
             float distance = Vector3.Distance(lastPoint, transform.position);
-            scale.x *= distance > scale.x ? distance : scale.x;
+            scale.x *= distance * 2 > scale.x ? distance * 2 : scale.x;
 
             if (scale.x <= 0.5f)    scale.x = 0.5f;
+
             midPoint.transform.localScale = scale;
+
+            midPoint.transform.Rotate(new Vector3(0, 0, 1), angle, Space.Self);
 
             midPoint.GetComponent<Collider>().enabled = false;
             midPoint.GetComponent<Collider>().enabled = true;
