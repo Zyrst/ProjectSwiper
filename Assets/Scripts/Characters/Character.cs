@@ -21,7 +21,7 @@ public class Character : MonoBehaviour {
     {
         _health -= Mathf.Abs(damage_);
 
-        if(_health <= 0)
+        if (_health <= 0)
         {
             Die();
         }
