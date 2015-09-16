@@ -31,8 +31,6 @@ public class MouseCuboid : MonoBehaviour
     {
         if (mayUpdate)
         {
-            lastPoint = transform.position;
-
             transform.forward = Camera.main.transform.forward;
             transform.position = MouseController.Instance.worldPosition;
 
@@ -58,6 +56,8 @@ public class MouseCuboid : MonoBehaviour
 
             midPoint.GetComponent<Collider>().enabled = false;
             midPoint.GetComponent<Collider>().enabled = true;
+
+            lastPoint = transform.position;
         }
 	}
 
