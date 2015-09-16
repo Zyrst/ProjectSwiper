@@ -5,9 +5,23 @@ public class Game : MonoBehaviour {
 
     public GameObject _combat;
 
+    public int _level = 1;
+
+    private static Game _instance = null;
+
+    public static Game Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = GameObject.Find("GAME").GetComponent<Game>();
+            return _instance;
+        }
+    }
 	// Use this for initialization
 	void Start () {
         GameObject.Instantiate(_combat);
+        SaveManager.Load();
 	}
 	
 	// Update is called once per frame
