@@ -34,7 +34,7 @@ public class Enemy : Character {
 
         if (_attackCounter <= 0)
         {
-            _attackCounter = _attackCooldown;
+            ResetCooldown();
             AttackPlayer();
         }
     }
@@ -42,5 +42,27 @@ public class Enemy : Character {
     void AttackPlayer()
     {
         Debug.Log(gameObject.GetInstanceID() + " attakerade spelaren för " + _attackDamage + " skada");
+
+        Resources.Instance._player.GetComponent<Player>().Damage(_attackDamage);
+    }
+
+    void ResetCooldown()
+    {
+        _attackCounter = _attackCooldown;
+    }
+
+    void DelayAttack(float delay_)
+    {
+        _attackCounter += delay_;
+
+        if (_attackCounter > _attackCooldown)
+        {
+            _attackCounter = _attackCooldown;
+        }
+    }
+
+    void DelayAttackNoLimit(float delay_)
+    {
+        _attackCounter += delay_;
     }
 }
