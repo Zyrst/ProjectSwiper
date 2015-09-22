@@ -5,6 +5,7 @@ public class Game : MonoBehaviour {
 
     public GameObject _combat;
     public GameObject _currentPlayer;
+    public GameObject _HUD;
 
     public GameObject[] _combatArenas;
     public GameObject[] _enemies;
@@ -35,6 +36,8 @@ public class Game : MonoBehaviour {
 
         GameObject.Instantiate(Resources.Instance._player);
         CurrencyObject.Spawn(new Vector3(20f, 1f, 0f), new Vector3(0f, 0f, 0f));
+
+        Instantiate(_HUD);
     }
 	
 	
