@@ -7,6 +7,8 @@ public class Character : MonoBehaviour {
 
     public float _damage = 1;
 
+    public bool _isDead = false;
+
 	// Use this for initialization
     void Start()
     {
@@ -30,7 +32,7 @@ public class Character : MonoBehaviour {
 
     public void Damage(float damage_)
     {
-        Debug.Log(_health);
+       // Debug.Log(_health);
 
         _health -= Mathf.Abs(damage_);
 
@@ -52,6 +54,6 @@ public class Character : MonoBehaviour {
 
     public virtual void Die()
     {
-
+        _isDead = true;
     }
 }

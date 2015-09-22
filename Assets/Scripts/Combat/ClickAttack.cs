@@ -38,7 +38,7 @@ public class ClickAttack : MonoBehaviour {
                     {
                         _lastHit = tempCol;
                         _lastCharacter = _lastHit.gameObject.GetComponent<Character>();
-                        Debug.Log("<color=blue>HITTADE EN FIENDE</color>");
+                        //Debug.Log("<color=blue>HITTADE EN FIENDE</color>");
 
                         newHit = true;
 

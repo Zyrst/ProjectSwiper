@@ -6,7 +6,13 @@ public class Game : MonoBehaviour {
     public GameObject _combat;
     public GameObject _player;
 
+    public GameObject[] _combatArenas;
+    public GameObject[] _enemies;
+
     public int _level = 1;
+
+    public enum GameMode : int { Quest = 0, Farm, Tutorial };
+    public GameMode _gameMode = GameMode.Farm;
 
     private static Game _instance = null;
 
@@ -21,7 +27,10 @@ public class Game : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-        GameObject.Instantiate(_combat);
+        _combat = GameObject.Instantiate(_combat);
+        _combat.GetComponent<Combat>().AddEnemy(_enemies[0]);
+        _combat.GetComponent<Combat>().StartArena(_combatArenas[0]);
+
         GameObject.Instantiate(_player);
         SaveManager.Load();
 	}
