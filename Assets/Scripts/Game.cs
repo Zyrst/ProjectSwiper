@@ -4,7 +4,6 @@ using System.Collections;
 public class Game : MonoBehaviour {
 
     public GameObject _combat;
-    public GameObject _player;
 
     public int _level = 1;
     public int _gameCurrency = 1;
@@ -28,6 +27,7 @@ public class Game : MonoBehaviour {
         CurrencyObject.Spawn(new Vector3(20f, 1f, 0f), new Vector3(0f, 0f, 0f));
 	}
 	
+	
 	// Update is called once per frame
 	void Update () {
         MouseController.Instance.Update();
@@ -45,7 +45,5 @@ public class Game : MonoBehaviour {
     void LateUpdate()
     {
         MouseController.Instance.LateUpdate();
-
-        // TODO: Suck a dong
     }
 }
