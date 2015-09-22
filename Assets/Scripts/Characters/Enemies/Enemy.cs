@@ -11,7 +11,11 @@ public class Enemy : Character {
 	    GameObject healthBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Healthbar")) as GameObject;
         healthBar.transform.SetParent(transform);
         healthBar.GetComponent<RectTransform>().localPosition = new Vector3(0, 1, 0);
-	}
+
+        GameObject cooldownBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Cooldownbar")) as GameObject;
+        cooldownBar.transform.SetParent(transform);
+        cooldownBar.GetComponent<RectTransform>().localPosition = new Vector3(0, -1, 0);
+    }
 	
 	// Update is called once per frame
 	void Update () {
