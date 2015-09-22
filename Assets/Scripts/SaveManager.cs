@@ -20,8 +20,9 @@ public static class SaveManager {
     public static void Save()
     {
         _info._level = Game.Instance._level;
-        _info._damage = Game.Instance._player.GetComponent<Player>()._damage;
-        _info._maxHealth = Game.Instance._player.GetComponent<Player>()._maxHealth;
+        Player player = Game.Instance._player.GetComponent<Player>();
+        _info._damage = player._damage;
+        _info._maxHealth = player._maxHealth;
 
         Debug.Log(_info._level);
 
@@ -29,7 +30,7 @@ public static class SaveManager {
         FileStream file = File.Create(Application.persistentDataPath + "/savedGame.dfq");
         bf.Serialize(file, _info);
         file.Close();
-        Debug.Log(Application.persistentDataPath);
+        Debug.Log("Save damage: " + _info._damage);
     }
 
     public static void Load()
@@ -40,8 +41,12 @@ public static class SaveManager {
             FileStream file = File.Open(Application.persistentDataPath + "/savedGame.dfq", FileMode.Open);
             _info = (GameInfo)bf.Deserialize(file);
             file.Close();
-            Debug.Log(_info._level);
-            Debug.Log(Application.persistentDataPath);
+            //Debug.Log(_info._level);
+            Game.Instance._level = _info._level;
+            Player player = Game.Instance._player.GetComponent<Player>();
+            player._damage = _info._damage;
+            player._maxHealth = _info._maxHealth;
+            Debug.Log("Load damage: " + _info._damage);
         }
 
     }

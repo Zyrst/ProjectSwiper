@@ -29,6 +29,15 @@ public class Game : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         MouseController.Instance.Update();
+
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            SaveManager.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SaveManager.Load();
+        }
 	}
 
     void LateUpdate()
