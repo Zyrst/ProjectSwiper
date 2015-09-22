@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : Character {
 	// Use this for initialization
 	void Start () {
-        Resources.Instance._player = gameObject;
+        Game.Instance._currentPlayer = gameObject;
 	}
 	
 	// Update is called once per frame
@@ -19,5 +19,8 @@ public class Player : Character {
     public override void Die()
     {
         base.Die();
+
+        Debug.Log("Spelaren avled tragiskt");
+        // TODO Något när spelaren dör
     }
 }

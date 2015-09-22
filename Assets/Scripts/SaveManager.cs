@@ -22,7 +22,8 @@ public static class SaveManager {
         //Add information to GameInfo before save
         _info._level = Game.Instance._level;
         _info._gameCurrency = Game.Instance._gameCurrency;
-        Player player = Resources.Instance._player.GetComponent<Player>();
+        
+        Player player = Game.Instance._currentPlayer.GetComponent<Player>();
         _info._damage = player._damage;
         _info._maxHealth = player._maxHealth;
 
@@ -47,9 +48,16 @@ public static class SaveManager {
             //apply everything
             Game.Instance._level = _info._level;
             Game.Instance._gameCurrency  = _info._gameCurrency;
-            Player player = Resources.Instance._player.GetComponent<Player>();
-            player._damage = _info._damage;
-            player._maxHealth = _info._maxHealth;
+            if(Game.Instance._currentPlayer != null)
+            {
+                Player player = Game.Instance._currentPlayer.GetComponent<Player>();
+                player._damage = _info._damage;
+                player._maxHealth = _info._maxHealth;
+            }
+            else
+            { 
+                Debug.LogError("No current player");
+            }
 
             Debug.Log("Load damage: " + _info._damage);
         }
