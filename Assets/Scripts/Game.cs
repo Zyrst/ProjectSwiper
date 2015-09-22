@@ -7,6 +7,7 @@ public class Game : MonoBehaviour {
     public GameObject _player;
 
     public int _level = 1;
+    public int _gameCurrency = 1;
 
     private static Game _instance = null;
 
@@ -24,6 +25,7 @@ public class Game : MonoBehaviour {
         GameObject.Instantiate(_combat);
         GameObject.Instantiate(_player);
         SaveManager.Load();
+        CurrencyObject.Spawn(new Vector3(20f, 1f, 0f), new Vector3(0f, 0f, 0f));
 	}
 	
 	// Update is called once per frame

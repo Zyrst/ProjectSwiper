@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : Character {
 	// Use this for initialization
 	void Start () {
-        Game.Instance._player = gameObject;
+        Resources.Instance._player = gameObject;
 	}
 	
 	// Update is called once per frame
