@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : Character {
 
     public float _attackCooldown = 1;
-    float _attackCounter = 0;
+    public float _attackCounter = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -29,11 +29,11 @@ public class Enemy : Character {
 
     void UpdateAttackCooldown()
     {
-        _attackCounter += Time.deltaTime;
+        _attackCounter -= Time.deltaTime;
 
-        if (_attackCounter >= _attackCooldown)
+        if (_attackCounter <= 0)
         {
-            _attackCounter = 0;
+            _attackCounter = _attackCooldown;
             AttackPlayer();
         }
     }
