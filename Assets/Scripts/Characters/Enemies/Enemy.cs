@@ -24,7 +24,9 @@ public class Enemy : Character {
         base.Die();
 
         Debug.Log(gameObject.GetInstanceID() + " avled tragiskt");
-        CurrencyObject.Spawn(new Vector3(0, 1, -20), transform.position);
+
+        Vector3 dir = (Vector3.up * 15f) + -(transform.position - Camera.main.transform.position);
+        CurrencyObject.Spawn(dir, transform.position + new Vector3(0,1,0));
         Destroy(gameObject);
     }
 
