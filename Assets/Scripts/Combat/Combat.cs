@@ -1,17 +1,71 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Combat : MonoBehaviour {
 
-    GameObject _scene;
+    public GameObject _arena;
+    public List<EnemySpawner> _enemySpawners;
+    public List<Enemy> _currentEnemies = new List<Enemy>();
+
+    Combat()
+    {
+        Debug.Log("i konstruktorn");
+    }
 
 	// Use this for initialization
 	void Start () {
+
+        Debug.Log("i start ");
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+        bool alive = false;
+        
+        foreach (var item in _enemySpawners)
+        {
+            if (item._enemyIsAlive)
+            {
+                alive = true;
+                break;
+            }
+        }
+        if (!alive)
+        {
+            SpawnNewWave();
+        }
 	}
+
+    public void AddEnemy(GameObject enemy_)
+    {
+        _currentEnemies.Add(enemy_.GetComponent<Enemy>());
+    }
+
+    public void StartArena(GameObject arena_)
+    {
+        _arena = GameObject.Instantiate(arena_);
+        _arena.transform.position = Vector3.zero;
+        _enemySpawners.Clear();
+        foreach (var item in _arena.GetComponentsInChildren<EnemySpawner>())
+        {
+            _enemySpawners.Add(item);
+        }
+
+        Debug.Log("original spawn");
+        foreach (var item in _enemySpawners)
+        {
+            item.Spawn(_currentEnemies[0]);
+        }
+    }
+
+    public void SpawnNewWave()
+    {
+        Debug.Log("spawning new enemies");
+        foreach (var item in _enemySpawners)
+        {
+            item.Spawn(_currentEnemies[0]);
+        }
+    }
 }

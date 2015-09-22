@@ -62,5 +62,4 @@ public static class SaveManager {
             Debug.Log("Load damage: " + _info._damage);
         }
     }
-
 }
