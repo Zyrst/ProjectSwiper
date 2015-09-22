@@ -57,6 +57,7 @@ public class CurrencyObject : MonoBehaviour {
         body.useGravity = false;
         body.velocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
+        GetComponent<SphereCollider>().enabled = false;
         _collect = true;
     }
 
