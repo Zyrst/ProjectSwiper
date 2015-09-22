@@ -42,6 +42,5 @@ public class Enemy : Character {
     void AttackPlayer()
     {
         Debug.Log(gameObject.GetInstanceID() + " attakerade spelaren för " + _attackDamage + " skada");
-        Resources.Instance._player.GetComponent<Player>().Damage(_attackDamage);
     }
 }
