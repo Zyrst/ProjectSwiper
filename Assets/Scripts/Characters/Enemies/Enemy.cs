@@ -5,6 +5,7 @@ public class Enemy : Character {
 
     public float _attackCooldown = 1;
     public float _attackCounter = 0;
+    public float _attackDamage = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +41,7 @@ public class Enemy : Character {
 
     void AttackPlayer()
     {
-        Debug.Log(gameObject.GetInstanceID() + " attakerade spelaren");
+        Debug.Log(gameObject.GetInstanceID() + " attakerade spelaren för " + _attackDamage + " skada");
+        Resources.Instance._player.GetComponent<Player>().Damage(_attackDamage);
     }
 }
