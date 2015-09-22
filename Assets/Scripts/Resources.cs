@@ -10,9 +10,6 @@ public class Resources : MonoBehaviour {
     public GameObject _gameCurrency;
     public GameObject _player; 
 
-
-
-
     private static Resources _instance = null;
 
     public static Resources Instance
@@ -27,7 +24,7 @@ public class Resources : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+     
 	}
 	
 	// Update is called once per frame
