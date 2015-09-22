@@ -19,5 +19,8 @@ public class Player : Character {
     public override void Die()
     {
         base.Die();
+
+        Debug.Log("Spelaren avled tragiskt");
+        // TODO Något när spelaren dör
     }
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class Enemy : Character {
@@ -12,7 +12,11 @@ public class Enemy : Character {
 	    GameObject healthBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Healthbar")) as GameObject;
         healthBar.transform.SetParent(transform);
         healthBar.GetComponent<RectTransform>().localPosition = new Vector3(0, 1, 0);
-	}
+
+        GameObject cooldownBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Cooldownbar")) as GameObject;
+        cooldownBar.transform.SetParent(transform);
+        cooldownBar.GetComponent<RectTransform>().localPosition = new Vector3(0, -1, 0);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -36,7 +40,7 @@ public class Enemy : Character {
 
         if (_attackCounter <= 0)
         {
-            _attackCounter = _attackCooldown;
+            ResetCooldown();
             AttackPlayer();
         }
     }
@@ -44,5 +48,27 @@ public class Enemy : Character {
     void AttackPlayer()
     {
         Debug.Log(gameObject.GetInstanceID() + " attakerade spelaren för " + _attackDamage + " skada");
+
+        Resources.Instance._player.GetComponent<Player>().Damage(_attackDamage);
+    }
+
+    void ResetCooldown()
+    {
+        _attackCounter = _attackCooldown;
+    }
+
+    void DelayAttack(float delay_)
+    {
+        _attackCounter += delay_;
+
+        if (_attackCounter > _attackCooldown)
+        {
+            _attackCounter = _attackCooldown;
+        }
+    }
+
+    void DelayAttackNoLimit(float delay_)
+    {
+        _attackCounter += delay_;
     }
 }

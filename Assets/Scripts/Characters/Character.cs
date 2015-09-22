@@ -32,8 +32,6 @@ public class Character : MonoBehaviour {
 
     public void Damage(float damage_)
     {
-       // Debug.Log(_health);
-
         _health -= Mathf.Abs(damage_);
 
         if (_health <= 0)
@@ -50,6 +48,11 @@ public class Character : MonoBehaviour {
         {
             _health = _maxHealth;
         }
+    }
+
+    public void IncreaseMaxHealth(float amount_)
+    {
+        _maxHealth += amount_;
     }
 
     public virtual void Die()
