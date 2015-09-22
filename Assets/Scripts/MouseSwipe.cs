@@ -26,8 +26,9 @@ public class MouseSwipe : MonoBehaviour {
 	void Update () {
         if (MouseController.Instance.buttonDown)
         {
-            if (!firstFrameElse)
+            if (!firstFrameElse)    // första frame efter att man tryck ned knappen igen
             {
+                // sätter alla linjer i muspositionen
                 for (int i = 0; i < _count; i++)
                 {
                     vertecies[i] = MouseController.Instance.worldPosition + (Camera.main.transform.forward * 5);
@@ -36,9 +37,11 @@ public class MouseSwipe : MonoBehaviour {
             }
             firstFrameElse = true;
 
+            // första linjen sätts till musen
             vertecies[0] = MouseController.Instance.worldPosition + (Camera.main.transform.forward * 5);
             _lineRender.SetPosition(0, vertecies[0]);
 
+            // alla andra linjer sätts till föregående linje
             for (int i = _count - 1; i > 0; i--)
             {
                 vertecies[i] = vertecies[i - 1];
@@ -47,9 +50,10 @@ public class MouseSwipe : MonoBehaviour {
         }
         else
         {
-            if (firstFrameElse)
+            if (firstFrameElse)     // första frame man släppt knappen
             {
                 firstFrameElse = false;
+                // flyttar alla linjer utanför skärmen
                 for (int i = 0; i < _count; i++)
                 {
                     vertecies[i] = new Vector3(-1, -1, -1);
