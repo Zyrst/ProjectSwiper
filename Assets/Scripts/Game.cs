@@ -4,7 +4,6 @@ using System.Collections;
 public class Game : MonoBehaviour {
 
     public GameObject _combat;
-    public GameObject _player;
 
     public GameObject[] _combatArenas;
     public GameObject[] _enemies;
@@ -14,8 +13,9 @@ public class Game : MonoBehaviour {
     public enum GameMode : int { Quest = 0, Farm, Tutorial };
     public GameMode _gameMode = GameMode.Farm;
 
-    private static Game _instance = null;
+    public int _gameCurrency = 1;
 
+    private static Game _instance = null;
     public static Game Instance
     {
         get
@@ -31,9 +31,11 @@ public class Game : MonoBehaviour {
         _combat.GetComponent<Combat>().AddEnemy(_enemies[0]);
         _combat.GetComponent<Combat>().StartArena(_combatArenas[0]);
 
-        GameObject.Instantiate(_player);
+        GameObject.Instantiate(Resources.Instance._player);
         SaveManager.Load();
+        CurrencyObject.Spawn(new Vector3(20f, 1f, 0f), new Vector3(0f, 0f, 0f));
 	}
+	
 	
 	// Update is called once per frame
 	void Update () {
