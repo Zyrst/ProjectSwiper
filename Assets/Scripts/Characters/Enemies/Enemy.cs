@@ -24,7 +24,7 @@ public class Enemy : Character {
         base.Die();
 
         Debug.Log(gameObject.GetInstanceID() + " avled tragiskt");
-
+        CurrencyObject.Spawn(new Vector3(0, 1, -20), transform.position);
         Destroy(gameObject);
     }
 

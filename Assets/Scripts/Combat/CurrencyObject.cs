@@ -5,23 +5,26 @@ public class CurrencyObject : MonoBehaviour {
 
     public float _lifeTime = 5f;
     public int _value = 1;
+    public bool _collect = false;
+    public Vector3 _target;
+    public float _speed = 1f;
 
     [HideInInspector]
     public float _timer = 0f;
 
 	// Use this for initialization
 	void Start () {
-	
+        _target = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
 	}
 	
 	// Update is called once per frame
 	void Update () {
         _timer += Time.deltaTime;
-        if (_timer >= _lifeTime)
+        if (_timer >= _lifeTime && !_collect)
         {
             Collect();
         }
-        else
+        else if(!_collect)
         {
             Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
             RaycastHit hit = new RaycastHit();
@@ -33,25 +36,38 @@ public class CurrencyObject : MonoBehaviour {
                 }
             }
         }
+        if(_collect)
+        {
+            Vector3 calc = (_target - transform.position) * (_speed * Time.deltaTime);
+            transform.position += calc;
+
+            if(Vector3.Distance(_target, transform.position) <= 3f)
+            {
+                Game.Instance._gameCurrency += _value;
+                Debug.Log("Currency " + Game.Instance._gameCurrency);
+                GameObject.Destroy(gameObject);
+            }
+        }
 	}
 
     public void Collect()
     {
-        Game.Instance._gameCurrency += _value;
-        Debug.Log("Currency " + Game.Instance._gameCurrency);
-        GameObject.Destroy(gameObject);
+        
+        Rigidbody body = GetComponent<Rigidbody>();
+        body.useGravity = false;
+        body.velocity = Vector3.zero;
+        body.angularVelocity = Vector3.zero;
+        _collect = true;
     }
 
 
     public static void Spawn(Vector3 force_, Vector3 pos_)
     {
-        GameObject _cur = GameObject.Instantiate(Resources.Instance._gameCurrency);
+        GameObject go = GameObject.Instantiate(Resources.Instance._gameCurrency);
 
         pos_ += new Vector3(0f, 1f, 0f);
-        _cur.transform.position = pos_;
-
-
-        _cur.GetComponent<Rigidbody>().AddForce(force_);
+        go.transform.position = pos_;
+        go.GetComponent<Rigidbody>().AddForce(force_);
         // HACK: Suck ₫ for a ₫ 
     }
 }

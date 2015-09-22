@@ -4,6 +4,7 @@ using System.Collections;
 public class Game : MonoBehaviour {
 
     public GameObject _combat;
+    public GameObject _currentPlayer;
 
     public int _level = 1;
     public int _gameCurrency = 1;
@@ -23,7 +24,6 @@ public class Game : MonoBehaviour {
 	void Start () {
         GameObject.Instantiate(_combat);
         GameObject.Instantiate(Resources.Instance._player);
-        SaveManager.Load();
         CurrencyObject.Spawn(new Vector3(20f, 1f, 0f), new Vector3(0f, 0f, 0f));
 	}
 	
@@ -45,5 +45,21 @@ public class Game : MonoBehaviour {
     void LateUpdate()
     {
         MouseController.Instance.LateUpdate();
+    }
+
+    void OnApplicationExit()
+    {
+        Debug.Log("Exiting game");
+       // SaveManager.Save();
+    }
+    
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if(pauseStatus == true)
+        {
+            Debug.Log("Paused game");
+            SaveManager.Save();
+        }
+            
     }
 }
