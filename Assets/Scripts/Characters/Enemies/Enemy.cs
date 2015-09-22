@@ -2,15 +2,17 @@
 using System.Collections;
 
 public class Enemy : Character {
-
+    
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+        GameObject healthBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Healthbar")) as GameObject;
+        healthBar.transform.SetParent(transform);
+        healthBar.GetComponent<RectTransform>().localPosition = new Vector3(0, 1, 0);
+    }
+
+    // Update is called once per frame
+    void Update () {
+	    
 	}
 
     public override void Die()
