@@ -22,7 +22,7 @@ public class Game : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         GameObject.Instantiate(_combat);
-        GameObject.Instantiate(_player);
+        GameObject.Instantiate(Resources.Instance._player);
         SaveManager.Load();
         CurrencyObject.Spawn(new Vector3(20f, 1f, 0f), new Vector3(0f, 0f, 0f));
 	}
