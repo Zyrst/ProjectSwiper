@@ -8,13 +8,15 @@ public class Enemy : Character {
 
 	// Use this for initialization
 	void Start () {
-	
+	    GameObject healthBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Healthbar")) as GameObject;
+        healthBar.transform.SetParent(transform);
+        healthBar.GetComponent<RectTransform>().localPosition = new Vector3(0, 1, 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
         UpdateAttackCooldown();
-	}
+    }
 
     public override void Die()
     {
@@ -27,7 +29,7 @@ public class Enemy : Character {
 
     void UpdateAttackCooldown()
     {
-        _attackCounter += 1;
+        _attackCounter += Time.deltaTime;
 
         if (_attackCounter >= _attackCooldown)
         {

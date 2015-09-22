@@ -43,7 +43,5 @@ public class Game : MonoBehaviour {
     void LateUpdate()
     {
         MouseController.Instance.LateUpdate();
-
-        // TODO: Suck a dong
     }
 }

@@ -54,7 +54,7 @@ public class MouseCuboid : MonoBehaviour
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-            Vector3 scale = Vector3.one;//midPoint.transform.localScale;
+            Vector3 scale = Vector3.one;
             scale.z = 20;
             float distance = Vector3.Distance(lastPoint, transform.position);
             scale.x *= distance * 2 > scale.x ? distance * 2 : scale.x;
@@ -81,6 +81,7 @@ public class MouseCuboid : MonoBehaviour
 
     void OnTriggerEnter(Collider col_)
     {
+    // lägger in collidern om den inte redan finns i listan
         bool foundit = false;
         foreach (var item in colliders)
         {
@@ -111,6 +112,7 @@ public class MouseCuboid : MonoBehaviour
 
     void OnTriggerExit(Collider col_)
     {
+        // clearar alla, men det är lugnt, alla gamla kommer in nästa frame igen
         colliders.Clear();
     }
 }
