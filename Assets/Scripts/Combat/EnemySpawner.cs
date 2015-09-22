@@ -29,8 +29,9 @@ public class EnemySpawner : MonoBehaviour {
             Destroy(_enemy);
         }
         _enemy = GameObject.Instantiate(enemy_);
-        _enemy.transform.position = transform.position;
+        _enemy.transform.position = transform.position + (Vector3.up * _enemy.transform.localScale.y/2);
 
+       
         _enemy.transform.parent = transform;
 
         _enemyIsAlive = true;
