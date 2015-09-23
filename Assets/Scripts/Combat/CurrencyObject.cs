@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class CurrencyObject : MonoBehaviour {
 
@@ -14,7 +15,10 @@ public class CurrencyObject : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _target = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
+        GameObject go = GameObject.Find("CurrencyComponent");
+        Vector3 targ = go.transform.position;
+        targ -= new Vector3((go.GetComponent<RectTransform>().rect.width / 2), 0 , 0);
+        _target = Camera.main.ScreenToWorldPoint(targ);
 	}
 	
 	// Update is called once per frame
@@ -26,15 +30,28 @@ public class CurrencyObject : MonoBehaviour {
         }
         else if(!_collect)
         {
-            Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
-            RaycastHit hit = new RaycastHit();
-            if(Physics.Raycast(ray, out hit))
+           // Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
+            //RaycastHit hit = new RaycastHit();
+            //if(Physics.Raycast(ray, out hit))
+            //{
+            //    if(hit.collider.transform == transform)
+            //    {
+            //        Collect();
+            //    }
+            //}
+            if (MouseController.Instance.buttonDown)
             {
-                if(hit.collider.transform == transform)
+                if (MouseCuboid.hit)
                 {
-                    Collect();
+                    Collider tempCol = MouseCuboid.colliders.FirstOrDefault(x => x.gameObject.tag == "Currency");
+                    if (tempCol != null)
+                    {
+                        Debug.Log(tempCol.transform);
+                        if(tempCol.transform == transform)
+                            Collect();
+                    }
                 }
-            }
+            }   
         }
         if(_collect)
         {

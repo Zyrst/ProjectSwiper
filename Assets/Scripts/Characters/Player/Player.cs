@@ -20,7 +20,7 @@ public class Player : Character {
     {
         base.Die();
 
-        Debug.Log("Spelaren avled tragiskt");
+        //Debug.Log("Spelaren avled tragiskt");
         // TODO Något när spelaren dör
     }
 }

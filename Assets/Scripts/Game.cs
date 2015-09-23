@@ -53,6 +53,14 @@ public class Game : MonoBehaviour {
         {
             SaveManager.Load();
         }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            _gameCurrency += 50;
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            UpgradePlayer.Upgrade();
+        }
 	}
 
     void LateUpdate()

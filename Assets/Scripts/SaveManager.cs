@@ -32,7 +32,7 @@ public static class SaveManager {
         bf.Serialize(file, _info);
         file.Close();
 
-        Debug.Log("Save damage: " + _info._damage);
+        Debug.Log("Save damage: " + _info._damage + "Level " + _info._level);
     }
 
     public static void Load()
