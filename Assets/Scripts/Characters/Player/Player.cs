@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class Player : Character {
+    public float _damage = 1;
+
 	// Use this for initialization
 	void Start () {
         Game.Instance._currentPlayer = gameObject;

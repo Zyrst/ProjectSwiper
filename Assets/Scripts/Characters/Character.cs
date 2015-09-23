@@ -5,8 +5,6 @@ public class Character : MonoBehaviour {
     public float _maxHealth = 0;
     public float _health = 0;
 
-    public float _damage = 1;
-
     public bool _isDead = false;
 
 	// Use this for initialization

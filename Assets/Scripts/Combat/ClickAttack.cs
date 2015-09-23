@@ -42,7 +42,7 @@ public class ClickAttack : MonoBehaviour {
 
                         newHit = true;
 
-                        _lastHit.gameObject.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                        //_lastHit.gameObject.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                     }
                 }
                 else
