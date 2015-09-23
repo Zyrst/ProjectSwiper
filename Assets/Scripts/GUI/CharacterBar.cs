@@ -30,7 +30,9 @@ public class CharacterBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.LookAt(Camera.main.transform);
+        // If projection, yes below. Otherwise no pls
+        // transform.LookAt(Camera.main.transform.position);
+        transform.forward = -Camera.main.transform.forward;
 
         switch (_barType) {
             case BarType.Health:
