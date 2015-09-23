@@ -10,13 +10,10 @@ public class Combat : MonoBehaviour {
 
     Combat()
     {
-        Debug.Log("i konstruktorn");
     }
 
 	// Use this for initialization
 	void Start () {
-
-        Debug.Log("i start ");
 	
 	}
 	
@@ -53,11 +50,7 @@ public class Combat : MonoBehaviour {
             _enemySpawners.Add(item);
         }
 
-        Debug.Log("original spawn");
-        foreach (var item in _enemySpawners)
-        {
-            item.Spawn(_currentEnemies[0]);
-        }
+        SpawnNewWave();
     }
 
     public void SpawnNewWave()
