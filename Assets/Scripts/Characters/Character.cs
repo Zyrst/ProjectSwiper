@@ -17,6 +17,7 @@ public class Character : MonoBehaviour {
         // Mattias balla kod
         // TODO: stay cool, brah
         // HACK ( ͡° ͜ʖ ͡°)
+        // HACK Tiden = Guld = Pengar
         // --------------------------
     }
 
