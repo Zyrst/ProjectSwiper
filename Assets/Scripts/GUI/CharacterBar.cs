@@ -9,7 +9,7 @@ public class CharacterBar : MonoBehaviour {
     }
     public BarType _barType;
 
-    public Enemy _enemy;
+    public EnemyAttack _enemy;
     public Character _character;
     public Image _foreground;
     public Image _background;
@@ -24,7 +24,7 @@ public class CharacterBar : MonoBehaviour {
         // Try to find enemy
         if (transform.parent != null) {
             _character = transform.parent.GetComponent<Character>();
-            _enemy = transform.parent.GetComponent<Enemy>();
+            _enemy = transform.parent.GetComponent<EnemyAttack>();
         }
     }
 	
