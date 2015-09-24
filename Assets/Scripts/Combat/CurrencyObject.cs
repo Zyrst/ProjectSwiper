@@ -30,15 +30,6 @@ public class CurrencyObject : MonoBehaviour {
         }
         else if(!_collect)
         {
-           // Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
-            //RaycastHit hit = new RaycastHit();
-            //if(Physics.Raycast(ray, out hit))
-            //{
-            //    if(hit.collider.transform == transform)
-            //    {
-            //        Collect();
-            //    }
-            //}
             if (MouseController.Instance.buttonDown)
             {
                 if (MouseCuboid.hit)
@@ -46,7 +37,6 @@ public class CurrencyObject : MonoBehaviour {
                     Collider tempCol = MouseCuboid.colliders.FirstOrDefault(x => x.gameObject.tag == "Currency");
                     if (tempCol != null)
                     {
-                        Debug.Log(tempCol.transform);
                         if(tempCol.transform == transform)
                             Collect();
                     }
@@ -81,7 +71,7 @@ public class CurrencyObject : MonoBehaviour {
 
     public static void Spawn(Vector3 force_, Vector3 pos_)
     {
-        GameObject go = GameObject.Instantiate(Resources.Instance._gameCurrency);
+        GameObject go = GameObject.Instantiate(References.Instance._gameCurrency);
 
         pos_ += new Vector3(0f, 1f, 0f);
         go.transform.position = pos_;
