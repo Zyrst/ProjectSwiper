@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class Character : MonoBehaviour {
-    public float _maxHealth = 0;
-    public float _health = 0;
+    public float _maxHealth = 1;
+    public float _health = 1;
 
     public bool _isDead = false;
 
@@ -20,8 +20,7 @@ public class Character : MonoBehaviour {
     }
 
 	void Awake() {
-        _maxHealth = 10;
-        _health = _maxHealth;
+
 	}
 	
 	// Update is called once per frame
