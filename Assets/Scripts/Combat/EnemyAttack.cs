@@ -33,7 +33,7 @@ public class EnemyAttack : MonoBehaviour {
     {
         //Debug.Log(gameObject.GetInstanceID() + " attakerade spelaren för " + _attackDamage + " skada");
 
-        Resources.Instance._player.GetComponent<Player>().Damage(_attackDamage);
+        Game.Instance._currentPlayer.GetComponent<Player>().Damage(_attackDamage);
     }
 
     void ResetCooldown()
