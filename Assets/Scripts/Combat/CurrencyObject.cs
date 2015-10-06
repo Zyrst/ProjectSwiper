@@ -15,7 +15,7 @@ public class CurrencyObject : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GameObject go = GameObject.Find("CurrencyComponent");
+        GameObject go = GameObject.Find("Currency");
         Vector3 targ = go.transform.position;
         targ -= new Vector3((go.GetComponent<RectTransform>().rect.width / 2), 0 , 0);
         _target = Camera.main.ScreenToWorldPoint(targ);

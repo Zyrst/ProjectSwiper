@@ -7,6 +7,7 @@ public class Combat : MonoBehaviour {
     public GameObject _arena;
     public List<EnemySpawner> _enemySpawners;
     public List<Enemy> _currentEnemies = new List<Enemy>();
+    public int _waveCounter;
 
     Combat()
     {
@@ -49,7 +50,7 @@ public class Combat : MonoBehaviour {
         {
             _enemySpawners.Add(item);
         }
-
+        _waveCounter = 0;
         SpawnNewWave();
     }
 
@@ -60,5 +61,7 @@ public class Combat : MonoBehaviour {
         {
             item.Spawn(_currentEnemies[0]);
         }
+        _waveCounter++;
+        Debug.Log(_waveCounter);
     }
 }
