@@ -29,7 +29,7 @@ public class Game : MonoBehaviour {
     {
         _combat = GameObject.Instantiate(_combat);
         _combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
-        _combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[1]);
+        _combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
 
         GameObject.Instantiate(References.Instance._player);
 

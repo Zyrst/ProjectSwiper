@@ -28,7 +28,7 @@ public class Character : MonoBehaviour {
 	    
 	}
 
-    public void Damage(float damage_)
+    public virtual void Damage(float damage_)
     {
         _health -= Mathf.Abs(damage_);
 

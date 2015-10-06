@@ -10,13 +10,60 @@ public class Sounds : MonoBehaviour {
         {
             if (_instance == null)
             {
-                _instance = GameObject.Find("Sounds").GetComponent<Sounds>();
+                _instance = GameObject.Find("SOUNDS").GetComponent<Sounds>();
             }
             return _instance;
         }
     }
 
-    public FMODAsset test;
+    [System.Serializable]
+    public struct Combat
+    {
+        [System.Serializable]
+        public struct Enemies
+        {
+            [System.Serializable]
+            public struct Damage
+            {
+                public FMODAsset Heavy;
+                public FMODAsset Medium;
+                public FMODAsset Small;
+            };
+
+            public Damage robotDamage;
+        };
+        [System.Serializable]
+        public struct Player
+        {
+            [System.Serializable]
+            public struct Attack
+            {
+                public FMODAsset swipe;
+            };
+
+            public Attack attack;
+            public FMODAsset damage;
+            public FMODAsset dies;
+        };
+
+        public Enemies enemies;
+        public Player player;
+    };
+
+    [System.Serializable]
+    public struct UI
+    {
+        public FMODAsset currencyCollect;
+        public FMODAsset newWave;
+        public FMODAsset planetAvailable;
+        public FMODAsset PlanetTravel;
+        public FMODAsset upgradeAvailable;
+        public FMODAsset upgradeBuy;
+    };
+
+    public Combat combat;
+    public UI ui;
+
 
     /// <summary>
     /// plays the asset once
