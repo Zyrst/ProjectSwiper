@@ -51,6 +51,9 @@ public class Combat : MonoBehaviour {
     {
         _arena = GameObject.Instantiate(arena_);
         _arena.transform.position = Vector3.zero;
+        Arena a = _arena.GetComponent<Arena>();
+        a.setTexture(Random.Range(0, a.textures.Length));
+
         _enemySpawners.Clear();
         foreach (var item in _arena.GetComponentsInChildren<EnemySpawner>())
         {
