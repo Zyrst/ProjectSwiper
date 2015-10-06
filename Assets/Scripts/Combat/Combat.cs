@@ -75,7 +75,7 @@ public class Combat : MonoBehaviour {
     public void ChangeArena()
     {
         Destroy(_arena);
-        StartArena(Game.Instance._combatArenas[1]);
+        StartArena(References.Instance._combatArenas[1]);
     }
 
     public void ResetCounter()
