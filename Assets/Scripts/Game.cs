@@ -35,7 +35,6 @@ public class Game : MonoBehaviour {
         _combat.GetComponent<Combat>().StartArena(_combatArenas[0]);
 
         GameObject.Instantiate(References.Instance._player);
-        CurrencyObject.Spawn(new Vector3(20f, 1f, 0f), new Vector3(0f, 0f, 0f));
 
         Instantiate(_HUD);
     }

@@ -23,7 +23,7 @@ public class CurrencyObject : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _timer += Time.deltaTime;
+        _timer += Time.deltaTime;   //Increase time
         if (_timer >= _lifeTime && !_collect)
         {
             Collect();
@@ -34,6 +34,7 @@ public class CurrencyObject : MonoBehaviour {
             {
                 if (MouseCuboid.hit)
                 {
+                    //if hit and the transform equals this transform, collect
                     Collider tempCol = MouseCuboid.colliders.FirstOrDefault(x => x.gameObject.tag == "Currency");
                     if (tempCol != null)
                     {
@@ -45,13 +46,14 @@ public class CurrencyObject : MonoBehaviour {
         }
         if(_collect)
         {
+            //Make it fly to the target on the GUI
             Vector3 calc = (_target - transform.position) * (_speed * Time.deltaTime);
             transform.position += calc;
 
             if(Vector3.Distance(_target, transform.position) <= 3f)
             {
                 Game.Instance._gameCurrency += _value;
-                Debug.Log("Currency " + Game.Instance._gameCurrency);
+               // Debug.Log("Currency " + Game.Instance._gameCurrency);
                 GameObject.Destroy(gameObject);
             }
         }
@@ -59,7 +61,8 @@ public class CurrencyObject : MonoBehaviour {
 
     public void Collect()
     {
-        
+        //Setup so it can fly easily to the target
+        //Remove all forces and no gravity and turn off collider
         Rigidbody body = GetComponent<Rigidbody>();
         body.useGravity = false;
         body.velocity = Vector3.zero;
