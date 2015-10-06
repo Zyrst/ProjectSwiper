@@ -14,12 +14,20 @@ public class Player : Character {
         Character charHit = GetComponent<ClickAttack>().getNewHit();
 	    if (charHit != null)
         {
+            Sounds.OneShot(Sounds.Instance.combat.player.attack.swipe, charHit.transform.position);
             charHit.Damage(_damage);
         }
 	}
 
+    public override void Damage(float damage_)
+    {
+        Sounds.OneShot(Sounds.Instance.combat.player.damage, transform.position);
+        base.Damage(damage_);
+    }
+
     public override void Die()
     {
+        Sounds.OneShot(Sounds.Instance.combat.player.dies, transform.position);
         base.Die();
 
         Game.Instance._combat.GetComponent<Combat>().ResetCounter();

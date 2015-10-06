@@ -52,6 +52,7 @@ public class CurrencyObject : MonoBehaviour {
 
             if(Vector3.Distance(_target, transform.position) <= 3f)
             {
+                Sounds.OneShot(Sounds.Instance.ui.currencyCollect);
                 Game.Instance._gameCurrency += _value;
                // Debug.Log("Currency " + Game.Instance._gameCurrency);
                 GameObject.Destroy(gameObject);

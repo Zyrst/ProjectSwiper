@@ -63,6 +63,7 @@ public class Combat : MonoBehaviour {
 
     public void SpawnNewWave()
     {
+        Sounds.OneShot(Sounds.Instance.ui.newWave);
         Debug.Log("spawning new enemies");
         foreach (var item in _enemySpawners)
         {
