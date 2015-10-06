@@ -27,7 +27,8 @@ public class Enemy : Character {
     {
         base.Die();
 
-        // Todo: Ta bort kommentaren här :)
+        // TODO: Ta bort kommentaren här :)
+        // TODO: Sluta skriva dumma TODO's överallt
         //Debug.Log(gameObject.GetInstanceID() + " avled tragiskt");
 
         SpawnCurrency();
