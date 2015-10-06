@@ -22,6 +22,7 @@ public class Player : Character {
     {
         base.Die();
 
+        Game.Instance._combat.GetComponent<Combat>().ResetCounter();
         //Debug.Log("Spelaren avled tragiskt");
         // TODO Något när spelaren dör
     }
