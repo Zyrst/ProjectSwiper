@@ -10,6 +10,9 @@ public class References : MonoBehaviour {
     public GameObject _gameCurrency;
     public GameObject _player;
 
+    public GameObject[] _combatArenas;
+    public GameObject[] _enemies;
+
     private static References _instance = null;
 
     public static References Instance

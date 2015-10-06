@@ -8,6 +8,7 @@ public class Combat : MonoBehaviour {
     public List<EnemySpawner> _enemySpawners;
     public List<Enemy> _currentEnemies = new List<Enemy>();
     public int _waveCounter;
+    public int _minWaves;
 
     Combat()
     {
@@ -34,6 +35,11 @@ public class Combat : MonoBehaviour {
         {
             SpawnNewWave();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1) && _waveCounter >= _minWaves)
+        {
+            ChangeArena();
+        }
 	}
 
     public void AddEnemy(GameObject enemy_)
@@ -50,8 +56,9 @@ public class Combat : MonoBehaviour {
         {
             _enemySpawners.Add(item);
         }
-        _waveCounter = 0;
+        ResetCounter();
         SpawnNewWave();
+        _minWaves = Random.Range(6, 13);
     }
 
     public void SpawnNewWave()
@@ -59,9 +66,20 @@ public class Combat : MonoBehaviour {
         Debug.Log("spawning new enemies");
         foreach (var item in _enemySpawners)
         {
-            item.Spawn(_currentEnemies[0]);
+            item.Spawn(_currentEnemies[Random.Range(0, _currentEnemies.Count)]);
         }
         _waveCounter++;
         Debug.Log(_waveCounter);
+    }
+
+    public void ChangeArena()
+    {
+        Destroy(_arena);
+        StartArena(References.Instance._combatArenas[1]);
+    }
+
+    public void ResetCounter()
+    {
+       // _waveCounter = 0;
     }
 }

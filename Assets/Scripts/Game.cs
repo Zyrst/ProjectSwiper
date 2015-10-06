@@ -7,9 +7,6 @@ public class Game : MonoBehaviour {
     public GameObject _currentPlayer;
     public GameObject _HUD;
 
-    public GameObject[] _combatArenas;
-    public GameObject[] _enemies;
-
     public int _level = 1;
 
     public enum GameMode : int { Quest = 0, Farm, Tutorial };
@@ -31,11 +28,10 @@ public class Game : MonoBehaviour {
     void Start()
     {
         _combat = GameObject.Instantiate(_combat);
-        _combat.GetComponent<Combat>().AddEnemy(_enemies[0]);
-        _combat.GetComponent<Combat>().StartArena(_combatArenas[0]);
+        _combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
+        _combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[1]);
 
         GameObject.Instantiate(References.Instance._player);
-        CurrencyObject.Spawn(new Vector3(20f, 1f, 0f), new Vector3(0f, 0f, 0f));
 
         Instantiate(_HUD);
     }
