@@ -59,7 +59,7 @@ public class Combat : MonoBehaviour {
         Debug.Log("spawning new enemies");
         foreach (var item in _enemySpawners)
         {
-            item.Spawn(_currentEnemies[0]);
+            item.Spawn(_currentEnemies[Random.Range(0, _currentEnemies.Count)]);
         }
         _waveCounter++;
         Debug.Log(_waveCounter);

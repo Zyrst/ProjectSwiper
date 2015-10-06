@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        GetComponent<Renderer>().enabled = false;
 	
 	}
 	
@@ -32,11 +34,6 @@ public class EnemySpawner : MonoBehaviour {
         // spawnar på rätt jävla positionsjävel
         _enemy.transform.position = transform.position + (Vector3.up * _enemy.transform.localScale.y/2) - 
             (Vector3.up * (transform.position.y - (transform.localScale.y/2)));
-        
-        // alla tittar på skärmen
-        Quaternion rotY = _enemy.transform.rotation;
-        rotY.y = Camera.main.transform.rotation.y;
-        _enemy.transform.rotation = rotY;
        
         _enemy.transform.parent = transform;
 
