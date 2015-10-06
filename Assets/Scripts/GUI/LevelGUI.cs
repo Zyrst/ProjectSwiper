@@ -15,5 +15,5 @@ public class LevelGUI : Text {
 	// Update is called once per frame
 	void Update () {
         this.text = _string + Game.Instance._level;
-	}
+    }
 }
