@@ -53,6 +53,11 @@ public class Character : MonoBehaviour {
         _maxHealth += amount_;
     }
 
+    public void RestoreMaxHealth()
+    {
+        _health = _maxHealth;
+    }
+
     public virtual void Die()
     {
         _isDead = true;

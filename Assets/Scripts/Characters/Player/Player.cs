@@ -27,11 +27,13 @@ public class Player : Character {
 
     public override void Die()
     {
-        Sounds.OneShot(Sounds.Instance.combat.player.dies, transform.position);
         base.Die();
 
+        Sounds.OneShot(Sounds.Instance.combat.player.dies, transform.position);
+
         Game.Instance._combat.GetComponent<Combat>().ResetCounter();
+        Game.Instance._combat.GetComponent<Combat>().PlayerDied();
+
         //Debug.Log("Spelaren avled tragiskt");
-        // TODO Något när spelaren dör
     }
 }
