@@ -101,7 +101,7 @@ public class Combat : MonoBehaviour {
 
     public void ResetCounter()
     {
-       // _waveCounter = 0;
+        _waveCounter = 0;
     }
 
     public void PlayerDied()

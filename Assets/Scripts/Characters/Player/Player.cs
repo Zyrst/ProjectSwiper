@@ -35,5 +35,6 @@ public class Player : Character {
         Game.Instance._combat.GetComponent<Combat>().PlayerDied();
 
         //Debug.Log("Spelaren avled tragiskt");
+
     }
 }
