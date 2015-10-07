@@ -9,6 +9,10 @@ public class Combat : MonoBehaviour {
     public List<Enemy> _currentEnemies = new List<Enemy>();
     public int _waveCounter;
     public int _minWaves;
+    public float _newWaveTime = 0.8f;
+
+    private bool _triggerNewWave = false;
+    private float _triggerNewWaveCounter = 0f;
 
     Combat()
     {
@@ -21,24 +25,37 @@ public class Combat : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        bool alive = false;
-        
-        foreach (var item in _enemySpawners)
+        if (!_triggerNewWave)
         {
-            if (item._enemyIsAlive)
+            bool alive = false;
+
+            foreach (var item in _enemySpawners)
             {
-                alive = true;
-                break;
+                if (item._enemyIsAlive)
+                {
+                    alive = true;
+                    break;
+                }
+            }
+            if (!alive)
+            {
+                _triggerNewWave = true;
+                _triggerNewWaveCounter = 0;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) && _waveCounter >= _minWaves)
+            {
+                ChangeArena();
             }
         }
-        if (!alive)
+        else
         {
-            SpawnNewWave();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1) && _waveCounter >= _minWaves)
-        {
-            ChangeArena();
+            _triggerNewWaveCounter += Time.deltaTime;
+            if (_triggerNewWaveCounter >= _newWaveTime)
+            {
+                _triggerNewWave = false;
+                SpawnNewWave();
+            }
         }
 	}
 
