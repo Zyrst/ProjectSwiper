@@ -90,7 +90,7 @@ public class Combat : MonoBehaviour {
             item.Spawn(_currentEnemies[Random.Range(0, _currentEnemies.Count)]);
         }
         _waveCounter++;
-        Debug.Log(_waveCounter);
+        Debug.Log("Wave: " + _waveCounter);
     }
 
     public void ChangeArena()
@@ -102,5 +102,10 @@ public class Combat : MonoBehaviour {
     public void ResetCounter()
     {
        // _waveCounter = 0;
+    }
+
+    public void PlayerDied()
+    {
+
     }
 }
