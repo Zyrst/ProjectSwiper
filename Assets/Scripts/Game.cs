@@ -3,9 +3,6 @@ using System.Collections;
 using GameAnalyticsSDK;
 
 public class Game : MonoBehaviour {
-    public GameObject _combat;
-    public GameObject _currentPlayer;
-    public GameObject _HUD;
 
     public int _level = 1;
 
@@ -27,13 +24,13 @@ public class Game : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        _combat = GameObject.Instantiate(_combat);
-        _combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
-        _combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
+        References.Instance._combat = GameObject.Instantiate(References.Instance._combat);
+        References.Instance._combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
+        References.Instance._combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
 
         GameObject.Instantiate(References.Instance._player);
 
-        Instantiate(_HUD);
+        Instantiate(References.Instance._HUD);
     }
 	
 	

@@ -17,8 +17,8 @@ public class UpgradePlayer : MonoBehaviour {
     {
         if(Game.Instance._gameCurrency >= 100)
         {
-            Game.Instance._currentPlayer.GetComponent<Player>()._damage += 1;
-            Game.Instance._currentPlayer.GetComponent<Player>().IncreaseMaxHealth(10);
+            References.Instance._currentPlayer.GetComponent<Player>()._damage += 1;
+            References.Instance._currentPlayer.GetComponent<Player>().IncreaseMaxHealth(10);
             Game.Instance._gameCurrency -= 100;
             Game.Instance._level += 1;
             SaveManager.Save();

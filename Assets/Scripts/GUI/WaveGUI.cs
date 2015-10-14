@@ -15,6 +15,6 @@ public class WaveGUI : Text {
     // Update is called once per frame
     void Update()
     {
-        this.text = _string + Game.Instance._combat.GetComponent<Combat>()._waveCounter;
+        this.text = _string + References.Instance._combat.GetComponent<Combat>()._waveCounter;
     }
 }

@@ -106,6 +106,6 @@ public class Combat : MonoBehaviour {
 
     public void PlayerDied()
     {
-
+        Debug.Log("mattias är dålig");
     }
 }
