@@ -31,8 +31,7 @@ public class Player : Character {
 
         Sounds.OneShot(Sounds.Instance.combat.player.dies, transform.position);
 
-        References.Instance._combat.GetComponent<Combat>().ResetCounter();
-        References.Instance._combat.GetComponent<Combat>().PlayerDied();
+        Game.Instance.HandleCombatEvent(Game.CombatEvent.PlayerDied);
 
         //Debug.Log("Spelaren avled tragiskt");
     }
