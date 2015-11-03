@@ -6,7 +6,7 @@ public class Player : Character {
 
 	// Use this for initialization
 	void Start () {
-        References.Instance._currentPlayer = gameObject;
+        References.Instance._currentPlayer = gameObject.GetComponent<Player>();
 	}
 	
 	// Update is called once per frame
