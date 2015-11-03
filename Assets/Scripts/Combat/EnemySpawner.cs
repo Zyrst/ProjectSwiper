@@ -32,7 +32,6 @@ public class EnemySpawner : MonoBehaviour {
 
     public void Spawn(Enemy enemy_)
     {
-        Debug.Log(_enemy == null);
         if (_enemy != null)
         {
             Destroy(_enemy.gameObject);

@@ -20,7 +20,8 @@ public class Combat : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        _waveCounter = 0;
+        _triggerNewWaveCounter = 0;
 	}
 
     public void StartCombat()
@@ -105,6 +106,28 @@ public class Combat : MonoBehaviour {
         }
         _waveCounter++;
         Debug.Log("Wave: " + _waveCounter);
+
+        if (_waveCounter == _minWaves)
+        {
+            Debug.Log("next planet button");
+            ChangePlanet();
+
+        }
+    }
+
+    public void ChangePlanet()
+    {
+        // ändra planet i References
+        // gör nån speciell skit om det är sista planeten i systemet
+
+        Arena a = _arena.GetComponent<Arena>();
+        a.setTexture(Random.Range(0, a.textures.Length));
+
+        _waveCounter = 0;
+
+        Game.Instance.KillAllEnemies();
+
+        References.Instance._currentPlayer.Heal(References.Instance._currentPlayer._maxHealth);
     }
 
     public void ChangeArena()
