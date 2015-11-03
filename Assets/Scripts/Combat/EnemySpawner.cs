@@ -16,22 +16,29 @@ public class EnemySpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (_enemy == null || _enemy._isDead)
+        if (_enemy != null)
         {
-            _enemy = null;
-            _enemyIsAlive = false;
+            if (_enemy._isDead)
+            {
+                _enemyIsAlive = false;
+                Destroy(_enemy.gameObject);
+            }
         }
-	
+        else
+        {
+
+        }
 	}
 
     public void Spawn(Enemy enemy_)
     {
+        Debug.Log(_enemy == null);
         if (_enemy != null)
         {
-            Destroy(_enemy);
+            Destroy(_enemy.gameObject);
         }
         _enemy = GameObject.Instantiate(enemy_);
-        // spawnar på rätt jävla positionsjävel
+
         _enemy.transform.position = transform.position;
        
         _enemy.transform.parent = transform;
