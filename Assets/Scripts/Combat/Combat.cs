@@ -96,7 +96,7 @@ public class Combat : MonoBehaviour {
 
     public void SpawnNewWave()
     {
-        Debug.Log("skapar en ny vågjävel");
+       // Debug.Log("skapar en ny vågjävel");
 
         Sounds.OneShot(Sounds.Instance.ui.newWave);
         Debug.Log("spawning new enemies");
