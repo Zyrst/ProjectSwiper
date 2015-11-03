@@ -22,6 +22,19 @@ public class Combat : MonoBehaviour {
 	void Start () {
 	
 	}
+
+    public void StartCombat()
+    {
+        ResetCounter();
+        Random.seed = References.Instance._planet._id;
+        TriggerNewWave();
+    }
+
+    public void TriggerNewWave()
+    {
+        _triggerNewWave = true;
+        _triggerNewWaveCounter = 0;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -39,8 +52,7 @@ public class Combat : MonoBehaviour {
             }
             if (!alive)
             {
-                _triggerNewWave = true;
-                _triggerNewWaveCounter = 0;
+                Game.Instance.HandleCombatEvent(Game.CombatEvent.ClearWave);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && _waveCounter >= _minWaves)
@@ -83,6 +95,8 @@ public class Combat : MonoBehaviour {
 
     public void SpawnNewWave()
     {
+        Debug.Log("skapar en ny vågjävel");
+
         Sounds.OneShot(Sounds.Instance.ui.newWave);
         Debug.Log("spawning new enemies");
         foreach (var item in _enemySpawners)
@@ -101,7 +115,7 @@ public class Combat : MonoBehaviour {
 
     public void ResetCounter()
     {
-       // _waveCounter = 0;
+        _waveCounter = 0;
     }
 
     public void PlayerDied()

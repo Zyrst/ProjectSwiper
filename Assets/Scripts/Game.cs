@@ -3,11 +3,10 @@ using System.Collections;
 using GameAnalyticsSDK;
 
 public class Game : MonoBehaviour {
-    public GameObject _combat;
-    public GameObject _currentPlayer;
-    public GameObject _HUD;
 
     public int _level = 1;
+
+    public enum CombatEvent : int { PlayerDied = 0, ClearWave };
 
     public enum GameMode : int { Quest = 0, Farm, Tutorial };
     public GameMode _gameMode = GameMode.Farm;
@@ -27,13 +26,13 @@ public class Game : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        _combat = GameObject.Instantiate(_combat);
-        _combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
-        _combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
+        References.Instance._combat = GameObject.Instantiate(References.Instance._combat);
+        References.Instance._combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
+        References.Instance._combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
 
         GameObject.Instantiate(References.Instance._player);
 
-        Instantiate(_HUD);
+        Instantiate(References.Instance._HUD);
     }
 	
 	
@@ -62,6 +61,85 @@ public class Game : MonoBehaviour {
     void LateUpdate()
     {
         MouseController.Instance.LateUpdate();
+    }
+
+    public void HandleCombatEvent(CombatEvent ce_)
+    {
+        switch (_gameMode)
+        {
+            case GameMode.Quest:
+                HandleQuestCombatEvent(ce_);
+                break;
+            case GameMode.Farm:
+                HandleFarmCombatEvent(ce_);
+                break;
+            case GameMode.Tutorial:
+                HandleTutorialCombatEvent(ce_);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void HandleQuestCombatEvent(CombatEvent ce_)
+    {
+        switch (ce_)
+        {
+            case CombatEvent.PlayerDied:
+
+                // trigger defeat screen
+
+                Player p = References.Instance._currentPlayer.GetComponent<Player>();
+                p.Heal(p._maxHealth);
+                p._isDead = false;
+
+                References.Instance._combat.StartCombat();
+
+                break;
+            case CombatEvent.ClearWave:
+                Combat c = References.Instance._combat;
+                c.TriggerNewWave();
+                break;
+            default:
+                break;
+        }
+    }
+    private void HandleFarmCombatEvent(CombatEvent ce_)
+    {
+        switch (ce_)
+        {
+            case CombatEvent.PlayerDied:
+                {
+                    Player p = References.Instance._currentPlayer.GetComponent<Player>();
+                    p.Heal(p._maxHealth);
+                    p._isDead = false;
+                }
+                break;
+            case CombatEvent.ClearWave:
+                {
+                    Combat c = References.Instance._combat;
+                    c.TriggerNewWave();
+
+                    Player p = References.Instance._currentPlayer.GetComponent<Player>();
+                    p.Heal(p._maxHealth);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void HandleTutorialCombatEvent(CombatEvent ce_)
+    {
+        switch (ce_)
+        {
+            case CombatEvent.PlayerDied:
+                break;
+            case CombatEvent.ClearWave:
+                break;
+            default:
+                break;
+        }
     }
 
     void OnApplicationExit()

@@ -6,7 +6,7 @@ public class Player : Character {
 
 	// Use this for initialization
 	void Start () {
-        Game.Instance._currentPlayer = gameObject;
+        References.Instance._currentPlayer = gameObject;
 	}
 	
 	// Update is called once per frame
@@ -31,9 +31,9 @@ public class Player : Character {
 
         Sounds.OneShot(Sounds.Instance.combat.player.dies, transform.position);
 
-        Game.Instance._combat.GetComponent<Combat>().ResetCounter();
-        Game.Instance._combat.GetComponent<Combat>().PlayerDied();
+        Game.Instance.HandleCombatEvent(Game.CombatEvent.PlayerDied);
 
         //Debug.Log("Spelaren avled tragiskt");
+
     }
 }

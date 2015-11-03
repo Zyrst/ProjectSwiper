@@ -15,8 +15,8 @@ public class UpgradeButtonGUI : Button {
         if (Game.Instance._gameCurrency >= 100)
         {
             Sounds.OneShot(Sounds.Instance.ui.upgradeBuy);
-            Game.Instance._currentPlayer.GetComponent<Player>()._damage += 1;
-            Game.Instance._currentPlayer.GetComponent<Player>()._maxHealth += 10;
+            References.Instance._currentPlayer.GetComponent<Player>()._damage += 1;
+            References.Instance._currentPlayer.GetComponent<Player>()._maxHealth += 10;
             Game.Instance._gameCurrency -= 100;
             Game.Instance._level += 1;
             SaveManager.Save();
