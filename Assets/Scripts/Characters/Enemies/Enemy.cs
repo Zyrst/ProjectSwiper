@@ -39,6 +39,8 @@ public class Enemy : Character {
         {
             Sounds.OneShot(Sounds.Instance.combat.enemies.robotDamage.Small, transform.position);
         }
+
+        GetComponent<Animator>().SetTrigger("TakeDamage");
     }
 
     public override void Die()
