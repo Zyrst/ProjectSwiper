@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Enemy : Character {
+    public GameObject _textParticle;
 	// Use this for initialization
 	void Start () {
         InitializeGUI();
@@ -41,6 +42,11 @@ public class Enemy : Character {
         }
 
         GetComponent<Animator>().SetTrigger("TakeDamage");
+
+        GameObject damageText = GameObject.Instantiate(_textParticle);
+
+        damageText.GetComponent<TextParticleScript>().SetText(damage_.ToString());
+        damageText.transform.position = transform.position;
     }
 
     public override void Die()
