@@ -99,7 +99,7 @@ public class Combat : MonoBehaviour {
        // Debug.Log("skapar en ny vågjävel");
 
         Sounds.OneShot(Sounds.Instance.ui.newWave);
-        Debug.Log("spawning new enemies");
+        //Debug.Log("spawning new enemies");
         foreach (var item in _enemySpawners)
         {
             item.Spawn(_currentEnemies[Random.Range(0, _currentEnemies.Count)]);

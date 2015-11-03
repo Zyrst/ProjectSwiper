@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class UpgradePlayer : MonoBehaviour {
-
+    public static float modifider = 0.1f;
 	// Use this for initialization
 	void Start () {
 	
@@ -18,7 +18,8 @@ public class UpgradePlayer : MonoBehaviour {
         if(Game.Instance._gameCurrency >= 100)
         {
             References.Instance._currentPlayer.GetComponent<Player>()._damage += 1;
-            References.Instance._currentPlayer.GetComponent<Player>().IncreaseMaxHealth(10);
+            float maxHealth = Mathf.Ceil(100 + (Game.Instance._level * (Game.Instance._level * modifider)));
+            References.Instance._currentPlayer.GetComponent<Player>()._maxHealth = maxHealth;
             Game.Instance._gameCurrency -= 100;
             Game.Instance._level += 1;
             SaveManager.Save();
