@@ -54,6 +54,6 @@ public class Enemy : Character {
     void SpawnCurrency()
     {
         Vector3 dir = (Vector3.up * 15f) + -(transform.position - Camera.main.transform.position);
-        CurrencyObject.Spawn(dir, transform.position + new Vector3(0, 1, 0));
+        CurrencyObject.Spawn(dir, transform.position + new Vector3(-1.5f, 1f, -1.5f));
     }
 }
