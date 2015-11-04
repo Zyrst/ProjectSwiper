@@ -4,12 +4,11 @@ using System.Collections;
 
 public class LevelGUI : Text {
 
-    string _string = "Level: ";
+    public string _string = "Level: ";
 
     protected override void Start()
     {
         base.Start();
-        _string = text;
     }
 	
 	// Update is called once per frame

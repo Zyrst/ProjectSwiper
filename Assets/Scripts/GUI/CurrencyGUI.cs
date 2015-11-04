@@ -9,7 +9,6 @@ public class CurrencyGUI : Text {
     protected override void Start()
     {
         base.Start();
-        _string = text;
     }
 	
 	// Update is called once per frame
