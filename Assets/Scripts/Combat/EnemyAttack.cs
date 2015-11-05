@@ -8,6 +8,11 @@ public class EnemyAttack : MonoBehaviour {
     [HideInInspector]
     public float _attackCounter = 0;
 
+    public float _attackAnimationDelay = 0;
+
+    // True för att undviak att de slår direkt när spelet börjar
+    private bool _hasAttacked = true;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -22,10 +27,19 @@ public class EnemyAttack : MonoBehaviour {
     {
         _attackCounter -= Time.deltaTime;
 
-        if (_attackCounter <= 0)
+        if (_attackCounter <= _attackAnimationDelay)
         {
-            ResetCooldown();
-            AttackPlayer();
+            if(!_hasAttacked)
+            {
+                _hasAttacked = true;
+                AttackPlayer();
+            }
+
+            if (_attackCounter <= 0)
+            {
+                _hasAttacked = false;
+                ResetCooldown();
+            }
         }
     }
 
