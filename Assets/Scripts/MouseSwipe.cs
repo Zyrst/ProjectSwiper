@@ -3,6 +3,9 @@ using System.Collections;
 
 public class MouseSwipe : MonoBehaviour {
 
+    public ParticleSystem _particleSystem;
+    ParticleSystem.Particle _lastParticleRef;
+
     public LineRenderer _lineRender;
     public int _count = 2;
 
@@ -12,6 +15,8 @@ public class MouseSwipe : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        _particleSystem = GetComponent<ParticleSystem>();
+
         _lineRender = GetComponent<LineRenderer>();
         transform.rotation = Camera.main.transform.rotation;
 
@@ -24,6 +29,8 @@ public class MouseSwipe : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        bool enableParticleEmission = false;
+
         if (MouseController.Instance.buttonDown)
         {
             if (!firstFrameElse)    // första frame efter att man tryck ned knappen igen
@@ -47,6 +54,26 @@ public class MouseSwipe : MonoBehaviour {
                 vertecies[i] = vertecies[i - 1];
                 _lineRender.SetPosition(i, vertecies[i]);
             }
+
+            if (_particleSystem)
+            {
+                Vector3 newPos = MouseController.Instance.worldPosition;
+
+                ParticleSystem.Particle[] particles = new ParticleSystem.Particle[_particleSystem.particleCount];
+                _particleSystem.GetParticles(particles);
+
+                if (particles.Length > 1)
+                {
+                    if (!ReferenceEquals(_lastParticleRef, particles[particles.Length - 1]))
+                    {
+                        particles[particles.Length - 1].position = newPos;
+                        _particleSystem.SetParticles(particles, particles.Length);
+                        _lastParticleRef = particles[particles.Length - 1];
+                    }
+                }
+            }
+
+            enableParticleEmission = true;
         }
         else
         {
@@ -60,6 +87,11 @@ public class MouseSwipe : MonoBehaviour {
                     _lineRender.SetPosition(i, vertecies[i]);
                 }
             }
+
+            enableParticleEmission = false;
         }
+
+        if (_particleSystem)
+            _particleSystem.enableEmission = enableParticleEmission;
 	}
 }
