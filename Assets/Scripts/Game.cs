@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameAnalyticsSDK;
 
 public class Game : MonoBehaviour {
 
@@ -91,7 +90,8 @@ public class Game : MonoBehaviour {
                 // trigger defeat screen
 
                 Player p = References.Instance._currentPlayer.GetComponent<Player>();
-                p.Heal(p._maxHealth);
+                //p.Heal(p._maxHealth);
+                p._health = p._maxHealth;
                 p._isDead = false;
 
                 References.Instance._combat.StartCombat();
