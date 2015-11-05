@@ -2,20 +2,18 @@
 using System.Collections;
 
 public class EnemyAttack : MonoBehaviour {
-    public float _attackCooldown = 1;
-    public float _attackDamage = 1;
+    public float _attackCooldown = 0;
+    public float _attackDamage = 0;
 
     [HideInInspector]
     public float _attackCounter = 0;
 
     public float _attackAnimationDelay = 0;
-
-    // True för att undviak att de slår direkt när spelet börjar
-    private bool _hasAttacked = true;
+    private bool _hasAttacked = false;
 
 	// Use this for initialization
 	void Start () {
-	
+        _attackCounter = Random.Range(_attackAnimationDelay, _attackCooldown);
 	}
 	
 	// Update is called once per frame
