@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameAnalyticsSDK;
 
 public class Game : MonoBehaviour {
 
@@ -26,13 +25,14 @@ public class Game : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        References.Instance._combat = GameObject.Instantiate(References.Instance._combat);
-        References.Instance._combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
-        References.Instance._combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
+        //References.Instance._combat = GameObject.Instantiate(References.Instance._combat);
+        //References.Instance._combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
+        //References.Instance._combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
 
         GameObject.Instantiate(References.Instance._player);
+        Instantiate(References.Instance._mainMenu);
 
-        Instantiate(References.Instance._HUD);
+        //Instantiate(References.Instance._HUD);
     }
 	
 	
@@ -90,7 +90,8 @@ public class Game : MonoBehaviour {
                 // trigger defeat screen
 
                 Player p = References.Instance._currentPlayer.GetComponent<Player>();
-                p.Heal(p._maxHealth);
+                //p.Heal(p._maxHealth);
+                p._health = p._maxHealth;
                 p._isDead = false;
 
                 References.Instance._combat.StartCombat();
@@ -110,8 +111,8 @@ public class Game : MonoBehaviour {
         {
             case CombatEvent.PlayerDied:
                 {
-                    Player p = References.Instance._currentPlayer.GetComponent<Player>();
-                    p.Heal(p._maxHealth);
+                    Player p = References.Instance._currentPlayer;
+                    p._health = p._maxHealth;
                     p._isDead = false;
                 }
                 break;
@@ -120,7 +121,7 @@ public class Game : MonoBehaviour {
                     Combat c = References.Instance._combat;
                     c.TriggerNewWave();
 
-                    Player p = References.Instance._currentPlayer.GetComponent<Player>();
+                    Player p = References.Instance._currentPlayer;
                     p.Heal(p._maxHealth);
                 }
                 break;
