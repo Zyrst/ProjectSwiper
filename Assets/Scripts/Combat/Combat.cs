@@ -22,6 +22,8 @@ public class Combat : MonoBehaviour {
 	void Start () {
         _waveCounter = 0;
         _triggerNewWaveCounter = 0;
+
+        References.Instance._currentPlayer.RestoreMaxHealth();
 	}
 
     public void StartCombat()
@@ -127,7 +129,7 @@ public class Combat : MonoBehaviour {
 
         Game.Instance.KillAllEnemies();
 
-        References.Instance._currentPlayer.Heal(References.Instance._currentPlayer._maxHealth);
+        References.Instance._currentPlayer.RestoreMaxHealth();
     }
 
     public void ChangeArena()

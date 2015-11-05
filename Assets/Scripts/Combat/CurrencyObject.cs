@@ -8,7 +8,7 @@ public class CurrencyObject : MonoBehaviour {
     public int _value = 1;
     public bool _collect = false;
     public Vector3 _target;
-    public float _speed = 10000f;
+    public float _speed = 1000000f;
 
     [HideInInspector]
     public float _timer = 0f;
@@ -48,7 +48,7 @@ public class CurrencyObject : MonoBehaviour {
         if(_collect)
         {
             //Make it fly to the target on the GUI
-            Vector3 calc = ((_target - transform.position) * _speed) * Time.deltaTime;
+            Vector3 calc = ((_target - transform.position) *_speed) * Time.deltaTime;
             transform.position += calc;
 
             if(Vector3.Distance(_target, transform.position) <= 3f)

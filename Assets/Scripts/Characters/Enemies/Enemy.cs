@@ -2,9 +2,17 @@
 using System.Collections;
 
 public class Enemy : Character {
+    public float _baseHealth = 100;
+    public float _healthConst = 0.1f;
+
 	// Use this for initialization
 	void Start () {
         InitializeGUI();
+
+        int level = Game.Instance._arenaLevel;
+        float newHealth = Mathf.Ceil(_baseHealth + (level * (level * _healthConst)));
+        _maxHealth = newHealth;
+        _health = _maxHealth;
     }
 	
 	// Update is called once per frame
