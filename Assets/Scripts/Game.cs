@@ -4,6 +4,7 @@ using System.Collections;
 public class Game : MonoBehaviour {
 
     public int _level = 1;
+    public int _arenaLevel = 1;
 
     public enum CombatEvent : int { PlayerDied = 0, ClearWave };
 
