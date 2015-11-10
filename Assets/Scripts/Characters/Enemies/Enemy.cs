@@ -3,8 +3,11 @@ using System.Collections;
 
 public class Enemy : Character {
 
-    public float _baseHealth = 100;
-    public float _healthConst = 0.1f;
+    public float _baseHealth = 75;
+    public float _healthConst = 0.8f;
+    public float _baseDamage = 3f;
+    public float _modifierDamage = 50;
+
 
     private GameObject _textParticle;
 	// Use this for initialization
@@ -12,18 +15,28 @@ public class Enemy : Character {
         InitializeGUI();
 
         int level = Game.Instance._arenaLevel;
-        float newHealth = Mathf.Ceil(_baseHealth + (level * (level * _healthConst)));
-        _maxHealth = newHealth;
-        _health = _maxHealth;
+        
+
+        float dmg = _baseDamage + level * (level / _modifierDamage);
+        this.GetComponent<EnemyAttack>()._attackDamage = Mathf.Ceil(dmg);
+        
 
         _textParticle = References.Instance._textParticle;
     }
 	
+    void OnAwake()
+    {
+        int level = Game.Instance._arenaLevel;
+        float newHealth = Mathf.Ceil(_baseHealth + (level * (level * _healthConst)));
+        this._maxHealth = newHealth;
+        this._health = _maxHealth;
+    }
 	// Update is called once per frame
 	void Update () {
         
     }
 
+  
     void InitializeGUI()
     {
         GameObject healthBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Healthbar")) as GameObject;
