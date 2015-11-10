@@ -6,7 +6,7 @@ public class Enemy : Character {
     public float _baseHealth = 100;
     public float _healthConst = 0.1f;
 
-    public GameObject _textParticle;
+    private GameObject _textParticle;
 	// Use this for initialization
 	void Start () {
         InitializeGUI();
@@ -15,6 +15,8 @@ public class Enemy : Character {
         float newHealth = Mathf.Ceil(_baseHealth + (level * (level * _healthConst)));
         _maxHealth = newHealth;
         _health = _maxHealth;
+
+        _textParticle = References.Instance._textParticle;
     }
 	
 	// Update is called once per frame
