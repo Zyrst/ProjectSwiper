@@ -107,19 +107,21 @@ public class Game : MonoBehaviour {
                 break;
             case CombatEvent.goToPrevPlanet:
                 _arenaLevel--;
+                References.Instance._combat.ChangePlanet();
                 break;
             case CombatEvent.goToNextPlanet:
                 _arenaLevel++;
+                References.Instance._combat.ChangePlanet();
                 break;
             case CombatEvent.UnlockNextPlanetButton:
                 {
-                    GameObject go = References.Instance._HUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
+                    GameObject go = References.Instance._currentHUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
                     go.GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "NextButton").interactable = true;
                 }
                 break;
             case CombatEvent.LockNextPlanetButton:
                 {
-                    GameObject go = References.Instance._HUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
+                    GameObject go = References.Instance._currentHUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
                     go.GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "NextButton").interactable = false;
                 }
                 break;
