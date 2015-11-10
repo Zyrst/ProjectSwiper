@@ -112,6 +112,7 @@ public class Combat : MonoBehaviour {
         if (_waveCounter == _minWaves)
         {
             Debug.Log("next planet button");
+            Game.Instance.HandleCombatEvent(Game.CombatEvent.UnlockNextPlanetButton);
             ChangePlanet();
 
         }

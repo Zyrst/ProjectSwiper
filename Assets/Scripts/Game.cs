@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Game : MonoBehaviour {
 
     public int _level = 1;
     public int _arenaLevel = 1;
 
-    public enum CombatEvent : int { PlayerDied = 0, ClearWave };
+    public enum CombatEvent : int { PlayerDied = 0, ClearWave, goToNextPlanet, goToPrevPlanet, UnlockNextPlanetButton, LockNextPlanetButton };
 
     public enum GameMode : int { Quest = 0, Farm, Tutorial };
     public GameMode _gameMode = GameMode.Farm;
@@ -101,6 +104,24 @@ public class Game : MonoBehaviour {
             case CombatEvent.ClearWave:
                 Combat c = References.Instance._combat;
                 c.TriggerNewWave();
+                break;
+            case CombatEvent.goToPrevPlanet:
+                _arenaLevel--;
+                break;
+            case CombatEvent.goToNextPlanet:
+                _arenaLevel++;
+                break;
+            case CombatEvent.UnlockNextPlanetButton:
+                {
+                    GameObject go = References.Instance._HUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
+                    go.GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "NextButton").interactable = true;
+                }
+                break;
+            case CombatEvent.LockNextPlanetButton:
+                {
+                    GameObject go = References.Instance._HUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
+                    go.GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "NextButton").interactable = false;
+                }
                 break;
             default:
                 break;
