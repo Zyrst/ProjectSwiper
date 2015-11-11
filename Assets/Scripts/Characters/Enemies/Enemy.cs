@@ -15,22 +15,26 @@ public class Enemy : Character {
         InitializeGUI();
 
         int level = Game.Instance._arenaLevel;
+        if(level > 1)
+        {
+            float newHealth = Mathf.Ceil(_baseHealth + (level * (level * _healthConst)));
+            this._maxHealth = newHealth;
+            this._health = _maxHealth;
+            float dmg = _baseDamage + level * (level / _modifierDamage);
+            this.GetComponent<EnemyAttack>()._attackDamage = Mathf.Ceil(dmg);
+        }
+        else
+        {
+            this._maxHealth = this._health = _baseHealth;
+            this.GetComponent<EnemyAttack>()._attackDamage = _baseDamage;
+        }
         
-
-        float dmg = _baseDamage + level * (level / _modifierDamage);
-        this.GetComponent<EnemyAttack>()._attackDamage = Mathf.Ceil(dmg);
         
 
         _textParticle = References.Instance._textParticle;
     }
 	
-    void OnAwake()
-    {
-        int level = Game.Instance._arenaLevel;
-        float newHealth = Mathf.Ceil(_baseHealth + (level * (level * _healthConst)));
-        this._maxHealth = newHealth;
-        this._health = _maxHealth;
-    }
+  
 	// Update is called once per frame
 	void Update () {
         
