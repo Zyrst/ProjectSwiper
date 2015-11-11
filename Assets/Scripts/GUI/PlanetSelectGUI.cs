@@ -15,12 +15,13 @@ public class PlanetSelectGUI : MonoBehaviour {
 
     public void goToNextPlanet()
     {
-        Game.Instance.HandleCombatEvent(Game.CombatEvent.goToNextPlanet);
         Game.Instance.HandleCombatEvent(Game.CombatEvent.LockNextPlanetButton);
+        Game.Instance.HandleCombatEvent(Game.CombatEvent.goToNextPlanet);
     }
 
     public void goToPrevPlanet()
     {
+        Game.Instance.HandleCombatEvent(Game.CombatEvent.LockPrevPlanetButton);
         Game.Instance.HandleCombatEvent(Game.CombatEvent.goToPrevPlanet);
     }
 }
