@@ -6,6 +6,8 @@ public class Enemy : Character {
     public float _baseHealth = 100;
     public float _healthConst = 0.1f;
 
+    bool _nextHitIsCrit = false;
+
     private GameObject _textParticle;
 	// Use this for initialization
 	void Start () {
@@ -35,6 +37,11 @@ public class Enemy : Character {
         cooldownBar.GetComponent<RectTransform>().localPosition = new Vector3(0, -1, 0);
     }
 
+    public void MakeNextHitCrit()
+    {
+        _nextHitIsCrit = true;
+    }
+
     public override void Damage(float damage_)
     {
         float oldPercent = _health / _maxHealth;
@@ -57,6 +64,13 @@ public class Enemy : Character {
         GameObject damageText = GameObject.Instantiate(_textParticle);
 
         damageText.GetComponent<TextParticleScript>().SetText(damage_.ToString());
+        
+        if (_nextHitIsCrit)
+        {
+            damageText.GetComponent<TextParticleScript>().SetColor(Color.red);
+            _nextHitIsCrit = false;
+        }
+
         damageText.transform.position = transform.position;
     }
 

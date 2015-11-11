@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Player : Character {
     public float _damage = 1;
+    public float _critMultiplier = 1.5f;
+    public int _critDenominator = 2;
 
 	// Use this for initialization
 	void Start () {
@@ -11,11 +13,20 @@ public class Player : Character {
 	
 	// Update is called once per frame
 	void Update () {
-        Character charHit = GetComponent<ClickAttack>().getNewHit();
+        Enemy charHit = (Enemy)GetComponent<ClickAttack>().getNewHit();
 	    if (charHit != null)
         {
             Sounds.OneShot(Sounds.Instance.combat.player.attack.swipe, charHit.transform.position);
-            charHit.Damage(_damage);
+
+            int chance = Random.Range(0, _critDenominator);
+            float damage = _damage;
+            if (chance == 0)
+            {
+                damage *= _critMultiplier;
+                charHit.MakeNextHitCrit();
+            }
+
+            charHit.Damage(damage);
         }
 	}
 

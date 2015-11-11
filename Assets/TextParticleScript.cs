@@ -12,6 +12,8 @@ public class TextParticleScript : MonoBehaviour {
 
     Vector3 _speed;
 
+    Color _color = Color.white;
+
 	// Use this for initialization
 	void Start () {
         transform.forward = -Camera.main.transform.forward;
@@ -23,7 +25,10 @@ public class TextParticleScript : MonoBehaviour {
         transform.forward = Camera.main.transform.forward;
 
         if (_textRef)
+        {
             _textRef.text = _string;
+            _textRef.color = _color;
+        }
 
         _lifeTime += Time.deltaTime;
         if (_lifeTime > _maxLifeTime)
@@ -41,5 +46,10 @@ public class TextParticleScript : MonoBehaviour {
     public void SetMaxLifeTime(float t)
     {
         _maxLifeTime = t;
+    }
+
+    public void SetColor(Color color_)
+    {
+        _color = color_;
     }
 }
