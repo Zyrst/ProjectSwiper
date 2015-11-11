@@ -1,12 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Game : MonoBehaviour {
 
+    /// <summary>
+    /// level: player level
+    /// arenaLevel: current enemy level
+    /// maxArenaLevel: the current highest unlocked level
+    /// </summary>
     public int _level = 1;
     public int _arenaLevel = 1;
+    // ökas i SpawnNewWave() i Combat
+    public int _maxArenaLevel = 1;
 
-    public enum CombatEvent : int { PlayerDied = 0, ClearWave };
+    public enum CombatEvent : int { PlayerDied = 0, ClearWave, goToNextPlanet, goToPrevPlanet, 
+        UnlockNextPlanetButton, LockNextPlanetButton, UnlockPrevPlanetButton, LockPrevPlanetButton };
 
     public enum GameMode : int { Quest = 0, Farm, Tutorial };
     public GameMode _gameMode = GameMode.Farm;
@@ -102,6 +113,38 @@ public class Game : MonoBehaviour {
                 Combat c = References.Instance._combat;
                 c.TriggerNewWave();
                 break;
+            case CombatEvent.goToPrevPlanet:
+                _arenaLevel--;
+                References.Instance._combat.ChangePlanet();
+                break;
+            case CombatEvent.goToNextPlanet:
+                _arenaLevel++;
+                References.Instance._combat.ChangePlanet();
+                break;
+            case CombatEvent.UnlockNextPlanetButton:
+                {
+                    GameObject go = References.Instance._currentHUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
+                    go.GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "NextButton").interactable = true;
+                }
+                break;
+            case CombatEvent.LockNextPlanetButton:
+                {
+                    GameObject go = References.Instance._currentHUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
+                    go.GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "NextButton").interactable = false;
+                }
+                break;
+            case CombatEvent.UnlockPrevPlanetButton:
+                {
+                    GameObject go = References.Instance._currentHUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
+                    go.GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "PrevButton").interactable = true;
+                }
+                break;
+            case CombatEvent.LockPrevPlanetButton:
+                {
+                    GameObject go = References.Instance._currentHUD.GetComponentInChildren<PlanetSelectGUI>().gameObject;
+                    go.GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "PrevButton").interactable = false;
+                }
+                break;
             default:
                 break;
         }
@@ -135,7 +178,7 @@ public class Game : MonoBehaviour {
     {
         for (int i = 0; i < References.Instance._combat._enemySpawners.Count; i++)
         {
-            References.Instance._combat._enemySpawners[i]._enemy._isDead = false;
+            References.Instance._combat._enemySpawners[i].KillEnemy();
         }
     }
 

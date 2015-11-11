@@ -12,6 +12,7 @@ public class References : MonoBehaviour {
     public Combat _combat;
     public Player _currentPlayer;
     public GameObject _HUD;
+    public HUDScript _currentHUD;
     public GameObject _mainMenu;
     public GameObject _textParticle;
 

@@ -50,6 +50,7 @@ public class CurrencyObject : MonoBehaviour {
             //Make it fly to the target on the GUI
             Vector3 calc = ((_target - transform.position) *_speed) * Time.deltaTime;
             transform.position += calc;
+            this.transform.Rotate(Random.Range(1, 9), Random.Range(1, 9), Random.Range(1, 9)); // Remove this for no rotation when moving towards position
 
             if(Vector3.Distance(_target, transform.position) <= 3f)
             {
@@ -69,7 +70,6 @@ public class CurrencyObject : MonoBehaviour {
         body.useGravity = false;
         body.velocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
-        //GetComponent<SphereCollider>().enabled = false;
         _collect = true;
     }
 

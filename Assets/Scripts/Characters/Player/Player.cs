@@ -2,9 +2,10 @@
 using System.Collections;
 
 public class Player : Character {
-    public float _damage = 1;
+    public float _damage = 5;
     public float _critMultiplier = 1.5f;
     public int _critDenominator = 2;
+
 
 	// Use this for initialization
 	void Start () {

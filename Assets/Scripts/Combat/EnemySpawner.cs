@@ -16,6 +16,12 @@ public class EnemySpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        CheckAndandleDead();
+
+	}
+
+    public void CheckAndandleDead()
+    {
         if (_enemy != null)
         {
             if (_enemy._isDead)
@@ -24,11 +30,17 @@ public class EnemySpawner : MonoBehaviour {
                 Destroy(_enemy.gameObject);
             }
         }
-        else
-        {
+    }
 
+    public void KillEnemy()
+    {
+        if (_enemy != null)
+        {
+            _enemy.Damage(_enemy._maxHealth);
+
+            CheckAndandleDead();
         }
-	}
+    }
 
     public void Spawn(Enemy enemy_)
     {

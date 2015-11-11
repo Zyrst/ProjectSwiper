@@ -98,8 +98,6 @@ public class Combat : MonoBehaviour {
 
     public void SpawnNewWave()
     {
-       // Debug.Log("skapar en ny vågjävel");
-
         Sounds.OneShot(Sounds.Instance.ui.newWave);
         //Debug.Log("spawning new enemies");
         foreach (var item in _enemySpawners)
@@ -111,9 +109,12 @@ public class Combat : MonoBehaviour {
 
         if (_waveCounter == _minWaves)
         {
+            if (Game.Instance._arenaLevel == Game.Instance._maxArenaLevel)
+            {
+                Game.Instance._maxArenaLevel++;
+            }
             Debug.Log("next planet button");
-            ChangePlanet();
-
+            Game.Instance.HandleCombatEvent(Game.CombatEvent.UnlockNextPlanetButton);
         }
     }
 
@@ -130,6 +131,11 @@ public class Combat : MonoBehaviour {
         Game.Instance.KillAllEnemies();
 
         References.Instance._currentPlayer.RestoreMaxHealth();
+
+        if (Game.Instance._arenaLevel > 1)
+            Game.Instance.HandleCombatEvent(Game.CombatEvent.UnlockPrevPlanetButton);
+        if (Game.Instance._arenaLevel < Game.Instance._maxArenaLevel)
+            Game.Instance.HandleCombatEvent(Game.CombatEvent.UnlockNextPlanetButton);
     }
 
     public void ChangeArena()
