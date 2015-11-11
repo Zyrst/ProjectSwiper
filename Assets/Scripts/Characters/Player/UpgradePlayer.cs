@@ -3,7 +3,6 @@ using System.Collections;
 
 public class UpgradePlayer : MonoBehaviour {
     public static float _modifider = 0.1f;
-    public static float _baseDmg = 5f;
     public static float _modifierDmg = 8;
 	// Use this for initialization
 	void Start () {
@@ -21,9 +20,11 @@ public class UpgradePlayer : MonoBehaviour {
         {
             Game.Instance._level += 1;
             int level = Game.Instance._level;
-            float dmg = _baseDmg + level * (level / _modifierDmg);
+            float baseDamage = References.Instance._currentPlayer.GetComponent<Player>()._baseDamage;
+            float dmg = baseDamage + level * (level / _modifierDmg);
             References.Instance._currentPlayer.GetComponent<Player>()._damage = Mathf.Ceil(dmg);
-            float maxHealth = Mathf.Ceil(100 + (level * (level * _modifider)));
+            float baseHP = References.Instance._currentPlayer.GetComponent<Player>()._baseHealth;
+            float maxHealth = Mathf.Ceil(baseHP + (level * (level * _modifider)));
             References.Instance._currentPlayer.GetComponent<Player>()._maxHealth = maxHealth + level;
             Game.Instance._gameCurrency -= 100;
             SaveManager.Save();

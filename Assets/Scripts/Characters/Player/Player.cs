@@ -5,7 +5,8 @@ public class Player : Character {
     public float _damage = 5;
     public float _critMultiplier = 1.5f;
     public int _critDenominator = 2;
-
+    public float _baseHealth = 100f;
+    public float _baseDamage = 5f;
 
 	// Use this for initialization
 	void Start () {
@@ -47,5 +48,12 @@ public class Player : Character {
 
         //Debug.Log("Spelaren avled tragiskt");
 
+    }
+	
+	 public void ResetStats()
+    {
+        this._maxHealth = this._baseHealth;
+        this._health = this._maxHealth;
+        this._damage = this._baseDamage;
     }
 }

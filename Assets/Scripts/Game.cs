@@ -68,6 +68,11 @@ public class Game : MonoBehaviour {
         {
             UpgradePlayer.Upgrade();
         }
+		 //Will reset stats but not save them
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            References.Instance._currentPlayer.ResetStats();
+        }
 	}
 
     void LateUpdate()
