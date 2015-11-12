@@ -57,11 +57,6 @@ public class Combat : MonoBehaviour {
             {
                 Game.Instance.HandleCombatEvent(Game.CombatEvent.ClearWave);
             }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1) && _waveCounter >= _minWaves)
-            {
-                ChangeArena();
-            }
         }
         else
         {
@@ -93,13 +88,12 @@ public class Combat : MonoBehaviour {
         }
         ResetCounter();
         SpawnNewWave();
-        _minWaves = Random.Range(6, 13);
+        _minWaves = 10;
     }
 
     public void SpawnNewWave()
     {
         Sounds.OneShot(Sounds.Instance.ui.newWave);
-        //Debug.Log("spawning new enemies");
         foreach (var item in _enemySpawners)
         {
             item.Spawn(_currentEnemies[Random.Range(0, _currentEnemies.Count)]);
@@ -120,11 +114,12 @@ public class Combat : MonoBehaviour {
 
     public void ChangePlanet()
     {
-        // ändra planet i References
-        // gör nån speciell skit om det är sista planeten i systemet
 
         Arena a = _arena.GetComponent<Arena>();
-        a.setTexture(Random.Range(0, a.textures.Length));
+        int ind = a._textureIndex;
+        // slumpa fram en ny textur
+        while (ind == a._textureIndex)
+            a.setTexture(Random.Range(0, a.textures.Length));
 
         _waveCounter = 0;
 

@@ -36,7 +36,8 @@ public class EnemySpawner : MonoBehaviour {
     {
         if (_enemy != null)
         {
-            _enemy.Damage(_enemy._maxHealth);
+            //_enemy.Damage(_enemy._maxHealth);
+            ((Character)_enemy).Die();
 
             CheckAndandleDead();
         }
