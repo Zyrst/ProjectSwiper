@@ -56,9 +56,17 @@ public static class SaveManager {
             Game.Instance._maxArenaLevel = _info._maxArenaLevel;
             if (References.Instance._currentPlayer != null)
             {
-                Player player = References.Instance._currentPlayer.GetComponent<Player>();
-                player._damage = _info._damage;
-                player._maxHealth = _info._maxHealth;
+                if(_info._level == 1)
+                {
+                    References.Instance._currentPlayer.GetComponent<Player>().ResetStats();
+                }
+                else
+                {
+                    Player player = References.Instance._currentPlayer.GetComponent<Player>();
+                    player._damage = _info._damage;
+                    player._maxHealth = _info._maxHealth;
+                }
+               
             }
             else
             { 
