@@ -12,6 +12,9 @@ public class Enemy : Character {
     bool _nextHitIsCrit = false;
 
     private GameObject _textParticle;
+
+    private Object _explosionPrefab;
+
 	// Use this for initialization
 	void Start () {
         InitializeGUI();
@@ -34,6 +37,8 @@ public class Enemy : Character {
         
 
         _textParticle = References.Instance._textParticle;
+
+        _explosionPrefab = Resources.Load("Prefabs/Effects/ExplosionPrefab");
     }
 	
   
@@ -97,6 +102,9 @@ public class Enemy : Character {
         base.Die();
 
         SpawnCurrency();
+
+        // Spawn explosion
+        ((GameObject)Instantiate(_explosionPrefab)).GetComponent<ExplosionScript>().setPosition(transform.position);
     }
 
     void SpawnCurrency()
