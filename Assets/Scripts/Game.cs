@@ -111,6 +111,7 @@ public class Game : MonoBehaviour {
                 p._health = p._maxHealth;
                 p._isDead = false;
 
+                KillAllEnemies();
                 References.Instance._combat.StartCombat();
 
                 break;
@@ -179,14 +180,6 @@ public class Game : MonoBehaviour {
         }
     }
 
-    public void KillAllEnemies()
-    {
-        for (int i = 0; i < References.Instance._combat._enemySpawners.Count; i++)
-        {
-            References.Instance._combat._enemySpawners[i].KillEnemy();
-        }
-    }
-
     private void HandleTutorialCombatEvent(CombatEvent ce_)
     {
         switch (ce_)
@@ -204,6 +197,20 @@ public class Game : MonoBehaviour {
     {
         Debug.Log("Exiting game");
        // SaveManager.Save();
+    }
+
+    public void KillAllEnemies()
+    {
+        try
+        {
+            for (int i = 0; i < References.Instance._combat._enemySpawners.Count; i++)
+            {
+                References.Instance._combat._enemySpawners[i].KillEnemy();
+            }
+        }
+        catch (System.NullReferenceException)
+        {
+        }
     }
     
     void OnApplicationPause(bool pauseStatus)

@@ -79,7 +79,7 @@ public class Combat : MonoBehaviour {
         _arena = GameObject.Instantiate(arena_);
         _arena.transform.position = Vector3.zero;
         Arena a = _arena.GetComponent<Arena>();
-        a.setTexture(Random.Range(0, a.textures.Length));
+        a.setTexture(0);
 
         _enemySpawners.Clear();
         foreach (var item in _arena.GetComponentsInChildren<EnemySpawner>())
@@ -89,6 +89,13 @@ public class Combat : MonoBehaviour {
         ResetCounter();
         SpawnNewWave();
         _minWaves = 10;
+
+
+        if (Game.Instance._arenaLevel > 1)
+            Game.Instance.HandleCombatEvent(Game.CombatEvent.UnlockPrevPlanetButton);
+        if (Game.Instance._arenaLevel < Game.Instance._maxArenaLevel)
+            Game.Instance.HandleCombatEvent(Game.CombatEvent.UnlockNextPlanetButton);
+
     }
 
     public void SpawnNewWave()
@@ -99,7 +106,6 @@ public class Combat : MonoBehaviour {
             item.Spawn(_currentEnemies[Random.Range(0, _currentEnemies.Count)]);
         }
         _waveCounter++;
-        Debug.Log("Wave: " + _waveCounter);
 
         if (_waveCounter == _minWaves)
         {
@@ -107,17 +113,15 @@ public class Combat : MonoBehaviour {
             {
                 Game.Instance._maxArenaLevel++;
             }
-            Debug.Log("next planet button");
             Game.Instance.HandleCombatEvent(Game.CombatEvent.UnlockNextPlanetButton);
         }
     }
 
     public void ChangePlanet()
     {
-
+     // slumpa fram en ny textur
         Arena a = _arena.GetComponent<Arena>();
         int ind = a._textureIndex;
-        // slumpa fram en ny textur
         while (ind == a._textureIndex)
             a.setTexture(Random.Range(0, a.textures.Length));
 

@@ -27,9 +27,9 @@ public class MainMenu : MonoBehaviour {
     {
         References.Instance._combat = GameObject.Instantiate(References.Instance._combat);
         References.Instance._combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
-        References.Instance._combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
 
         References.Instance._currentHUD = Instantiate(References.Instance._HUD).GetComponent<HUDScript>();
+        References.Instance._combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
 
         GameObject.Destroy(this.gameObject);
     }
