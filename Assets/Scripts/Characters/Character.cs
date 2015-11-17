@@ -62,4 +62,9 @@ public class Character : MonoBehaviour {
     {
         _isDead = true;
     }
+
+    public virtual void Despawn()
+    {
+        _isDead = true;
+    }
 }

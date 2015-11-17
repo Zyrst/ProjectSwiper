@@ -107,6 +107,11 @@ public class Enemy : Character {
         ((GameObject)Instantiate(_explosionPrefab)).GetComponent<ExplosionScript>().setPosition(transform.position);
     }
 
+    public override void Despawn()
+    {
+        base.Despawn();
+    }
+
     void SpawnCurrency()
     {
         Vector3 dir = (Vector3.up * 15f) + -(transform.position - Camera.main.transform.position);
