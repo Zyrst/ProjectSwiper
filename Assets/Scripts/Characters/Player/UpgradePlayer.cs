@@ -64,10 +64,12 @@ public class UpgradePlayer : MonoBehaviour {
 
     public static void UpgradeCrit()
     {
-        if (Game.Instance._gameCurrency >= 100 && References.Instance._currentPlayer._critLevel < 50)
+        if (Game.Instance._gameCurrency >= 100 && References.Instance._currentPlayer._critLevel <= 50)
         {
             References.Instance._currentPlayer._critLevel += 1;
-            //TODO : Upgrade crit
+            References.Instance._currentPlayer._critDenominator = 100 - References.Instance._currentPlayer._critLevel;
+            Game.Instance._gameCurrency -= 100;
+            SaveManager.Save();
         }
         
     }
