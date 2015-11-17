@@ -8,6 +8,10 @@ public class Player : Character {
     public float _baseHealth = 100f;
     public float _baseDamage = 5f;
 
+    public int _healthLevel;
+    public int _damageLevel;
+    public int _critLevel;
+
 	// Use this for initialization
 	void Start () {
         References.Instance._currentPlayer = gameObject.GetComponent<Player>();
@@ -55,5 +59,8 @@ public class Player : Character {
         this._maxHealth = this._baseHealth;
         this._health = this._maxHealth;
         this._damage = this._baseDamage;
+        this._healthLevel = 1;
+        this._damageLevel = 1;
+        this._critLevel = 1;
     }
 }

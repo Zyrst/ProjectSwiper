@@ -14,6 +14,9 @@ public static class SaveManager {
         public int _arenaLevel;
         public int _maxArenaLevel;
         public int _gameCurrency;
+        public int _healthLevel;
+        public int _damageLevel;
+        public int _critLevel;
         public float _damage;
         public float _maxHealth;
     }
@@ -26,17 +29,21 @@ public static class SaveManager {
         _info._gameCurrency = Game.Instance._gameCurrency;
         _info._arenaLevel = Game.Instance._arenaLevel;
         _info._maxArenaLevel = Game.Instance._maxArenaLevel;
+        
 
-        Player player = References.Instance._currentPlayer.GetComponent<Player>();
+        Player player = References.Instance._currentPlayer;
         _info._damage = player._damage;
         _info._maxHealth = player._maxHealth;
+        _info._healthLevel = player._healthLevel;
+        _info._damageLevel = player._damageLevel;
+        _info._critLevel = player._critLevel;
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGame.dfq");
         bf.Serialize(file, _info);
         file.Close();
 
-        Debug.Log("Save damage: " + _info._damage + "Level " + _info._level);
+       // Debug.Log("Save damage: " + _info._damage + "Level " + _info._level);
     }
 
     public static void Load()
@@ -65,6 +72,9 @@ public static class SaveManager {
                     Player player = References.Instance._currentPlayer.GetComponent<Player>();
                     player._damage = _info._damage;
                     player._maxHealth = _info._maxHealth;
+                    player._healthLevel = _info._healthLevel;
+                    player._damageLevel = _info._damageLevel;
+                    player._critLevel = _info._critLevel;
                 }
                
             }
