@@ -8,9 +8,9 @@ public class Player : Character {
     public float _baseHealth = 100f;
     public float _baseDamage = 5f;
 
-    public int _healthLevel;
-    public int _damageLevel;
-    public int _critLevel;
+    public int _healthLevel = 1;
+    public int _damageLevel = 1;
+    public int _critLevel = 1;
 
 	// Use this for initialization
 	void Start () {
