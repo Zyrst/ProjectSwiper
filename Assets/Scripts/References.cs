@@ -10,6 +10,7 @@ public class References : MonoBehaviour {
     public GameObject _gameCurrency;
     public GameObject _player;
     public Combat _combat;
+    public Combat _currentCombat;
     public Player _currentPlayer;
     public GameObject _HUD;
     public HUDScript _currentHUD;

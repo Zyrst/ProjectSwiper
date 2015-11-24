@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         SaveManager.Load();
+
 	}
 	
 	// Update is called once per frame
@@ -25,12 +26,12 @@ public class MainMenu : MonoBehaviour {
 
     public void Play()
     {
-        References.Instance._combat = GameObject.Instantiate(References.Instance._combat);
-        References.Instance._combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
+        References.Instance._currentCombat = GameObject.Instantiate(References.Instance._combat);
+        References.Instance._currentCombat.AddEnemy(References.Instance._enemies[0]);
 
         References.Instance._currentHUD = Instantiate(References.Instance._HUD).GetComponent<HUDScript>();
-        References.Instance._combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
-
+        References.Instance._currentCombat.StartArena(References.Instance._combatArenas[0]);
+        References.Instance._currentPlayer.GetComponent<ClickAttack>().enabled = true;
         GameObject.Destroy(this.gameObject);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Combat : MonoBehaviour {
 
@@ -24,6 +26,7 @@ public class Combat : MonoBehaviour {
         _triggerNewWaveCounter = 0;
 
         References.Instance._currentPlayer.RestoreMaxHealth();
+        GameObject.Find("HUD(Clone)").GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "Menu").onClick.AddListener(() => BackToMenu());
 	}
 
     public void StartCombat()
@@ -31,6 +34,7 @@ public class Combat : MonoBehaviour {
         ResetCounter();
         Random.seed = References.Instance._planet._id;
         TriggerNewWave();
+
     }
 
     public void TriggerNewWave()
@@ -123,7 +127,7 @@ public class Combat : MonoBehaviour {
         Arena a = _arena.GetComponent<Arena>();
         int ind = a._textureIndex;
         while (ind == a._textureIndex)
-            a.setTexture(Random.Range(0, a.textures.Length));
+            a.setTexture(Game.Instance._arenaLevel % a.textures.Length);
 
         _waveCounter = 0;
 
@@ -150,6 +154,20 @@ public class Combat : MonoBehaviour {
 
     public void PlayerDied()
     {
+
+    }
+
+    public void BackToMenu()
+    {
+        SaveManager.Save();
+        GameObject.Instantiate(References.Instance._mainMenu);
+
+       // _enemySpawners.Clear();
+
+        GameObject.Destroy(GameObject.Find("HUD(Clone)"));
+        GameObject.Destroy(_arena);
+        References.Instance._currentPlayer.GetComponent<ClickAttack>().enabled = false;
+        GameObject.Destroy(this.gameObject);
 
     }
 }

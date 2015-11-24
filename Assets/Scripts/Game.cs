@@ -37,14 +37,9 @@ public class Game : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        //References.Instance._combat = GameObject.Instantiate(References.Instance._combat);
-        //References.Instance._combat.GetComponent<Combat>().AddEnemy(References.Instance._enemies[0]);
-        //References.Instance._combat.GetComponent<Combat>().StartArena(References.Instance._combatArenas[0]);
-
-        GameObject.Instantiate(References.Instance._player);
+        GameObject.Instantiate(References.Instance._player).GetComponent<Player>();
         Instantiate(References.Instance._mainMenu);
 
-        //Instantiate(References.Instance._HUD);
     }
 	
 	

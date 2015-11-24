@@ -21,9 +21,9 @@ public class MouseCuboid : MonoBehaviour
     public MouseCuboid()
     {
     }
-
 	// Use this for initialization
 	void Start () {
+       
 	}
 	
 	// Update is called once per frame

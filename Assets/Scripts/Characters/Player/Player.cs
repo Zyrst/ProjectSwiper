@@ -15,6 +15,7 @@ public class Player : Character {
 	// Use this for initialization
 	void Start () {
         References.Instance._currentPlayer = gameObject.GetComponent<Player>();
+        gameObject.GetComponent<ClickAttack>().enabled = false;
 	}
 	
 	// Update is called once per frame
