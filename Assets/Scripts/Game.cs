@@ -39,7 +39,6 @@ public class Game : MonoBehaviour {
     {
         GameObject.Instantiate(References.Instance._player).GetComponent<Player>();
         Instantiate(References.Instance._mainMenu);
-
     }
 	
 	
@@ -111,7 +110,7 @@ public class Game : MonoBehaviour {
 
                 break;
             case CombatEvent.ClearWave:
-                Combat c = References.Instance._combat;
+                Combat c = References.Instance._currentCombat;
                 c.TriggerNewWave();
                 break;
             case CombatEvent.goToPrevPlanet:
@@ -120,7 +119,7 @@ public class Game : MonoBehaviour {
                 break;
             case CombatEvent.goToNextPlanet:
                 _arenaLevel++;
-                References.Instance._combat.ChangePlanet();
+                References.Instance._currentCombat.ChangePlanet();
                 break;
             case CombatEvent.UnlockNextPlanetButton:
                 {
