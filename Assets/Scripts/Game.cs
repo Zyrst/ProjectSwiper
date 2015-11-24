@@ -22,7 +22,7 @@ public class Game : MonoBehaviour {
     public enum GameMode : int { Quest = 0, Farm, Tutorial };
     public GameMode _gameMode = GameMode.Farm;
 
-    public int _gameCurrency = 1;
+    public long _gameCurrency = 1;
 
     private static Game _instance = null;
     public static Game Instance

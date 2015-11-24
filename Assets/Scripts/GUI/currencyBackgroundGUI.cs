@@ -16,6 +16,6 @@ public class currencyBackgroundGUI : MonoBehaviour {
     }
 	
 	void Update () {
-        _rect.sizeDelta = new Vector2(Mathf.Max(_minWidth, _childGUIRect.rect.width + 50), _height);
+        _rect.sizeDelta = new Vector2(Mathf.Max(_minWidth, _childGUIRect.rect.width + 120), _height);
     }
 }

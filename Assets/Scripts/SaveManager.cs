@@ -13,7 +13,7 @@ public static class SaveManager {
         public int _level;
         public int _arenaLevel;
         public int _maxArenaLevel;
-        public int _gameCurrency;
+        public long _gameCurrency;
         public int _healthLevel;
         public int _damageLevel;
         public int _critLevel;
