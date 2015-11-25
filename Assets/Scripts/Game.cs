@@ -106,7 +106,7 @@ public class Game : MonoBehaviour {
                 p._isDead = false;
 
                 KillAllEnemies();
-                References.Instance._combat.StartCombat();
+                References.Instance._currentCombat.StartCombat();
 
                 break;
             case CombatEvent.ClearWave:
@@ -115,7 +115,7 @@ public class Game : MonoBehaviour {
                 break;
             case CombatEvent.goToPrevPlanet:
                 _arenaLevel--;
-                References.Instance._combat.ChangePlanet();
+                References.Instance._currentCombat.ChangePlanet();
                 break;
             case CombatEvent.goToNextPlanet:
                 _arenaLevel++;
