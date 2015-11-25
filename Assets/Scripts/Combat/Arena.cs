@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 
 public class Arena : MonoBehaviour {
 
     public Texture[] textures;
-    public Renderer renderer;
+    public Renderer _renderer{
+        get {
+            return GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Ground").GetComponentInChildren<Renderer>();
+        }
+    }
     public int _textureIndex;
 
     /// <summary>
@@ -23,7 +28,7 @@ public class Arena : MonoBehaviour {
     /// </summary>
     public void setTexture(Texture tex_)
     {
-        renderer.material.SetTexture(0, tex_);
+        _renderer.material.SetTexture(0, tex_);
     }
 
 	// Use this for initialization

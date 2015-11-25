@@ -6,7 +6,7 @@ using System.Linq;
 
 public class Combat : MonoBehaviour {
 
-    public GameObject _arena;
+    public Arena _arena;
     public List<EnemySpawner> _enemySpawners;
     public List<Enemy> _currentEnemies = new List<Enemy>();
     public int _waveCounter;
@@ -80,10 +80,9 @@ public class Combat : MonoBehaviour {
 
     public void StartArena(GameObject arena_)
     {
-        _arena = GameObject.Instantiate(arena_);
+        _arena = GameObject.Instantiate(arena_).GetComponent<Arena>();
         _arena.transform.position = Vector3.zero;
-        Arena a = _arena.GetComponent<Arena>();
-        a.setTexture(0);
+        _arena.setTexture(0);
 
         _enemySpawners.Clear();
         foreach (var item in _arena.GetComponentsInChildren<EnemySpawner>())
@@ -124,10 +123,9 @@ public class Combat : MonoBehaviour {
     public void ChangePlanet()
     {
      // slumpa fram en ny textur
-        Arena a = _arena.GetComponent<Arena>();
-        int ind = a._textureIndex;
-        while (ind == a._textureIndex)
-            a.setTexture(Game.Instance._arenaLevel % a.textures.Length);
+        int ind = _arena._textureIndex;
+        while (ind == _arena._textureIndex)
+            _arena.setTexture(Game.Instance._arenaLevel % _arena.textures.Length);
 
         _waveCounter = 0;
 
