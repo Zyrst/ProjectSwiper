@@ -11,9 +11,14 @@ public class EnemyAttack : MonoBehaviour {
     public float _attackAnimationDelay = 0;
     private bool _hasAttacked = false;
 
+    public bool _stunned = false;
+    public float _stunTime = 3f;
+    public float _stunTimer = 0f;
+
 	// Use this for initialization
 	void Start () {
         _attackCounter = Random.Range(_attackAnimationDelay, _attackCooldown);
+        _stunned = false;
 	}
 	
 	// Update is called once per frame
@@ -23,20 +28,34 @@ public class EnemyAttack : MonoBehaviour {
 
     void UpdateAttackCooldown()
     {
-        _attackCounter -= Time.deltaTime;
-
-        if (_attackCounter <= _attackAnimationDelay)
+        if (!_stunned)
         {
-            if(!_hasAttacked)
-            {
-                _hasAttacked = true;
-                AttackPlayer();
-            }
 
-            if (_attackCounter <= 0)
+
+            _attackCounter -= Time.deltaTime;
+
+            if (_attackCounter <= _attackAnimationDelay)
             {
-                _hasAttacked = false;
-                ResetCooldown();
+                if (!_hasAttacked)
+                {
+                    _hasAttacked = true;
+                    AttackPlayer();
+                }
+
+                if (_attackCounter <= 0)
+                {
+                    _hasAttacked = false;
+                    ResetCooldown();
+                }
+            }
+        }
+        else if (_stunned)
+        {
+            _stunTimer += Time.deltaTime;
+            if (_stunTimer >= _stunTime)
+            {
+                _stunned = false;
+                _stunTimer = 0f;
             }
         }
     }
