@@ -158,14 +158,15 @@ public class Combat : MonoBehaviour {
     public void BackToMenu()
     {
         SaveManager.Save();
-        GameObject.Instantiate(References.Instance._mainMenu);
 
-       // _enemySpawners.Clear();
-
+        Game.Instance.KillAllEnemies();
         GameObject.Destroy(GameObject.Find("HUD(Clone)"));
         GameObject.Destroy(_arena);
+        Destroy(GameObject.Find(_arena.name));
         References.Instance._currentPlayer.GetComponent<ClickAttack>().enabled = false;
+        GameObject.Instantiate(References.Instance._mainMenu);
         GameObject.Destroy(this.gameObject);
+
 
     }
 }
