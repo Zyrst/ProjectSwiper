@@ -5,7 +5,8 @@ using System.Collections;
 public class HealSpell : Spells {
 
 	// Use this for initialization
-	void Start () {
+	new void Start () {
+        base.Start();
         _cooldownTime = 5f;
 	}
 	
@@ -19,18 +20,19 @@ public class HealSpell : Spells {
                 _cooldown = false;
                 Button b = GetComponent<Button>();
                 b.interactable = true;
-                b.targetGraphic.color = new Color(255f, 255f, 255f);
+                //b.targetGraphic.color = new Color(255f, 255f, 255f);
                 _timer = 0f;
             }
         }
-	}
+        base.updateMaterial();
+    }
 
     public override void DoHeal()
     {
         _cooldown = true;
         Button b = GetComponent<Button>();
         b.interactable = false;
-        b.targetGraphic.color *= 0.5f;
+        //b.targetGraphic.color *= 0.5f;
         References.Instance._currentPlayer.RestoreMaxHealth();
     }
 }

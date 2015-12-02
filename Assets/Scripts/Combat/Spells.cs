@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Spells : MonoBehaviour {
+
+    protected Material _material;
 
     private float _damage;
     private float _heal;
@@ -33,9 +36,11 @@ public class Spells : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {
-	
-	}
+	protected void Start () {
+        _material = Instantiate(transform.GetComponent<Image>().material);
+        _material.SetFloat("timer", 1f);
+        transform.GetComponent<Image>().material = _material;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -47,4 +52,12 @@ public class Spells : MonoBehaviour {
 
     public virtual void DoHeal()
     { }
+
+    protected void updateMaterial()
+    {
+        if (_cooldown)
+            _material.SetFloat("timer", _timer / _cooldownTime);
+        else
+            _material.SetFloat("timer", 1);
+    }
 }
