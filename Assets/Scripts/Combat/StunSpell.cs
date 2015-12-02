@@ -3,11 +3,12 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class StunSpell : Spells {
-
+    private GameCamera _camera;
 	// Use this for initialization
 	new void Start () {
         base.Start();
         _cooldownTime = 5f;
+        _camera = GameObject.Find("Main Camera").GetComponent<GameCamera>();
 	}
 	
 	// Update is called once per frame
@@ -40,5 +41,8 @@ public class StunSpell : Spells {
                 es._enemy.GetComponent<EnemyAttack>()._stunned = true;
             }
         }
+
+        _camera._shakeDist = 0.2f;
+        _camera.Shake();
     }
 }

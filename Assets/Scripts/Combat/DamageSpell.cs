@@ -3,12 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class DamageSpell : Spells {
-    
+
+    private GameCamera _camera;
+
 	// Use this for initialization
 	new void Start () {
         base.Start();
         _cooldownTime = 10f;
-    }
+        _camera = GameObject.Find("Main Camera").GetComponent<GameCamera>();
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -35,7 +38,13 @@ public class DamageSpell : Spells {
         //b.targetGraphic.color *= 0.5f;
         foreach (EnemySpawner es in References.Instance._currentCombat._enemySpawners)
         {
-            es._enemy.Damage(es._enemy._maxHealth * 0.75f);
+            if(es._enemyIsAlive)
+            {
+                es._enemy.Damage(es._enemy._maxHealth * 0.75f);
+            }
         }
+
+        _camera._shakeDist = 0.5f;
+        _camera.Shake();
     }
 }

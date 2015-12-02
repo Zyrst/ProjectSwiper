@@ -104,11 +104,17 @@ public class Combat : MonoBehaviour {
     public void SpawnNewWave()
     {
         Sounds.OneShot(Sounds.Instance.ui.newWave);
+       
         foreach (var item in _enemySpawners)
         {
             item.Spawn(_currentEnemies[Random.Range(0, _currentEnemies.Count)]);
         }
         _waveCounter++;
+
+        if (_waveCounter % 3 == 0)
+        {
+            References.Instance._currentPlayer.Heal(References.Instance._currentPlayer._maxHealth / 2);
+        }
 
         if (_waveCounter == _minWaves)
         {
@@ -158,14 +164,15 @@ public class Combat : MonoBehaviour {
     public void BackToMenu()
     {
         SaveManager.Save();
-        GameObject.Instantiate(References.Instance._mainMenu);
 
-       // _enemySpawners.Clear();
-
+        Game.Instance.KillAllEnemies();
         GameObject.Destroy(GameObject.Find("HUD(Clone)"));
         GameObject.Destroy(_arena);
+        Destroy(GameObject.Find(_arena.name));
         References.Instance._currentPlayer.GetComponent<ClickAttack>().enabled = false;
+        GameObject.Instantiate(References.Instance._mainMenu);
         GameObject.Destroy(this.gameObject);
+
 
     }
 }

@@ -58,10 +58,6 @@ public class Game : MonoBehaviour {
         {
             _gameCurrency += 50;
         }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            UpgradePlayer.Upgrade();
-        }
 		 //Will reset stats but not save them
         if(Input.GetKeyDown(KeyCode.R))
         {
@@ -190,7 +186,7 @@ public class Game : MonoBehaviour {
     void OnApplicationExit()
     {
         Debug.Log("Exiting game");
-       // SaveManager.Save();
+        SaveManager.Save();
     }
 
     public void KillAllEnemies()

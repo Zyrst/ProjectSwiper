@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
 public class MainMenu : MonoBehaviour {
     public Text _currency;
@@ -14,7 +15,7 @@ public class MainMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         SaveManager.Load();
-
+       
 	}
 	
 	// Update is called once per frame
@@ -33,5 +34,11 @@ public class MainMenu : MonoBehaviour {
         References.Instance._currentCombat.StartArena(References.Instance._combatArenas[0]);
         References.Instance._currentPlayer.GetComponent<ClickAttack>().enabled = true;
         GameObject.Destroy(this.gameObject);
+    }
+
+    public void Exit()
+    {
+        SaveManager.Save();
+        Application.Quit();
     }
 }
