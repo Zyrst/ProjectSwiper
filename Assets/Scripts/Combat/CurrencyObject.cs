@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System.Net;
 
 public class CurrencyObject : MonoBehaviour {
 
@@ -83,4 +84,5 @@ public class CurrencyObject : MonoBehaviour {
         go.GetComponent<Rigidbody>().AddForce(force_);
         // HACK: Suck ₫ for a ₫ 
     }
+   
 }

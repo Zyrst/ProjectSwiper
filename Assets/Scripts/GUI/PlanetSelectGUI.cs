@@ -14,6 +14,10 @@ public class PlanetSelectGUI : MonoBehaviour {
         {
             GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "PastLevel").text = (level - 1).ToString();
         }
+        else
+        {
+            GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "PastLevel").text = "";
+        }
 	}
 	
 	// Update is called once per frame
@@ -32,6 +36,10 @@ public class PlanetSelectGUI : MonoBehaviour {
         {
             GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "PastLevel").text = (level - 1).ToString();
         }
+        else
+        {
+            GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "PastLevel").text = "";
+        }
     }
 
     public void goToPrevPlanet()
@@ -40,10 +48,14 @@ public class PlanetSelectGUI : MonoBehaviour {
         Game.Instance.HandleCombatEvent(Game.CombatEvent.goToPrevPlanet);
         int level = Game.Instance._arenaLevel;
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "CurrentLevel").text = level.ToString();
-        GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "NextLevel").text = level.ToString();
+        GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "NextLevel").text = (level + 1).ToString();
         if(level != 1)
         {
             GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "PastLevel").text = (level - 1).ToString();
+        }
+        else
+        {
+            GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "PastLevel").text = "";
         }
     }
 }

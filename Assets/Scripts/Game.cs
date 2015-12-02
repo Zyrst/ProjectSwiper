@@ -193,9 +193,9 @@ public class Game : MonoBehaviour {
     {
         try
         {
-            for (int i = 0; i < References.Instance._combat._enemySpawners.Count; i++)
+            for (int i = 0; i < References.Instance._currentCombat._enemySpawners.Count; i++)
             {
-                References.Instance._combat._enemySpawners[i].KillEnemy();
+                References.Instance._currentCombat._enemySpawners[i].KillEnemy();
             }
         }
         catch (System.NullReferenceException)

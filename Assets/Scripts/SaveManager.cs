@@ -84,5 +84,9 @@ public static class SaveManager {
             }
 
         }
+        else
+        {
+            References.Instance._currentPlayer.GetComponent<Player>().ResetStats();
+        }
     }
 }
