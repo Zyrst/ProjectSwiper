@@ -5,6 +5,7 @@ using System.Collections;
 public class Spells : MonoBehaviour {
 
     protected Material _material;
+    float _blingTimer = 0;
 
     private float _damage;
     private float _heal;
@@ -56,8 +57,19 @@ public class Spells : MonoBehaviour {
     protected void updateMaterial()
     {
         if (_cooldown)
+        {
+            _blingTimer = 0;
             _material.SetFloat("timer", _timer / _cooldownTime);
+            _material.SetFloat("blingTimer", _blingTimer);
+        }
         else
+        {
             _material.SetFloat("timer", 1);
+            if (_blingTimer < 1)
+            {
+                _blingTimer += Time.deltaTime;
+                _material.SetFloat("blingTimer", _blingTimer);
+            }
+        }
     }
 }
