@@ -33,6 +33,7 @@ public class MainMenu : MonoBehaviour {
         References.Instance._currentHUD = Instantiate(References.Instance._HUD).GetComponent<HUDScript>();
         References.Instance._currentCombat.StartArena(References.Instance._combatArenas[0]);
         References.Instance._currentPlayer.GetComponent<ClickAttack>().enabled = true;
+        Debug.Log("Current level: " + Game.Instance._arenaLevel);
         GameObject.Destroy(this.gameObject);
     }
 

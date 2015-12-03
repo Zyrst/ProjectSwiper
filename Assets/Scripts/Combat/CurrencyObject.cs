@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
-using System.Net;
 
 public class CurrencyObject : MonoBehaviour {
-
     public float _lifeTime = 5f;
     public int _value = 1;
     public bool _collect = false;
@@ -84,5 +82,4 @@ public class CurrencyObject : MonoBehaviour {
         go.GetComponent<Rigidbody>().AddForce(force_);
         // HACK: Suck ₫ for a ₫ 
     }
-   
 }

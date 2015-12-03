@@ -42,7 +42,7 @@ public static class SaveManager {
         FileStream file = File.Create(Application.persistentDataPath + "/savedGame.dfq");
         bf.Serialize(file, _info);
         file.Close();
-
+        GameObject.Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Saved Popup"));
        // Debug.Log("Save damage: " + _info._damage + "Level " + _info._level);
     }
 
@@ -63,23 +63,15 @@ public static class SaveManager {
             Game.Instance._maxArenaLevel = _info._maxArenaLevel;
             if (References.Instance._currentPlayer != null)
             {
-                if(_info._level == 1)
-                {
-                    References.Instance._currentPlayer.GetComponent<Player>().ResetStats();
-                }
-                else
-                {
-                    Player player = References.Instance._currentPlayer.GetComponent<Player>();
-                    player._damage = _info._damage;
-                    player._maxHealth = _info._maxHealth;
-                    player._healthLevel = _info._healthLevel;
-                    player._damageLevel = _info._damageLevel;
-                    player._critLevel = _info._critLevel;
-                }
-               
+                Player player = References.Instance._currentPlayer;
+                player._damage = _info._damage;
+                player._maxHealth = _info._maxHealth;
+                player._healthLevel = _info._healthLevel;
+                player._damageLevel = _info._damageLevel;
+                player._critLevel = _info._critLevel;
             }
             else
-            { 
+            {
                 Debug.LogError("No current player");
             }
 
