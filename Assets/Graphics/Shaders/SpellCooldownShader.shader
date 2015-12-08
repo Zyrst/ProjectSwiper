@@ -55,7 +55,7 @@
 				fixed4 col = tex2D(_MainTex, uv);
 				fixed4 outCol = col * i.color;
 
-				// Grey scale
+
 				//float avg = (outCol.r + outCol.g + outCol.b) / 3.0;
 				//avg -= 0.2;
 				float avg = dot(outCol.rgb, float3(0.2125, 0.7154, 0.0721));
@@ -73,7 +73,7 @@
 
 				float btt = blingTimer * 2;
 				float fxx = smoothstep(0, 0.5, btt) - smoothstep(0.5, 1, btt);
-				gradLerp.rgb += lerp(float3(0, 0, 0), float3(0.05, 0.05, 0.05), fxx);
+				gradLerp.rgb += lerp(float3(0, 0, 0), float3(0.1, 0.1, 0.1), fxx);
 
 				return gradLerp;
 			}
