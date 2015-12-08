@@ -12,14 +12,20 @@ public class MainMenu : MonoBehaviour {
     public string _currencyTxt = "Currency: ";
     public string _healthTxt = "Health: ";
 
+    public Button _healthUpgradeButton;
+    public Button _damageUpgradeButton;
+    public Button _critUpgradeButton;
+
+
 	// Use this for initialization
 	void Start () {
         SaveManager.Load();
-       
-	}
+        checkButtonEnableStatus();
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        checkButtonEnableStatus();
         _currency.text = _currencyTxt + Game.Instance._gameCurrency;
         _damage.text = _damageTxt + References.Instance._currentPlayer._damage;
         _health.text = _healthTxt + References.Instance._currentPlayer._maxHealth;
@@ -41,5 +47,13 @@ public class MainMenu : MonoBehaviour {
     {
         SaveManager.Save();
         Application.Quit();
+    }
+
+    private void checkButtonEnableStatus()
+    {
+        bool enabled = Game.Instance._gameCurrency > 100;
+        _healthUpgradeButton.interactable = enabled;
+        _damageUpgradeButton.interactable = enabled;
+        _critUpgradeButton.interactable = enabled;
     }
 }

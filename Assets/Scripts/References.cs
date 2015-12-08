@@ -14,6 +14,7 @@ public class References : MonoBehaviour {
     public Player _currentPlayer;
     public GameObject _HUD;
     public HUDScript _currentHUD;
+    public GameObject _defeatedHUD;
     public GameObject _mainMenu;
     public GameObject _textParticle;
 

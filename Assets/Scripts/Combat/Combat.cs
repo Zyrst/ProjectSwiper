@@ -172,7 +172,5 @@ public class Combat : MonoBehaviour {
         References.Instance._currentPlayer.GetComponent<ClickAttack>().enabled = false;
         GameObject.Instantiate(References.Instance._mainMenu);
         GameObject.Destroy(this.gameObject);
-
-
     }
 }
