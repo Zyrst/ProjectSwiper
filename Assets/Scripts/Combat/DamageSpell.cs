@@ -25,6 +25,8 @@ public class DamageSpell : Spells {
                 b.interactable = true;
                 //b.targetGraphic.color = new Color(255f, 255f, 255f);
                 _timer = 0f;
+
+                Sounds.OneShot(Sounds.Instance.ui.abilityReady);
             }
         }
         base.updateMaterial();
@@ -32,6 +34,8 @@ public class DamageSpell : Spells {
 
     public override void DoDamage()
     {
+        Sounds.OneShot(Sounds.Instance.abilities.Damage);
+
         _cooldown = true;
         Button b = GetComponent<Button>();
         b.interactable = false;

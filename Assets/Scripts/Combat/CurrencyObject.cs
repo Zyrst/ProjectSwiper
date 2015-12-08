@@ -53,8 +53,18 @@ public class CurrencyObject : MonoBehaviour {
 
             if(Vector3.Distance(_target, transform.position) <= 3f)
             {
+                // kollar ifall man har mindre guld än kostnaden för upgrades innan
+                bool preUnderCost = false;
+                if (Game.Instance._gameCurrency < UpgradePlayer._cost)
+                    preUnderCost = true;
+
                 Sounds.OneShot(Sounds.Instance.ui.currencyCollect);
                 Game.Instance._gameCurrency += _value;
+
+                // spelar ljud ifall man har mer än kostnaden för upgrade efter
+                if (preUnderCost && Game.Instance._gameCurrency >= UpgradePlayer._cost)
+                    Sounds.OneShot(Sounds.Instance.ui.upgradeAvailable);
+
                // Debug.Log("Currency " + Game.Instance._gameCurrency);
                 GameObject.Destroy(gameObject);
             }

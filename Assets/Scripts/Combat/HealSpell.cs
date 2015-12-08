@@ -22,6 +22,8 @@ public class HealSpell : Spells {
                 b.interactable = true;
                 //b.targetGraphic.color = new Color(255f, 255f, 255f);
                 _timer = 0f;
+
+                Sounds.OneShot(Sounds.Instance.ui.abilityReady);
             }
         }
         base.updateMaterial();
@@ -29,6 +31,8 @@ public class HealSpell : Spells {
 
     public override void DoHeal()
     {
+        Sounds.OneShot(Sounds.Instance.abilities.Heal);
+
         _cooldown = true;
         Button b = GetComponent<Button>();
         b.interactable = false;
