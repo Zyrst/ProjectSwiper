@@ -95,14 +95,15 @@ public class Game : MonoBehaviour {
             case CombatEvent.PlayerDied:
 
                 // trigger defeat screen
+                GameObject.Instantiate(References.Instance._defeatedHUD);
 
-                Player p = References.Instance._currentPlayer.GetComponent<Player>();
-                //p.Heal(p._maxHealth);
-                p._health = p._maxHealth;
-                p._isDead = false;
+                //Player p = References.Instance._currentPlayer.GetComponent<Player>();
+                ////p.Heal(p._maxHealth);
+                //p._health = p._maxHealth;
+                //p._isDead = false;
 
-                KillAllEnemies();
-                References.Instance._currentCombat.StartCombat();
+                //KillAllEnemies();
+                //References.Instance._currentCombat.StartCombat();
 
                 break;
             case CombatEvent.ClearWave:

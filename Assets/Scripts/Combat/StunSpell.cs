@@ -23,6 +23,8 @@ public class StunSpell : Spells {
                 b.interactable = true;
                 //b.targetGraphic.color = new Color(255f, 255f, 255f);
                 _timer = 0f;
+
+                Sounds.OneShot(Sounds.Instance.ui.abilityReady);
             }
         }
         base.updateMaterial();
@@ -30,6 +32,8 @@ public class StunSpell : Spells {
 
     public void Stun()
     {
+        Sounds.OneShot(Sounds.Instance.abilities.Stun);
+
         _cooldown = true;
         Button b = GetComponent<Button>();
         b.interactable = false;

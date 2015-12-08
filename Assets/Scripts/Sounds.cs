@@ -17,6 +17,14 @@ public class Sounds : MonoBehaviour {
     }
 
     [System.Serializable]
+    public struct Abilities
+    {
+        public FMODAsset Damage;
+        public FMODAsset Heal;
+        public FMODAsset Stun;
+    }
+
+    [System.Serializable]
     public struct Combat
     {
         [System.Serializable]
@@ -53,6 +61,7 @@ public class Sounds : MonoBehaviour {
     [System.Serializable]
     public struct UI
     {
+        public FMODAsset abilityReady;
         public FMODAsset currencyCollect;
         public FMODAsset newWave;
         public FMODAsset planetAvailable;
@@ -61,6 +70,7 @@ public class Sounds : MonoBehaviour {
         public FMODAsset upgradeBuy;
     };
 
+    public Abilities abilities;
     public Combat combat;
     public UI ui;
 

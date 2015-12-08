@@ -16,15 +16,18 @@ public class UpgradeComponentGUI : MonoBehaviour {
     public void upgradeHealth()
     {
         UpgradePlayer.UpgradeHealth();
+        Sounds.OneShot(Sounds.Instance.ui.upgradeBuy);
     }
 
     public void upgradeDamage()
     {
         UpgradePlayer.UpgradeDamage();
+        Sounds.OneShot(Sounds.Instance.ui.upgradeBuy);
     }
 
     public void upgradeCrit()
     {
         UpgradePlayer.UpgradeCrit();
+        Sounds.OneShot(Sounds.Instance.ui.upgradeBuy);
     }
 }
