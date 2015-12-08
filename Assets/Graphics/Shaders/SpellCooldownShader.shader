@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
+		_BlingStrength ("BlingStrength", Range(0,1)) = 0.2
 	}
 		SubShader
 	{
@@ -45,6 +46,7 @@
 			}
 
 			sampler2D _MainTex;
+			float _BlingStrength;
 			uniform float timer;
 			uniform float blingTimer;
 			float _InactiveColorA;
@@ -73,7 +75,7 @@
 
 				float btt = blingTimer * 2;
 				float fxx = smoothstep(0, 0.5, btt) - smoothstep(0.5, 1, btt);
-				gradLerp.rgb += lerp(float3(0, 0, 0), float3(0.1, 0.1, 0.1), fxx);
+				gradLerp.rgb += lerp(float3(0, 0, 0), float3(_BlingStrength, _BlingStrength, _BlingStrength), fxx);
 
 				return gradLerp;
 			}
