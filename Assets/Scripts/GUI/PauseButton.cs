@@ -29,6 +29,7 @@ public class PauseButton : MonoBehaviour {
             Time.timeScale = 0;
             _paused = true;
             _image.sprite = _sprites[1];
+            SaveManager.Save();
         }
         else if (_paused)
         {
