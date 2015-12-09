@@ -4,7 +4,7 @@ using System.Collections;
 public class UpgradePlayer : MonoBehaviour {
     public static float _modifider = 0.1f;
     public static float _modifierDmg = 8;
-    public static long _cost = 100;
+    public static long _cost = 50;
 	// Use this for initialization
 	void Start () {
 	

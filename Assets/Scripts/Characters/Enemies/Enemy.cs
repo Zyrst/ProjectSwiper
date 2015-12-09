@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class Enemy : Character {
 
@@ -8,6 +9,8 @@ public class Enemy : Character {
     public float _baseDamage = 3f;
     public float _modifierDamage = 50;
 
+    public enum EnemyType : int {Assassin = 0, Tank = 1, Normal = 2};
+    public EnemyType _myType; 
 
     bool _nextHitIsCrit = false;
 
@@ -19,13 +22,36 @@ public class Enemy : Character {
 	void Start () {
         InitializeGUI();
 
+        _myType = (EnemyType)Random.Range(0, 3);
+
         int level = Game.Instance._arenaLevel;
         if(level > 1)
         {
             float newHealth = Mathf.Ceil(_baseHealth + (level * (level * _healthConst)));
             this._maxHealth = newHealth;
-            this._health = _maxHealth;
+           
             float dmg = _baseDamage + level * (level / _modifierDamage);
+            
+
+            switch (_myType)
+            {
+                case EnemyType.Assassin:
+                    dmg *= 1.2f;
+                    this._maxHealth *= 0.8f;
+                    GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                    break;
+                case EnemyType.Tank:
+                    dmg *= 0.8f;
+                    this._maxHealth *= 1.2f;
+                    GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                    break;
+                case EnemyType.Normal:
+                    break;
+                default:
+                    break;
+            }
+
+            this._health = _maxHealth;
             this.GetComponent<EnemyAttack>()._attackDamage = Mathf.Ceil(dmg);
         }
         else

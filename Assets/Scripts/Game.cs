@@ -37,7 +37,7 @@ public class Game : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        GameObject.Instantiate(References.Instance._player).GetComponent<Player>();
+        GameObject.Instantiate(References.Instance._player);
         Instantiate(References.Instance._mainMenu);
     }
 	
