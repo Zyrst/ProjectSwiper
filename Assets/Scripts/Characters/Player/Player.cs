@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player : Character {
     public float _damage = 5;
-    public float _critMultiplier = 1.5f;
+    public float _critMultiplier = 5f;
     public int _critDenominator = 2;
     public float _baseHealth = 100f;
     public float _baseDamage = 5f;
@@ -25,9 +25,9 @@ public class Player : Character {
         {
             Sounds.OneShot(Sounds.Instance.combat.player.attack.swipe, charHit.transform.position);
 
-            int chance = Random.Range(0, _critDenominator);
+            int chance = Random.Range(0, 100);
             float damage = _damage;
-            if (chance == 0)
+            if (chance <= _critLevel)
             {
                 damage *= _critMultiplier;
                 charHit.MakeNextHitCrit();
@@ -60,8 +60,9 @@ public class Player : Character {
         this._maxHealth = this._baseHealth;
         this._health = this._maxHealth;
         this._damage = this._baseDamage;
-        this._healthLevel = 1;
-        this._damageLevel = 1;
-        this._critLevel = 1;
+        this._healthLevel = 0;
+        this._damageLevel = 0;
+        this._critLevel = 10;
+        this._critDenominator = 100;
     }
 }

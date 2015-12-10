@@ -23,8 +23,9 @@ public class Combat : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         _waveCounter = 0;
-        _triggerNewWaveCounter = 0;
-
+        //_triggerNewWaveCounter = 0;
+        TriggerNewWave();
+        Game.Instance.KillAllEnemies();
         References.Instance._currentPlayer.RestoreMaxHealth();
         GameObject.Find("HUD(Clone)").GetComponentsInChildren<Button>().FirstOrDefault(x => x.name == "Menu").onClick.AddListener(() => BackToMenu());
 	}

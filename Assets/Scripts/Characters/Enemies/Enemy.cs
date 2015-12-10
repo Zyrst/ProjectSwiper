@@ -126,7 +126,13 @@ public class Enemy : Character {
     {
         Sounds.OneShot(Sounds.Instance.combat.enemies.robotDamage.Heavy, transform.position);
         base.Die();
-
+        int pLevel = References.Instance._currentPlayer._critLevel -10;
+        pLevel += References.Instance._currentPlayer._damageLevel;
+        pLevel += References.Instance._currentPlayer._healthLevel;
+        for (int i = 0; i < Game.Instance._arenaLevel - pLevel; i++)
+        {
+            SpawnCurrency();
+        }
         SpawnCurrency();
 
         // Spawn explosion

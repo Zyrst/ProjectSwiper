@@ -7,10 +7,12 @@ public class MainMenu : MonoBehaviour {
     public Text _currency;
     public Text _damage;
     public Text _health;
+    public Text _crit;
 
     public string _damageTxt = "Damage: ";
     public string _currencyTxt = "Currency: ";
     public string _healthTxt = "Health: ";
+    public string _critTxt = "Crit: ";
 
     public Button _healthUpgradeButton;
     public Button _damageUpgradeButton;
@@ -29,6 +31,7 @@ public class MainMenu : MonoBehaviour {
         _currency.text = _currencyTxt + Game.Instance._gameCurrency;
         _damage.text = _damageTxt + References.Instance._currentPlayer._damage;
         _health.text = _healthTxt + References.Instance._currentPlayer._maxHealth;
+        _crit.text = _critTxt +  References.Instance._currentPlayer._critLevel + "%";
 	}
 
     public void Play()
@@ -62,6 +65,6 @@ public class MainMenu : MonoBehaviour {
         bool enabled = Game.Instance._gameCurrency > 100;
         _healthUpgradeButton.interactable = enabled;
         _damageUpgradeButton.interactable = enabled;
-        _critUpgradeButton.interactable = enabled;
+        _critUpgradeButton.interactable = enabled && (References.Instance._currentPlayer._critLevel < 60);
     }
 }

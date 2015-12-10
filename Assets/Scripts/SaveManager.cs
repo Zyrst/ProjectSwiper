@@ -18,6 +18,7 @@ public static class SaveManager {
         public int _damageLevel;
         public int _critLevel;
         public float _damage;
+        public int _critDenominator;
         public float _maxHealth;
     }
 
@@ -37,6 +38,7 @@ public static class SaveManager {
         _info._healthLevel = player._healthLevel;
         _info._damageLevel = player._damageLevel;
         _info._critLevel = player._critLevel;
+        _info._critDenominator = player._critDenominator;
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGame.dfq");
@@ -69,6 +71,7 @@ public static class SaveManager {
                 player._healthLevel = _info._healthLevel;
                 player._damageLevel = _info._damageLevel;
                 player._critLevel = _info._critLevel;
+                player._critDenominator = _info._critDenominator;
             }
             else
             {
