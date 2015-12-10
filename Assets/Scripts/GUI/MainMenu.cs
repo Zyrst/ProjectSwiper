@@ -33,6 +33,8 @@ public class MainMenu : MonoBehaviour {
 
     public void Play()
     {
+        Sounds.OneShot(Sounds.Instance.ui.clickFight);
+
         References.Instance._currentCombat = GameObject.Instantiate(References.Instance._combat);
 
         foreach (var item in References.Instance._enemies)
@@ -45,10 +47,12 @@ public class MainMenu : MonoBehaviour {
         References.Instance._currentPlayer.GetComponent<ClickAttack>().enabled = true;
         Debug.Log("Current level: " + Game.Instance._arenaLevel);
         GameObject.Destroy(this.gameObject);
+
     }
 
     public void Exit()
     {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
         SaveManager.Save();
         Application.Quit();
     }

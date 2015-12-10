@@ -24,6 +24,7 @@ public class PauseButton : MonoBehaviour {
 
     public void TogglePause()
     {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
         if(!_paused)
         {
             Time.timeScale = 0;

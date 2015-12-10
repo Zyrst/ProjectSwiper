@@ -20,6 +20,7 @@ public class DefeatedGUI : MonoBehaviour {
 
     public void LowerLevel()
     {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
         if(Game.Instance._arenaLevel > 1)
         {
             Time.timeScale = 1f;
@@ -31,6 +32,7 @@ public class DefeatedGUI : MonoBehaviour {
 
     public void Restart()
     {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
         Time.timeScale = 1f;
         Player p = References.Instance._currentPlayer.GetComponent<Player>();
         p._health = p._maxHealth;
@@ -42,6 +44,7 @@ public class DefeatedGUI : MonoBehaviour {
 
     public void Menu()
     {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
         Time.timeScale = 1f;
         References.Instance._currentCombat.BackToMenu();
         Destroy(this.gameObject);

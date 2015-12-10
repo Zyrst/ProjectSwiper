@@ -68,6 +68,8 @@ public class Sounds : MonoBehaviour {
         public FMODAsset PlanetTravel;
         public FMODAsset upgradeAvailable;
         public FMODAsset upgradeBuy;
+        public FMODAsset clickFight;
+        public FMODAsset buttonClick;
     };
 
     public Abilities abilities;

@@ -82,7 +82,7 @@ public class Combat : MonoBehaviour {
     {
         _arena = GameObject.Instantiate(arena_).GetComponent<Arena>();
         _arena.transform.position = Vector3.zero;
-        _arena.setTexture(Random.Range(0,7));
+        _arena.setTexture(Game.Instance._arenaLevel % _arena.textures.Length);
 
         _enemySpawners.Clear();
         foreach (var item in _arena.GetComponentsInChildren<EnemySpawner>())
@@ -163,6 +163,8 @@ public class Combat : MonoBehaviour {
 
     public void BackToMenu()
     {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
+
         SaveManager.Save();
 
         Game.Instance.KillAllEnemies();

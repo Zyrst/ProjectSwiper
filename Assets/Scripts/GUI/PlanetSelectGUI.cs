@@ -40,6 +40,8 @@ public class PlanetSelectGUI : MonoBehaviour {
         {
             GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "PastLevel").text = "";
         }
+
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
     }
 
     public void goToPrevPlanet()
@@ -57,5 +59,7 @@ public class PlanetSelectGUI : MonoBehaviour {
         {
             GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "PastLevel").text = "";
         }
+
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
     }
 }
