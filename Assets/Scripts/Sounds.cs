@@ -77,6 +77,37 @@ public class Sounds : MonoBehaviour {
     public UI ui;
 
 
+    public FMOD.Studio.Bus master;
+    void Start()
+    {
+        FMOD.Studio.System system = FMOD_StudioSystem.instance.System;
+        FMOD.RESULT result =  system.getBus("bus:/", out master);
+        Debug.Log("FMOD master bus: " + result);
+    }
+
+    /// <summary>
+    /// updates volume of master bus
+    /// </summary>
+    /// <param name="volume_">0 - 1</param>
+    public void UpdateVolume(float volume_)
+    {
+        float vol = volume_ > 1f ? 1f : volume_;
+        master.setFaderLevel(vol);
+    }
+
+    /// <summary>
+    /// sets if master bus is mute
+    /// </summary>
+    public void Mute(bool mute_)
+    {
+        master.setMute(mute_);
+
+        bool mut;
+        master.getMute(out mut);
+
+        Debug.Log("FMOD mute :" + mut);
+    }
+
     /// <summary>
     /// plays the asset once
     /// </summary>

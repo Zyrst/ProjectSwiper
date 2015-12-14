@@ -21,6 +21,9 @@ public class References : MonoBehaviour {
     public GameObject[] _combatArenas;
     public GameObject[] _enemies;
 
+    public bool _FMODMasterMute = false;
+    public float _FMODMasterSlider = 1f;
+
 
     /*
      * resätt den har biten på riktigt sen
