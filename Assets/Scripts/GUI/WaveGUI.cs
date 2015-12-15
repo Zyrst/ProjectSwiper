@@ -14,6 +14,9 @@ public class WaveGUI : Text {
     // Update is called once per frame
     void Update()
     {
-        this.text = _string + References.Instance._currentCombat.GetComponent<Combat>()._waveCounter + " / 10";
+        if (Game.Instance._arenaLevel == Game.Instance._maxArenaLevel)
+            this.text = _string + References.Instance._currentCombat.GetComponent<Combat>()._waveCounter + " / 10";
+        else
+            this.text = "";
     }
 }

@@ -114,7 +114,7 @@ public class Combat : MonoBehaviour {
 
         if (_waveCounter % 3 == 0)
         {
-            References.Instance._currentPlayer.Heal(References.Instance._currentPlayer._maxHealth / 2);
+            //References.Instance._currentPlayer.Heal(References.Instance._currentPlayer._maxHealth / 2);
         }
 
         if (_waveCounter == _minWaves)

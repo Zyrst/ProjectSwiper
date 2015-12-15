@@ -4,6 +4,10 @@ using System.Collections;
 
 public class DefeatedGUI : MonoBehaviour {
 
+    public Image _bg;
+
+    private float _alpha = 0.1f;
+
 	// Use this for initialization
 	void Start () {
         Time.timeScale = 0;
@@ -15,7 +19,13 @@ public class DefeatedGUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        Color c = _bg.color;
+        c.a = _alpha;
+        _bg.color = c;
+
+        _alpha += Time.unscaledDeltaTime / 3;
+        if (_alpha >= 0.9f)
+            _alpha = 0.9f;
 	}
 
     public void LowerLevel()

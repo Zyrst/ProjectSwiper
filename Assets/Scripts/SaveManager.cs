@@ -92,5 +92,8 @@ public static class SaveManager {
         {
             References.Instance._currentPlayer.GetComponent<Player>().ResetStats();
         }
+
+        Sounds.Instance.UpdateVolume(References.Instance._FMODMasterSlider);
+        Sounds.Instance.Mute(References.Instance._FMODMasterMute);
     }
 }
