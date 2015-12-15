@@ -62,7 +62,7 @@ public class MainMenu : MonoBehaviour {
 
     private void checkButtonEnableStatus()
     {
-        bool enabled = Game.Instance._gameCurrency > 100;
+        bool enabled = Game.Instance._gameCurrency >= UpgradePlayer._cost;
         _healthUpgradeButton.interactable = enabled;
         _damageUpgradeButton.interactable = enabled;
         _critUpgradeButton.interactable = enabled && (References.Instance._currentPlayer._critLevel < 60);
