@@ -33,5 +33,7 @@ public class SoundOptions : MonoBehaviour {
     {
         References.Instance._FMODMasterMute = !References.Instance._FMODMasterMute;
         Sounds.Instance.Mute(References.Instance._FMODMasterMute);
+
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
     }
 }

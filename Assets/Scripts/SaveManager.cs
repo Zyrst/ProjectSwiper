@@ -20,6 +20,9 @@ public static class SaveManager {
         public float _damage;
         public int _critDenominator;
         public float _maxHealth;
+
+        public float _soundVolume;
+        public bool _soundMute;
     }
 
     public static GameInfo _info = new GameInfo();
@@ -39,6 +42,9 @@ public static class SaveManager {
         _info._damageLevel = player._damageLevel;
         _info._critLevel = player._critLevel;
         _info._critDenominator = player._critDenominator;
+
+        _info._soundVolume = References.Instance._FMODMasterSlider;
+        _info._soundMute = References.Instance._FMODMasterMute;
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGame.dfq");
@@ -77,6 +83,9 @@ public static class SaveManager {
             {
                 Debug.LogError("No current player");
             }
+
+            References.Instance._FMODMasterSlider = _info._soundVolume;
+            References.Instance._FMODMasterMute = _info._soundMute;
 
         }
         else
