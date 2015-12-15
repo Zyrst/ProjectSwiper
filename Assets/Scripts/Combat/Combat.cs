@@ -124,6 +124,7 @@ public class Combat : MonoBehaviour {
                 Game.Instance._maxArenaLevel++;
             }
             Game.Instance.HandleCombatEvent(Game.CombatEvent.UnlockNextPlanetButton);
+            Instantiate(References.Instance._nextPlanet);
         }
     }
 
@@ -167,6 +168,13 @@ public class Combat : MonoBehaviour {
         Sounds.OneShot(Sounds.Instance.ui.buttonClick);
 
         SaveManager.Save();
+
+        GameObject[] tag = GameObject.FindGameObjectsWithTag("Currency");
+        Debug.Log(tag.Length);
+        foreach(GameObject go in tag)
+        {
+            go.GetComponent<CurrencyObject>()._collect = true;
+        }
 
         Game.Instance.KillAllEnemies();
         GameObject.Destroy(GameObject.Find("HUD(Clone)"));
