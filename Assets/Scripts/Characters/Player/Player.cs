@@ -51,6 +51,8 @@ public class Player : Character {
 
         Game.Instance.HandleCombatEvent(Game.CombatEvent.PlayerDied);
 
+        Sounds.Instance.music.background.ChangeDeath();
+
         //Debug.Log("Spelaren avled tragiskt");
 
     }

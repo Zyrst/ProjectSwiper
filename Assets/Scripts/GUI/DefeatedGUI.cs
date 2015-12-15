@@ -37,7 +37,8 @@ public class DefeatedGUI : MonoBehaviour {
             GameObject.Find("PlanetSelect").GetComponent<PlanetSelectGUI>().goToPrevPlanet();
             Destroy(this.gameObject);
         }
-       
+
+        Sounds.Instance.music.background.Reset();
     }
 
     public void Restart()
@@ -50,6 +51,8 @@ public class DefeatedGUI : MonoBehaviour {
         Game.Instance.KillAllEnemies();
         References.Instance._currentCombat.StartCombat();
         Destroy(this.gameObject);
+
+        Sounds.Instance.music.background.Reset();
     }
 
     public void Menu()
@@ -58,5 +61,7 @@ public class DefeatedGUI : MonoBehaviour {
         Time.timeScale = 1f;
         References.Instance._currentCombat.BackToMenu();
         Destroy(this.gameObject);
+
+        Sounds.Instance.music.background.Reset();
     }
 }

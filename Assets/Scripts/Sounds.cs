@@ -72,9 +72,34 @@ public class Sounds : MonoBehaviour {
         public FMODAsset buttonClick;
     };
 
+    [System.Serializable]
+    public struct Music
+    {
+        [System.Serializable]
+        public struct Background
+        {
+            public FMODAsset song; 
+            [HideInInspector]
+            public FMOD.Studio.EventInstance instance;
+            [HideInInspector]
+            public FMOD.Studio.ParameterInstance param;
+
+            public void ChangeDeath()
+            {
+                param.setValue(1);
+            }
+            public void Reset()
+            {
+                param.setValue(0);
+            }
+        }
+        public Background background;
+    };
+
     public Abilities abilities;
     public Combat combat;
     public UI ui;
+    public Music music;
 
 
     public FMOD.Studio.Bus master;
@@ -83,6 +108,25 @@ public class Sounds : MonoBehaviour {
         FMOD.Studio.System system = FMOD_StudioSystem.instance.System;
         FMOD.RESULT result =  system.getBus("bus:/", out master);
         Debug.Log("FMOD master bus: " + result);
+
+
+        music.background.instance = FMOD_StudioSystem.instance.GetEvent(music.background.song);
+        music.background.instance.getParameter("Death", out  music.background.param);
+
+        StartMusic(Songs.BackgroundSong);
+    }
+
+    public enum Songs { BackgroundSong };
+    public void StartMusic(Songs song_)
+    {
+        switch (song_)
+        {
+            case Songs.BackgroundSong:
+                music.background.instance.start();
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
