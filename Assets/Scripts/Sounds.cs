@@ -101,13 +101,18 @@ public class Sounds : MonoBehaviour {
     public UI ui;
     public Music music;
 
+    public FMOD.Studio.Bus musicBus;
+    public FMOD.Studio.Bus soundBus;
 
-    public FMOD.Studio.Bus master;
     void Start()
     {
         FMOD.Studio.System system = FMOD_StudioSystem.instance.System;
-        FMOD.RESULT result =  system.getBus("bus:/", out master);
-        Debug.Log("FMOD master bus: " + result);
+
+        FMOD.RESULT result = system.getBus("bus:/Music", out musicBus);
+        Debug.Log("FMOD music bus: " + result);
+
+        result = system.getBus("bus:/Game", out soundBus);
+        Debug.Log("FMOD sound bus: " + result);
 
 
         music.background.instance = FMOD_StudioSystem.instance.GetEvent(music.background.song);
@@ -133,23 +138,18 @@ public class Sounds : MonoBehaviour {
     /// updates volume of master bus
     /// </summary>
     /// <param name="volume_">0 - 1</param>
-    public void UpdateVolume(float volume_)
+    public void UpdateVolume(FMOD.Studio.Bus bus_, float volume_)
     {
         float vol = volume_ > 1f ? 1f : volume_;
-        master.setFaderLevel(vol);
+        bus_.setFaderLevel(vol);
     }
 
     /// <summary>
     /// sets if master bus is mute
     /// </summary>
-    public void Mute(bool mute_)
+    public void Mute(FMOD.Studio.Bus bus_, bool mute_)
     {
-        master.setMute(mute_);
-
-        bool mut;
-        master.getMute(out mut);
-
-        Debug.Log("FMOD mute :" + mut);
+        bus_.setMute(mute_);
     }
 
     /// <summary>

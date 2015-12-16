@@ -22,8 +22,11 @@ public class References : MonoBehaviour {
     public GameObject[] _combatArenas;
     public GameObject[] _enemies;
 
-    public bool _FMODMasterMute = false;
-    public float _FMODMasterSlider = 1f;
+    public bool _FMODMusicMute = false;
+    public float _FMODMusicSlider = 1f;
+
+    public bool _FMODSoundMute = false;
+    public float _FMODSoundSlider = 1f;
 
 
     /*
