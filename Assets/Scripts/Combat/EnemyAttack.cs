@@ -87,4 +87,11 @@ public class EnemyAttack : MonoBehaviour {
     {
         _attackCounter += delay_;
     }
+
+    public void Stun()
+    {
+        _stunned = true;
+        GameObject go = Instantiate(Resources.Load("Prefabs/Effects/Stun")) as GameObject;
+        go.GetComponent<StunEffect>().SetPosition(transform.position + new Vector3(0,2,0), _stunTime);
+    }
 }
