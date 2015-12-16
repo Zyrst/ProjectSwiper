@@ -18,6 +18,9 @@ public class Enemy : Character {
 
     private Object _explosionPrefab;
 
+    public float _healthBarHeight = -0.77f;
+    public float _cooldownBarHeight = -1;
+
 	// Use this for initialization
 	void Start () {
         InitializeGUI();
@@ -78,11 +81,11 @@ public class Enemy : Character {
     {
         GameObject healthBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Healthbar")) as GameObject;
         healthBar.transform.SetParent(transform);
-        healthBar.GetComponent<RectTransform>().localPosition = new Vector3(0, 2, 0);
+        healthBar.GetComponent<RectTransform>().localPosition = new Vector3(0, _healthBarHeight, 0);
 
         GameObject cooldownBar = Instantiate(UnityEngine.Resources.Load("Prefabs/Combat/Cooldownbar")) as GameObject;
         cooldownBar.transform.SetParent(transform);
-        cooldownBar.GetComponent<RectTransform>().localPosition = new Vector3(0, -1, 0);
+        cooldownBar.GetComponent<RectTransform>().localPosition = new Vector3(0, _cooldownBarHeight, 0);
     }
 
     public void MakeNextHitCrit()
