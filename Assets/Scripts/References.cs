@@ -28,6 +28,19 @@ public class References : MonoBehaviour {
     public bool _FMODSoundMute = false;
     public float _FMODSoundSlider = 1f;
 
+    [System.Serializable]
+    public class Stats
+    {
+        public float moneyCollected = 0;
+        public float moneySpent = 0;
+        public float damageRecived = 0;
+        public float damageDelt = 0;
+        public float enemiesKilled = 0;
+        public float timesEnemiesKilled = 0;
+        public float timeSpentPlaying = 0;
+    }
+    public Stats _stats;
+
 
     /*
      * resätt den har biten på riktigt sen

@@ -25,6 +25,8 @@ public static class SaveManager {
         public bool _musicMute;
         public float _soundVolume;
         public bool _soundMute;
+
+        public References.Stats _stats;
     }
 
     public static GameInfo _info = new GameInfo();
@@ -49,6 +51,8 @@ public static class SaveManager {
         _info._musicMute = References.Instance._FMODMusicMute;
         _info._soundVolume = References.Instance._FMODSoundSlider;
         _info._soundMute = References.Instance._FMODSoundMute;
+
+        _info._stats = References.Instance._stats;
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGame.dfq");
@@ -93,6 +97,8 @@ public static class SaveManager {
 
             References.Instance._FMODSoundSlider = _info._soundVolume;
             References.Instance._FMODSoundMute = _info._soundMute;
+
+            References.Instance._stats = _info._stats;
 
         }
         else
