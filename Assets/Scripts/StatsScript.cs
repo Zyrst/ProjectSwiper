@@ -28,9 +28,9 @@ public class StatsScript : MonoBehaviour {
         enemiesKilled.text = References.Instance._stats.enemiesKilled.ToString();
         timesEnemiesKilled.text = References.Instance._stats.timesEnemiesKilled.ToString();
 
-        TimeSpan timeSpan = TimeSpan.FromSeconds(References.Instance._stats.timeSpentPlaying);
-        string timeText = string.Format("{0:D2}:{1:D2}:{2:D2}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(References.Instance._stats.timeSpentPlayingSeconds);
+        string timeText = References.Instance._stats.timeSpentPlayingDays.ToString() + ":" + 
+            string.Format("{0:D2}:{1:D2}", timeSpan.Hours, timeSpan.Minutes);
         timeSpentPlaying.text = timeText;
-
 	}
 }

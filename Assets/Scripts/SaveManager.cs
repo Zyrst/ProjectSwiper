@@ -66,6 +66,9 @@ public static class SaveManager {
     {
         if(File.Exists(Application.persistentDataPath + "/savedGame.dfq"))
         {
+
+            Debug.Log("FUCKING INNE I SKITEN");
+
             //Load information from file
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/savedGame.dfq", FileMode.Open);

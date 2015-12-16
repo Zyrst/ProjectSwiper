@@ -63,6 +63,13 @@ public class Game : MonoBehaviour {
         {
             References.Instance._currentPlayer.ResetStats();
         }
+
+        References.Instance._stats.timeSpentPlayingSeconds += Time.deltaTime;
+        if (References.Instance._stats.timeSpentPlayingSeconds >= 86400)
+        {
+            References.Instance._stats.timeSpentPlayingDays++;
+            References.Instance._stats.timeSpentPlayingSeconds -= 86400;
+        }
 	}
 
     void LateUpdate()
