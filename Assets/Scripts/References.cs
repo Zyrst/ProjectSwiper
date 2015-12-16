@@ -18,12 +18,30 @@ public class References : MonoBehaviour {
     public GameObject _nextPlanet;
     public GameObject _mainMenu;
     public GameObject _textParticle;
+    public GameObject _credits;
 
     public GameObject[] _combatArenas;
     public GameObject[] _enemies;
 
-    public bool _FMODMasterMute = false;
-    public float _FMODMasterSlider = 1f;
+    public bool _FMODMusicMute = false;
+    public float _FMODMusicSlider = 1f;
+
+    public bool _FMODSoundMute = false;
+    public float _FMODSoundSlider = 1f;
+
+    [System.Serializable]
+    public class Stats
+    {
+        public float moneyCollected = 0;
+        public float moneySpent = 0;
+        public float damageRecived = 0;
+        public float damageDelt = 0;
+        public float enemiesKilled = 0;
+        public float timesEnemiesKilled = 0;
+        public int timeSpentPlayingDays = 0;
+        public float timeSpentPlayingSeconds = 0;
+    }
+    public Stats _stats;
 
 
     /*

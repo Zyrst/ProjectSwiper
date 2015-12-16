@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 public class SoundOptions : MonoBehaviour {
 
-    public Button _muteButton;
-    public Slider _slider;
+    public Slider _musicSlider;
+    public Slider _soundSlider;
 
 	// Use this for initialization
 	void Start () {
-        ChangeVolume(References.Instance._FMODMasterSlider);
+        ChangeMusicVolume(References.Instance._FMODMusicSlider);
+        ChangeSoundVolume(References.Instance._FMODSoundSlider);
 	}
 	
 	// Update is called once per frame
@@ -17,22 +18,42 @@ public class SoundOptions : MonoBehaviour {
 	
 	}
 
-    public void UpdateVolumeFromSlider()
+    public void UpdateVolumeFromMusicSlider()
     {
-        ChangeVolume(_slider.value);
+        ChangeMusicVolume(_musicSlider.value);
     }
 
-    public void ChangeVolume(float value_)
+    public void UpdateVolumeFromSoundSlider()
     {
-        _slider.value = value_;
-        References.Instance._FMODMasterSlider = value_;
-        Sounds.Instance.UpdateVolume(value_);
+        ChangeSoundVolume(_soundSlider.value);
     }
 
-    public void ToggleMute()
+    public void ChangeMusicVolume(float value_)
     {
-        References.Instance._FMODMasterMute = !References.Instance._FMODMasterMute;
-        Sounds.Instance.Mute(References.Instance._FMODMasterMute);
+        _musicSlider.value = value_;
+        References.Instance._FMODMusicSlider = value_;
+        Sounds.Instance.UpdateVolume(Sounds.Instance.musicBus, value_);
+    }
+
+    public void ChangeSoundVolume(float value_)
+    {
+        _soundSlider.value = value_;
+        References.Instance._FMODSoundSlider = value_;
+        Sounds.Instance.UpdateVolume(Sounds.Instance.soundBus, value_);
+    }
+
+    public void ToggleMusicMute()
+    {
+        References.Instance._FMODMusicMute = !References.Instance._FMODMusicMute;
+        Sounds.Instance.Mute(Sounds.Instance.musicBus, References.Instance._FMODMusicMute);
+
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
+    }
+
+    public void ToggleSoundMute()
+    {
+        References.Instance._FMODSoundMute = !References.Instance._FMODSoundMute;
+        Sounds.Instance.Mute(Sounds.Instance.soundBus, References.Instance._FMODSoundMute);
 
         Sounds.OneShot(Sounds.Instance.ui.buttonClick);
     }

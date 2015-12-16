@@ -21,8 +21,12 @@ public static class SaveManager {
         public int _critDenominator;
         public float _maxHealth;
 
+        public float _musicVolume;
+        public bool _musicMute;
         public float _soundVolume;
         public bool _soundMute;
+
+        public References.Stats _stats;
     }
 
     public static GameInfo _info = new GameInfo();
@@ -43,8 +47,12 @@ public static class SaveManager {
         _info._critLevel = player._critLevel;
         _info._critDenominator = player._critDenominator;
 
-        _info._soundVolume = References.Instance._FMODMasterSlider;
-        _info._soundMute = References.Instance._FMODMasterMute;
+        _info._musicVolume = References.Instance._FMODMusicSlider;
+        _info._musicMute = References.Instance._FMODMusicMute;
+        _info._soundVolume = References.Instance._FMODSoundSlider;
+        _info._soundMute = References.Instance._FMODSoundMute;
+
+        _info._stats = References.Instance._stats;
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGame.dfq");
@@ -58,6 +66,9 @@ public static class SaveManager {
     {
         if(File.Exists(Application.persistentDataPath + "/savedGame.dfq"))
         {
+
+            Debug.Log("FUCKING INNE I SKITEN");
+
             //Load information from file
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/savedGame.dfq", FileMode.Open);
@@ -84,8 +95,13 @@ public static class SaveManager {
                 Debug.LogError("No current player");
             }
 
-            References.Instance._FMODMasterSlider = _info._soundVolume;
-            References.Instance._FMODMasterMute = _info._soundMute;
+            References.Instance._FMODMusicSlider = _info._musicVolume;
+            References.Instance._FMODMusicMute = _info._musicMute;
+
+            References.Instance._FMODSoundSlider = _info._soundVolume;
+            References.Instance._FMODSoundMute = _info._soundMute;
+
+            References.Instance._stats = _info._stats;
 
         }
         else
@@ -93,7 +109,9 @@ public static class SaveManager {
             References.Instance._currentPlayer.GetComponent<Player>().ResetStats();
         }
 
-        Sounds.Instance.UpdateVolume(References.Instance._FMODMasterSlider);
-        Sounds.Instance.Mute(References.Instance._FMODMasterMute);
+        Sounds.Instance.UpdateVolume(Sounds.Instance.musicBus, References.Instance._FMODMusicSlider);
+        Sounds.Instance.Mute(Sounds.Instance.musicBus, References.Instance._FMODMusicMute);
+        Sounds.Instance.UpdateVolume(Sounds.Instance.soundBus, References.Instance._FMODSoundSlider);
+        Sounds.Instance.Mute(Sounds.Instance.soundBus, References.Instance._FMODSoundMute);
     }
 }

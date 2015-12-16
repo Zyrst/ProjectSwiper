@@ -31,14 +31,13 @@ public class DefeatedGUI : MonoBehaviour {
     public void LowerLevel()
     {
         Sounds.OneShot(Sounds.Instance.ui.buttonClick);
+        Sounds.Instance.music.background.Reset();
         if(Game.Instance._arenaLevel > 1)
         {
             Time.timeScale = 1f;
             GameObject.Find("PlanetSelect").GetComponent<PlanetSelectGUI>().goToPrevPlanet();
             Destroy(this.gameObject);
         }
-
-        Sounds.Instance.music.background.Reset();
     }
 
     public void Restart()
@@ -50,9 +49,8 @@ public class DefeatedGUI : MonoBehaviour {
         p._isDead = false;
         Game.Instance.KillAllEnemies();
         References.Instance._currentCombat.StartCombat();
-        Destroy(this.gameObject);
-
         Sounds.Instance.music.background.Reset();
+        Destroy(this.gameObject);
     }
 
     public void Menu()
@@ -60,8 +58,7 @@ public class DefeatedGUI : MonoBehaviour {
         Sounds.OneShot(Sounds.Instance.ui.buttonClick);
         Time.timeScale = 1f;
         References.Instance._currentCombat.BackToMenu();
-        Destroy(this.gameObject);
-
         Sounds.Instance.music.background.Reset();
+        Destroy(this.gameObject);
     }
 }

@@ -42,7 +42,7 @@ public class StunSpell : Spells {
         {
             if (es._enemy != null)
             {
-                es._enemy.GetComponent<EnemyAttack>()._stunned = true;
+                es._enemy.GetComponent<EnemyAttack>().Stun();
             }
         }
 
