@@ -18,6 +18,7 @@ public class References : MonoBehaviour {
     public GameObject _nextPlanet;
     public GameObject _mainMenu;
     public GameObject _textParticle;
+    public GameObject _credits;
 
     public GameObject[] _combatArenas;
     public GameObject[] _enemies;

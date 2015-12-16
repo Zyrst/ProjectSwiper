@@ -67,4 +67,11 @@ public class MainMenu : MonoBehaviour {
         _damageUpgradeButton.interactable = enabled;
         _critUpgradeButton.interactable = enabled && (References.Instance._currentPlayer._critLevel < 60);
     }
+
+
+    public void Credits()
+    {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
+        Instantiate(References.Instance._credits);
+    }
 }
