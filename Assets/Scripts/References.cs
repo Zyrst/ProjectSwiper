@@ -19,6 +19,7 @@ public class References : MonoBehaviour {
     public GameObject _mainMenu;
     public GameObject _textParticle;
     public GameObject _credits;
+    public GameObject _statsGUI;
 
     public GameObject[] _combatArenas;
     public GameObject[] _enemies;

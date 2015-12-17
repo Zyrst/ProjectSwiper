@@ -33,4 +33,10 @@ public class StatsScript : MonoBehaviour {
             string.Format("{0:D2}:{1:D2}", timeSpan.Hours, timeSpan.Minutes);
         timeSpentPlaying.text = timeText;
 	}
+
+    public void Exit()
+    {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
+        Destroy(this.gameObject);
+    }
 }
