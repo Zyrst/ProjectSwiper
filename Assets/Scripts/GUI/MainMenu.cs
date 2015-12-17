@@ -80,4 +80,10 @@ public class MainMenu : MonoBehaviour {
         Sounds.OneShot(Sounds.Instance.ui.buttonClick);
         Instantiate(References.Instance._statsGUI);
     }
+
+    public void Tutorial()
+    {
+        Sounds.OneShot(Sounds.Instance.ui.buttonClick);
+        Instantiate(References.Instance._tutorialScreen);
+    }
 }
