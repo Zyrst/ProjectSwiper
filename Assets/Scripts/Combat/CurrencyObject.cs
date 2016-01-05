@@ -61,6 +61,8 @@ public class CurrencyObject : MonoBehaviour {
                 Sounds.OneShot(Sounds.Instance.ui.currencyCollect);
                 Game.Instance._gameCurrency += _value;
 
+                References.Instance._stats.moneyCollected += _value;
+
                 // spelar ljud ifall man har mer än kostnaden för upgrade efter
                 if (preUnderCost && Game.Instance._gameCurrency >= UpgradePlayer._cost)
                     Sounds.OneShot(Sounds.Instance.ui.upgradeAvailable);

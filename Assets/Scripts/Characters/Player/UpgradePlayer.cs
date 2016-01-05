@@ -45,6 +45,7 @@ public class UpgradePlayer : MonoBehaviour {
             float maxHealth = Mathf.Ceil(baseHP + (level * (level * _modifider)));
             References.Instance._currentPlayer._maxHealth = maxHealth + level;
             Game.Instance._gameCurrency -= _cost;
+            References.Instance._stats.moneySpent += _cost;
             SaveManager.Save();
         }
     }
@@ -59,6 +60,7 @@ public class UpgradePlayer : MonoBehaviour {
             float dmg = baseDamage + level * (level / _modifierDmg);
             References.Instance._currentPlayer.GetComponent<Player>()._damage = Mathf.Ceil(dmg);
             Game.Instance._gameCurrency -= _cost;
+            References.Instance._stats.moneySpent += _cost;
             SaveManager.Save();
         }
     }
@@ -70,6 +72,7 @@ public class UpgradePlayer : MonoBehaviour {
             References.Instance._currentPlayer._critLevel += 1;
             References.Instance._currentPlayer._critDenominator -= 1;
             Game.Instance._gameCurrency -= _cost;
+            References.Instance._stats.moneySpent += _cost;
             SaveManager.Save();
         }
         

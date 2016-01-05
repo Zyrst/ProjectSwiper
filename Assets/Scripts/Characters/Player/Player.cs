@@ -40,6 +40,8 @@ public class Player : Character {
     public override void Damage(float damage_)
     {
         Sounds.OneShot(Sounds.Instance.combat.player.damage, transform.position);
+
+        References.Instance._stats.damageRecived += damage_;
         base.Damage(damage_);
     }
 
@@ -52,6 +54,9 @@ public class Player : Character {
         Game.Instance.HandleCombatEvent(Game.CombatEvent.PlayerDied);
 
         Sounds.Instance.music.background.ChangeDeath();
+
+
+        References.Instance._stats.timesEnemiesKilled++;
 
         //Debug.Log("Spelaren avled tragiskt");
 

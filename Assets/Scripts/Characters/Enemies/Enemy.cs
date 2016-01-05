@@ -98,6 +98,7 @@ public class Enemy : Character {
         float oldPercent = _health / _maxHealth;
 
         base.Damage(damage_);
+        References.Instance._stats.damageDelt += damage_;
 
         float newPercent = _health / _maxHealth;
 
@@ -137,6 +138,9 @@ public class Enemy : Character {
             SpawnCurrency();
         }
         SpawnCurrency();
+
+
+        References.Instance._stats.enemiesKilled++;
 
         // Spawn explosion
         ((GameObject)Instantiate(_explosionPrefab)).GetComponent<ExplosionScript>().setPosition(transform.position);
