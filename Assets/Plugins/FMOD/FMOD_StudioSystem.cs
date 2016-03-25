@@ -25,7 +25,7 @@ namespace FMOD
 			
 			static public ATTRIBUTES_3D to3DAttributes(this Vector3 pos)
 			{
-				FMOD.Studio.ATTRIBUTES_3D attributes = new FMOD.Studio.ATTRIBUTES_3D();
+				FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
 				attributes.forward = toFMODVector(Vector3.forward);
 				attributes.up = toFMODVector(Vector3.up);
 				attributes.position = toFMODVector(pos);
@@ -35,7 +35,7 @@ namespace FMOD
 			
 			static public ATTRIBUTES_3D to3DAttributes(GameObject go, Rigidbody rigidbody = null)
 			{
-				FMOD.Studio.ATTRIBUTES_3D attributes = new FMOD.Studio.ATTRIBUTES_3D();
+				FMOD.ATTRIBUTES_3D attributes = new FMOD.ATTRIBUTES_3D();
 				attributes.forward = toFMODVector(go.transform.forward);
 				attributes.up = toFMODVector(go.transform.up);
 				attributes.position = toFMODVector(go.transform.position);
@@ -185,13 +185,13 @@ public class FMOD_StudioSystem : MonoBehaviour
 			{
 				ERRCHECK(FMOD.Studio.Util.ParseID(path, out id));
 			}
-			else if (path.StartsWith("event:"))
+			else if (path.StartsWith("event:") || path.StartsWith("snapshot:"))
 			{
 				ERRCHECK(system.lookupID(path, out id));
 			}
 			else
 			{
-				FMOD.Studio.UnityUtil.LogError("Expected event path to start with 'event:/'");
+				FMOD.Studio.UnityUtil.LogError("Expected event path to start with 'event:/' or 'snapshot:/'");
 			}
 			
 			FMOD.Studio.EventDescription desc = null;
@@ -260,6 +260,11 @@ public class FMOD_StudioSystem : MonoBehaviour
         ERRCHECK(FMOD.Studio.System.create(out system));
 
         FMOD.Studio.INITFLAGS flags = FMOD.Studio.INITFLAGS.NORMAL;
+		
+		FMOD.System sys;
+		ERRCHECK(system.getLowLevelSystem(out sys));
+		FMOD.ADVANCEDSETTINGS advancedSettings = new FMOD.ADVANCEDSETTINGS();
+		advancedSettings.randomSeed = (uint) DateTime.Now.Ticks;
 
 #if FMOD_LIVEUPDATE
         flags |= FMOD.Studio.INITFLAGS.LIVEUPDATE;
@@ -268,18 +273,15 @@ public class FMOD_StudioSystem : MonoBehaviour
         if (Application.unityVersion.StartsWith("5"))
         {
             FMOD.Studio.UnityUtil.LogWarning("FMOD_StudioSystem: detected Unity 5, running on port 9265");
-            FMOD.System sys;
-            ERRCHECK(system.getLowLevelSystem(out sys));
-            FMOD.ADVANCEDSETTINGS advancedSettings = new FMOD.ADVANCEDSETTINGS();
             advancedSettings.profilePort = 9265;
-            ERRCHECK(sys.setAdvancedSettings(ref advancedSettings));
         }
 #endif
+
+		ERRCHECK(sys.setAdvancedSettings(ref advancedSettings));
 
 		#if FMOD_DEBUG
 			FMOD.Debug.Initialize(FMOD.DEBUG_FLAGS.LOG, FMOD.DEBUG_MODE.FILE, null, "fmod.log");
 		#endif
-
 
         FMOD.Studio.UnityUtil.Log("FMOD_StudioSystem: system.init");
         FMOD.RESULT result = FMOD.RESULT.OK;
@@ -305,8 +307,10 @@ public class FMOD_StudioSystem : MonoBehaviour
             flags &= ~FMOD.Studio.INITFLAGS.LIVEUPDATE;
             ERRCHECK(system.release());
             ERRCHECK(FMOD.Studio.System.create(out system));
-            FMOD.System sys;
             ERRCHECK(system.getLowLevelSystem(out sys));
+		    advancedSettings = new FMOD.ADVANCEDSETTINGS();
+		    advancedSettings.randomSeed = (uint) DateTime.Now.Ticks;
+			ERRCHECK(sys.setAdvancedSettings(ref advancedSettings));
             result = system.initialize(1024, flags, FMOD.INITFLAGS.NORMAL, global::System.IntPtr.Zero);
             ERRCHECK(result);
         }

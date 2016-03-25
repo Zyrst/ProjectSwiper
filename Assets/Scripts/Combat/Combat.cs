@@ -170,7 +170,7 @@ public class Combat : MonoBehaviour {
         SaveManager.Save();
 
         GameObject[] tag = GameObject.FindGameObjectsWithTag("Currency");
-        Debug.Log(tag.Length);
+
         foreach(GameObject go in tag)
         {
             go.GetComponent<CurrencyObject>()._collect = true;

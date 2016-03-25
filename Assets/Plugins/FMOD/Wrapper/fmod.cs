@@ -1,12 +1,18 @@
 /* ========================================================================================== */
 /*                                                                                            */
-/* FMOD Studio - C# Wrapper . Copyright (c), Firelight Technologies Pty, Ltd. 2004-2015.          */
+/* FMOD Studio - C# Wrapper . Copyright (c), Firelight Technologies Pty, Ltd. 2004-2016.          */
 /*                                                                                            */
 /* ========================================================================================== */
+
+#if UNITY_EDITOR || ((UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX) && DEVELOPMENT_BUILD)
+#define FMOD_LOGGING
+#endif
 
 using System;
 using System.Text;
 using System.Runtime.InteropServices;
+
+
 
 namespace FMOD
 {
@@ -16,8 +22,8 @@ namespace FMOD
     */
     public class VERSION
     {
-        public const int    number = 0x00010610;
-#if UNITY_IPHONE && !UNITY_EDITOR
+        public const int    number = 0x00010800;
+#if (UNITY_IPHONE || UNITY_TVOS) && !UNITY_EDITOR
         public const string dll    = "__Internal";
 #elif (UNITY_PS4) && !UNITY_EDITOR
         public const string dll    = "libfmod";
@@ -25,7 +31,7 @@ namespace FMOD
         public const string dll    = "libfmodstudio";
 #elif (UNITY_WIIU) && !UNITY_EDITOR
         public const string dll    = "libfmodstudio";
-#elif (UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX) && FMOD_DEBUG
+#elif UNITY_EDITOR || ((UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX) && DEVELOPMENT_BUILD)
         public const string dll    = "fmodl";
 #else
         public const string dll    = "fmod";
@@ -35,7 +41,7 @@ namespace FMOD
     public class CONSTANTS
     {
         public const int MAX_CHANNEL_WIDTH = 32;
-        public const int MAX_LISTENERS = 5;
+        public const int MAX_LISTENERS = 8;
     }
 
     /*
@@ -132,10 +138,11 @@ namespace FMOD
         ERR_EVENT_NOTFOUND,        /* The requested event, bus or vca could not be found. */
         ERR_STUDIO_UNINITIALIZED,  /* The Studio::System object is not yet initialized. */
         ERR_STUDIO_NOT_LOADED,     /* The specified resource is not loaded, so it can't be unloaded. */
-
         ERR_INVALID_STRING,        /* An invalid string was passed to this function. */
         ERR_ALREADY_LOCKED,        /* The specified resource is already locked. */
         ERR_NOT_LOCKED,            /* The specified resource is not locked, so it can't be unlocked. */
+        ERR_RECORD_DISCONNECTED,   /* The specified recording driver has been disconnected. */
+        ERR_TOOMANYSAMPLES,        /* The length provided exceed the allowable limit. */
     }
 
 
@@ -211,10 +218,10 @@ namespace FMOD
     [StructLayout(LayoutKind.Sequential)]
     public struct ATTRIBUTES_3D
     {
-        VECTOR position;
-        VECTOR velocity;
-        VECTOR forward;
-        VECTOR up;
+        public VECTOR position;
+        public VECTOR velocity;
+        public VECTOR forward;
+        public VECTOR up;
     }
 
     /*
@@ -307,12 +314,14 @@ namespace FMOD
         PULSEAUDIO,      /* Linux                - Pulse Audio.                         (Default on Linux if available) */
         ALSA,            /* Linux                - Advanced Linux Sound Architecture.   (Default on Linux if PulseAudio isn't available) */
         COREAUDIO,       /* Mac/iOS              - Core Audio.                          (Default on Mac and iOS) */
-        XBOX360,         /* Xbox 360             - XAudio.                              (Default on Xbox 360) */
+        XAUDIO,          /* Xbox 360             - XAudio.                              (Default on Xbox 360) */
         PS3,             /* PS3                  - Audio Out.                           (Default on PS3) */
         AUDIOTRACK,      /* Android              - Java Audio Track.                    (Default on Android 2.2 and below) */
         OPENSL,          /* Android              - OpenSL ES.                           (Default on Android 2.3 and above) */
         WIIU,            /* Wii U                - AX.                                  (Default on Wii U) */
         AUDIOOUT,        /* PS4/PSVita           - Audio Out.                           (Default on PS4 and PS Vita) */
+        AUDIO3D,         /* PS4                  - Audio3D. */
+        ATMOS,           /* Win                  - Dolby Atmos (WASAPI). */
 
         MAX,             /* Maximum number of output types supported. */
     }
@@ -628,7 +637,29 @@ namespace FMOD
         MAX,             /* Maximum number of plugin types supported. */
     }
 
+    /*
+    [STRUCTURE]
+    [
+        [DESCRIPTION]
+        Used to support lists of plugins within the one file.
 
+        [REMARKS]
+        The description field is either a pointer to FMOD_DSP_DESCRIPTION, FMOD_OUTPUT_DESCRIPTION, FMOD_CODEC_DESCRIPTION.
+
+        This structure is returned from a plugin as a pointer to a list where the last entry has FMOD_PLUGINTYPE_MAX and
+        a null description pointer.
+
+        [SEE_ALSO]
+        System::getNumNestedPlugins
+        System::getNestedPlugin
+    ]
+    */
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PLUGINLIST
+    {
+        PLUGINTYPE type;
+        IntPtr description;
+    }
 
     /*
     [DEFINE]
@@ -684,11 +715,9 @@ namespace FMOD
         UNKNOWN,         /* 3rd party / unknown plugin format. */
         AIFF,            /* AIFF. */
         ASF,             /* Microsoft Advanced Systems Format (ie WMA/ASF/WMV). */
-        AT3,             /* Sony ATRAC 3 format */
         DLS,             /* Sound font / downloadable sound bank. */
         FLAC,            /* FLAC lossless codec. */
         FSB,             /* FMOD Sample Bank. */
-        GCADPCM,         /* Nintendo GameCube/Wii ADPCM */
         IT,              /* Impulse Tracker. */
         MIDI,            /* MIDI. extracodecdata is a pointer to an FMOD_MIDI_EXTRACODECDATA structure. */
         MOD,             /* Protracker / Fasttracker MOD. */
@@ -701,10 +730,7 @@ namespace FMOD
         WAV,             /* Microsoft WAV. */
         XM,              /* FastTracker 2 XM. */
         XMA,             /* Xbox360 XMA */
-        VAG,             /* PlayStation Portable ADPCM VAG format. */
         AUDIOQUEUE,      /* iPhone hardware decoder, supports AAC, ALAC and MP3. extracodecdata is a pointer to an FMOD_AUDIOQUEUE_EXTRACODECDATA structure. */
-        XWMA,            /* Xbox360 XWMA */
-        BCWAV,           /* 3DS BCWAV container format for DSP ADPCM and PCM */
         AT9,             /* PS4 / PSVita ATRAC 9 format */
         VORBIS,          /* Vorbis */
         MEDIA_FOUNDATION,/* Windows Store Application built in system codecs */
@@ -730,25 +756,15 @@ namespace FMOD
     */
     public enum SOUND_FORMAT : int
     {
-        NONE,             /* Unitialized / unknown. */
-        PCM8,             /* 8bit integer PCM data. */
-        PCM16,            /* 16bit integer PCM data. */
-        PCM24,            /* 24bit integer PCM data. */
-        PCM32,            /* 32bit integer PCM data. */
-        PCMFLOAT,         /* 32bit floating point PCM data. */
-        GCADPCM,          /* Compressed Nintendo 3DS/Wii DSP data. */
-        IMAADPCM,         /* Compressed IMA ADPCM data. */
-        VAG,              /* Compressed PlayStation Portable ADPCM data. */
-        HEVAG,            /* Compressed PSVita ADPCM data. */
-        XMA,              /* Compressed Xbox360 XMA data. */
-        MPEG,             /* Compressed MPEG layer 2 or 3 data. */
-        CELT,             /* Not supported. */
-        AT9,              /* Compressed PSVita ATRAC9 data. */
-        XWMA,             /* Compressed Xbox360 xWMA data. */
-        VORBIS,           /* Compressed Vorbis data. */
-        FADPCM,           /* Compressed FADPCM data. */
+        NONE,       /* Unitialized / unknown */
+        PCM8,       /* 8bit integer PCM data */
+        PCM16,      /* 16bit integer PCM data  */
+        PCM24,      /* 24bit integer PCM data  */
+        PCM32,      /* 32bit integer PCM data  */
+        PCMFLOAT,   /* 32bit floating point PCM data  */
+        BITSTREAM,  /* Sound data is in its native compressed format. */
 
-        MAX,              /* Maximum number of sound formats supported. */
+        MAX         /* Maximum number of sound formats supported. */
     }
 
 
@@ -964,7 +980,6 @@ namespace FMOD
         STUDIO_EVENTDESCRIPTION,
         STUDIO_EVENTINSTANCE,
         STUDIO_PARAMETERINSTANCE,
-        STUDIO_CUEINSTANCE,
         STUDIO_BUS,
         STUDIO_VCA,
         STUDIO_BANK,
@@ -1035,6 +1050,8 @@ namespace FMOD
         THREADDESTROYED        = 0x00000200,  /* Called directly when a thread is destroyed. */
         PREUPDATE              = 0x00000400,  /* Called at start of System::update function. */
         POSTUPDATE             = 0x00000800,  /* Called at end of System::update function. */
+        RECORDLISTCHANGED      = 0x00001000,  /* Called from System::update when the enumerated list of recording devices has changed. */
+        ALL                    = 0xFFFFFFFF,  /* Pass this mask to System::setCallback to receive all callback types.  */
     }
 	
     #region wrapperinternal
@@ -1087,7 +1104,7 @@ namespace FMOD
     public delegate RESULT FILE_OPENCALLBACK        (StringWrapper name, ref uint filesize, ref IntPtr handle, IntPtr userdata);
     public delegate RESULT FILE_CLOSECALLBACK       (IntPtr handle, IntPtr userdata);
     public delegate RESULT FILE_READCALLBACK        (IntPtr handle, IntPtr buffer, uint sizebytes, ref uint bytesread, IntPtr userdata);
-    public delegate RESULT FILE_SEEKCALLBACK        (IntPtr handle, int pos, IntPtr userdata);
+    public delegate RESULT FILE_SEEKCALLBACK        (IntPtr handle, uint pos, IntPtr userdata);
     public delegate RESULT FILE_ASYNCREADCALLBACK   (IntPtr handle, IntPtr info, IntPtr userdata);
     public delegate RESULT FILE_ASYNCCANCELCALLBACK (IntPtr handle, IntPtr userdata);
 
@@ -1386,41 +1403,43 @@ namespace FMOD
     [StructLayout(LayoutKind.Sequential)]
     public struct CREATESOUNDEXINFO
     {
-        public int                         cbsize;                 /* [w] Size of this structure.  This is used so the structure can be expanded in the future and still work on older versions of FMOD Ex. */
-        public uint                        length;                 /* [w] Optional. Specify 0 to ignore. Size in bytes of file to load, or sound to create (in this case only if FMOD_OPENUSER is used).  Required if loading from memory.  If 0 is specified, then it will use the size of the file (unless loading from memory then an error will be returned). */
-        public uint                        fileoffset;             /* [w] Optional. Specify 0 to ignore. Offset from start of the file to start loading from.  This is useful for loading files from inside big data files. */
-        public int                         numchannels;            /* [w] Optional. Specify 0 to ignore. Number of channels in a sound specified only if OPENUSER is used. */
-        public int                         defaultfrequency;       /* [w] Optional. Specify 0 to ignore. Default frequency of sound in a sound specified only if OPENUSER is used.  Other formats use the frequency determined by the file format. */
-        public SOUND_FORMAT                format;                 /* [w] Optional. Specify 0 or SOUND_FORMAT_NONE to ignore. Format of the sound specified only if OPENUSER is used.  Other formats use the format determined by the file format.   */
-        public uint                        decodebuffersize;       /* [w] Optional. Specify 0 to ignore. For streams.  This determines the size of the double buffer (in PCM samples) that a stream uses.  Use this for user created streams if you want to determine the size of the callback buffer passed to you.  Specify 0 to use FMOD's default size which is currently equivalent to 400ms of the sound format created/loaded. */
-        public int                         initialsubsound;        /* [w] Optional. Specify 0 to ignore. In a multi-sample file format such as .FSB/.DLS/.SF2, specify the initial subsound to seek to, only if CREATESTREAM is used. */
-        public int                         numsubsounds;           /* [w] Optional. Specify 0 to ignore or have no subsounds.  In a user created multi-sample sound, specify the number of subsounds within the sound that are accessable with Sound::getSubSound / SoundGetSubSound. */
-        public IntPtr                      inclusionlist;          /* [w] Optional. Specify 0 to ignore. In a multi-sample format such as .FSB/.DLS/.SF2 it may be desirable to specify only a subset of sounds to be loaded out of the whole file.  This is an array of subsound indicies to load into memory when created. */
-        public int                         inclusionlistnum;       /* [w] Optional. Specify 0 to ignore. This is the number of integers contained within the */
-        public SOUND_PCMREADCALLBACK       pcmreadcallback;        /* [w] Optional. Specify 0 to ignore. Callback to 'piggyback' on FMOD's read functions and accept or even write PCM data while FMOD is opening the sound.  Used for user sounds created with OPENUSER or for capturing decoded data as FMOD reads it. */
-        public SOUND_PCMSETPOSCALLBACK     pcmsetposcallback;      /* [w] Optional. Specify 0 to ignore. Callback for when the user calls a seeking function such as Channel::setPosition within a multi-sample sound, and for when it is opened.*/
-        public SOUND_NONBLOCKCALLBACK      nonblockcallback;       /* [w] Optional. Specify 0 to ignore. Callback for successful completion, or error while loading a sound that used the FMOD_NONBLOCKING flag.*/
-        public IntPtr                      dlsname;                /* [w] Optional. Specify 0 to ignore. Filename for a DLS or SF2 sample set when loading a MIDI file.   If not specified, on windows it will attempt to open /windows/system32/drivers/gm.dls, otherwise the MIDI will fail to open.  */
-        public IntPtr                      encryptionkey;          /* [w] Optional. Specify 0 to ignore. Key for encrypted FSB file.  Without this key an encrypted FSB file will not load. */
-        public int                         maxpolyphony;           /* [w] Optional. Specify 0 to ingore. For sequenced formats with dynamic channel allocation such as .MID and .IT, this specifies the maximum voice count allowed while playing.  .IT defaults to 64.  .MID defaults to 32. */
-        public IntPtr                      userdata;               /* [w] Optional. Specify 0 to ignore. This is user data to be attached to the sound during creation.  Access via Sound::getUserData. */
-        public SOUND_TYPE                  suggestedsoundtype;     /* [w] Optional. Specify 0 or FMOD_SOUND_TYPE_UNKNOWN to ignore.  Instead of scanning all codec types, use this to speed up loading by making it jump straight to this codec. */
-        public FILE_OPENCALLBACK           fileuseropen;           /* [w] Optional. Specify 0 to ignore. Callback for opening this file. */
-        public FILE_CLOSECALLBACK          fileuserclose;          /* [w] Optional. Specify 0 to ignore. Callback for closing this file. */
-        public FILE_READCALLBACK           fileuserread;           /* [w] Optional. Specify 0 to ignore. Callback for reading from this file. */
-        public FILE_SEEKCALLBACK           fileuserseek;           /* [w] Optional. Specify 0 to ignore. Callback for seeking within this file. */
-        public FILE_ASYNCREADCALLBACK      fileuserasyncread;      /* [w] Optional. Specify 0 to ignore. Callback for asyncronously reading from this file. */
-        public FILE_ASYNCCANCELCALLBACK    fileuserasynccancel;    /* [w] Optional. Specify 0 to ignore. Callback for cancelling an asyncronous read. */
-        public IntPtr                      fileuserdata;           /* [w] Optional. Specify 0 to ignore. User data to be passed into the file callbacks. */
-        public CHANNELORDER                channelorder;           /* [w] Optional. Specify 0 to ignore. Use this to differ the way fmod maps multichannel sounds to speakers.  See FMOD_CHANNELORDER for more. */
-        public CHANNELMASK                 channelmask;            /* [w] Optional. Specify 0 to ignore. Use this to differ the way fmod maps multichannel sounds to speakers.  See FMOD_CHANNELMASK for more. */
-        public IntPtr                      initialsoundgroup;      /* [w] Optional. Specify 0 to ignore. Specify a sound group if required, to put sound in as it is created. */
-        public uint                        initialseekposition;    /* [w] Optional. Specify 0 to ignore. For streams. Specify an initial position to seek the stream to. */
-        public TIMEUNIT                    initialseekpostype;     /* [w] Optional. Specify 0 to ignore. For streams. Specify the time unit for the position set in initialseekposition. */
-        public int                         ignoresetfilesystem;    /* [w] Optional. Specify 0 to ignore. Set to 1 to use fmod's built in file system. Ignores setFileSystem callbacks and also FMOD_CREATESOUNEXINFO file callbacks.  Useful for specific cases where you don't want to use your own file system but want to use fmod's file system (ie net streaming). */
-        public uint                        audioqueuepolicy;       /* [w] Optional. Specify 0 or FMOD_AUDIOQUEUE_CODECPOLICY_DEFAULT to ignore. Policy used to determine whether hardware or software is used for decoding, see FMOD_AUDIOQUEUE_CODECPOLICY for options (iOS >= 3.0 required, otherwise only hardware is available) */
-        public uint                        minmidigranularity;     /* [w] Optional. Specify 0 to ignore. Allows you to set a minimum desired MIDI mixer granularity. Values smaller than 512 give greater than default accuracy at the cost of more CPU and vise versa. Specify 0 for default (512 samples). */
-        public int                         nonblockthreadid;       /* [w] Optional. Specify 0 to ignore. Specifies a thread index to execute non blocking load on.  Allows for up to 5 threads to be used for loading at once.  This is to avoid one load blocking another.  Maximum value = 4. */
+        public int                         cbsize;                 /* [w]   Size of this structure.  This is used so the structure can be expanded in the future and still work on older versions of FMOD Ex. */
+        public uint                        length;                 /* [w]   Optional. Specify 0 to ignore. Size in bytes of file to load, or sound to create (in this case only if FMOD_OPENUSER is used).  Required if loading from memory.  If 0 is specified, then it will use the size of the file (unless loading from memory then an error will be returned). */
+        public uint                        fileoffset;             /* [w]   Optional. Specify 0 to ignore. Offset from start of the file to start loading from.  This is useful for loading files from inside big data files. */
+        public int                         numchannels;            /* [w]   Optional. Specify 0 to ignore. Number of channels in a sound specified only if OPENUSER is used. */
+        public int                         defaultfrequency;       /* [w]   Optional. Specify 0 to ignore. Default frequency of sound in a sound specified only if OPENUSER is used.  Other formats use the frequency determined by the file format. */
+        public SOUND_FORMAT                format;                 /* [w]   Optional. Specify 0 or SOUND_FORMAT_NONE to ignore. Format of the sound specified only if OPENUSER is used.  Other formats use the format determined by the file format.   */
+        public uint                        decodebuffersize;       /* [w]   Optional. Specify 0 to ignore. For streams.  This determines the size of the double buffer (in PCM samples) that a stream uses.  Use this for user created streams if you want to determine the size of the callback buffer passed to you.  Specify 0 to use FMOD's default size which is currently equivalent to 400ms of the sound format created/loaded. */
+        public int                         initialsubsound;        /* [w]   Optional. Specify 0 to ignore. In a multi-sample file format such as .FSB/.DLS/.SF2, specify the initial subsound to seek to, only if CREATESTREAM is used. */
+        public int                         numsubsounds;           /* [w]   Optional. Specify 0 to ignore or have no subsounds.  In a user created multi-sample sound, specify the number of subsounds within the sound that are accessable with Sound::getSubSound / SoundGetSubSound. */
+        public IntPtr                      inclusionlist;          /* [w]   Optional. Specify 0 to ignore. In a multi-sample format such as .FSB/.DLS/.SF2 it may be desirable to specify only a subset of sounds to be loaded out of the whole file.  This is an array of subsound indicies to load into memory when created. */
+        public int                         inclusionlistnum;       /* [w]   Optional. Specify 0 to ignore. This is the number of integers contained within the */
+        public SOUND_PCMREADCALLBACK       pcmreadcallback;        /* [w]   Optional. Specify 0 to ignore. Callback to 'piggyback' on FMOD's read functions and accept or even write PCM data while FMOD is opening the sound.  Used for user sounds created with OPENUSER or for capturing decoded data as FMOD reads it. */
+        public SOUND_PCMSETPOSCALLBACK     pcmsetposcallback;      /* [w]   Optional. Specify 0 to ignore. Callback for when the user calls a seeking function such as Channel::setPosition within a multi-sample sound, and for when it is opened.*/
+        public SOUND_NONBLOCKCALLBACK      nonblockcallback;       /* [w]   Optional. Specify 0 to ignore. Callback for successful completion, or error while loading a sound that used the FMOD_NONBLOCKING flag.*/
+        public IntPtr                      dlsname;                /* [w]   Optional. Specify 0 to ignore. Filename for a DLS or SF2 sample set when loading a MIDI file.   If not specified, on windows it will attempt to open /windows/system32/drivers/gm.dls, otherwise the MIDI will fail to open.  */
+        public IntPtr                      encryptionkey;          /* [w]   Optional. Specify 0 to ignore. Key for encrypted FSB file.  Without this key an encrypted FSB file will not load. */
+        public int                         maxpolyphony;           /* [w]   Optional. Specify 0 to ingore. For sequenced formats with dynamic channel allocation such as .MID and .IT, this specifies the maximum voice count allowed while playing.  .IT defaults to 64.  .MID defaults to 32. */
+        public IntPtr                      userdata;               /* [w]   Optional. Specify 0 to ignore. This is user data to be attached to the sound during creation.  Access via Sound::getUserData. */
+        public SOUND_TYPE                  suggestedsoundtype;     /* [w]   Optional. Specify 0 or FMOD_SOUND_TYPE_UNKNOWN to ignore.  Instead of scanning all codec types, use this to speed up loading by making it jump straight to this codec. */
+        public FILE_OPENCALLBACK           fileuseropen;           /* [w]   Optional. Specify 0 to ignore. Callback for opening this file. */
+        public FILE_CLOSECALLBACK          fileuserclose;          /* [w]   Optional. Specify 0 to ignore. Callback for closing this file. */
+        public FILE_READCALLBACK           fileuserread;           /* [w]   Optional. Specify 0 to ignore. Callback for reading from this file. */
+        public FILE_SEEKCALLBACK           fileuserseek;           /* [w]   Optional. Specify 0 to ignore. Callback for seeking within this file. */
+        public FILE_ASYNCREADCALLBACK      fileuserasyncread;      /* [w]   Optional. Specify 0 to ignore. Callback for asyncronously reading from this file. */
+        public FILE_ASYNCCANCELCALLBACK    fileuserasynccancel;    /* [w]   Optional. Specify 0 to ignore. Callback for cancelling an asyncronous read. */
+        public IntPtr                      fileuserdata;           /* [w]   Optional. Specify 0 to ignore. User data to be passed into the file callbacks. */
+        public int                         filebuffersize;         /* [w]   Optional. Specify 0 to ignore. Buffer size for reading the file, -1 to disable buffering, or 0 for system default. */
+        public CHANNELORDER                channelorder;           /* [w]   Optional. Specify 0 to ignore. Use this to differ the way fmod maps multichannel sounds to speakers.  See FMOD_CHANNELORDER for more. */
+        public CHANNELMASK                 channelmask;            /* [w]   Optional. Specify 0 to ignore. Use this to differ the way fmod maps multichannel sounds to speakers.  See FMOD_CHANNELMASK for more. */
+        public IntPtr                      initialsoundgroup;      /* [w]   Optional. Specify 0 to ignore. Specify a sound group if required, to put sound in as it is created. */
+        public uint                        initialseekposition;    /* [w]   Optional. Specify 0 to ignore. For streams. Specify an initial position to seek the stream to. */
+        public TIMEUNIT                    initialseekpostype;     /* [w]   Optional. Specify 0 to ignore. For streams. Specify the time unit for the position set in initialseekposition. */
+        public int                         ignoresetfilesystem;    /* [w]   Optional. Specify 0 to ignore. Set to 1 to use fmod's built in file system. Ignores setFileSystem callbacks and also FMOD_CREATESOUNEXINFO file callbacks.  Useful for specific cases where you don't want to use your own file system but want to use fmod's file system (ie net streaming). */
+        public uint                        audioqueuepolicy;       /* [w]   Optional. Specify 0 or FMOD_AUDIOQUEUE_CODECPOLICY_DEFAULT to ignore. Policy used to determine whether hardware or software is used for decoding, see FMOD_AUDIOQUEUE_CODECPOLICY for options (iOS >= 3.0 required, otherwise only hardware is available) */
+        public uint                        minmidigranularity;     /* [w]   Optional. Specify 0 to ignore. Allows you to set a minimum desired MIDI mixer granularity. Values smaller than 512 give greater than default accuracy at the cost of more CPU and vise versa. Specify 0 for default (512 samples). */
+        public int                         nonblockthreadid;       /* [w]   Optional. Specify 0 to ignore. Specifies a thread index to execute non blocking load on.  Allows for up to 5 threads to be used for loading at once.  This is to avoid one load blocking another.  Maximum value = 4. */
+        public IntPtr                      fsbguid;                /* [r/w] Optional. Specify 0 to ignore. Allows you to provide the GUID lookup for cached FSB header info. Once loaded the GUID will be written back to the pointer. This is to avoid seeking and reading the FSB header. */
     }
     /*
     [STRUCTURE]
@@ -1507,7 +1526,7 @@ namespace FMOD
     */
     public class PRESET
     {
-        /*                                                                           Instance  Env   Diffus  Room   RoomHF  RmLF DecTm   DecHF  DecLF   Refl  RefDel   Revb  RevDel  ModTm  ModDp   HFRef    LFRef   Diffus  Densty  FLAGS */
+        /*                                                                                  Instance  Env   Diffus  Room   RoomHF  RmLF DecTm   DecHF  DecLF   Refl  RefDel   Revb  RevDel  ModTm  ModDp   HFRef    LFRef   Diffus  Densty  FLAGS */
         public static REVERB_PROPERTIES OFF()                 { return new REVERB_PROPERTIES(  1000,    7,  11, 5000, 100, 100, 100, 250, 0,    20,  96, -80.0f );}
         public static REVERB_PROPERTIES GENERIC()             { return new REVERB_PROPERTIES(  1500,    7,  11, 5000,  83, 100, 100, 250, 0, 14500,  96,  -8.0f );}
         public static REVERB_PROPERTIES PADDEDCELL()          { return new REVERB_PROPERTIES(   170,    1,   2, 5000,  10, 100, 100, 250, 0,   160,  84,  -7.8f );}
@@ -1847,6 +1866,14 @@ namespace FMOD
         {
             return FMOD5_System_UnloadPlugin(rawPtr, handle);
         }
+        public RESULT getNumNestedPlugins    (uint handle, out int count)
+        {
+            return FMOD5_System_GetNumNestedPlugins(rawPtr, handle, out count);
+        }
+        public RESULT getNestedPlugin        (uint handle, int index, out uint nestedhandle)
+        {
+            return FMOD5_System_GetNestedPlugin(rawPtr, handle, index, out nestedhandle);
+        }
         public RESULT getNumPlugins          (PLUGINTYPE plugintype, out int numplugins)
         {
             return FMOD5_System_GetNumPlugins(rawPtr, plugintype, out numplugins);
@@ -1992,14 +2019,18 @@ namespace FMOD
         {
             return FMOD5_System_GetOutputHandle(rawPtr, out handle);
         }
-        public RESULT getChannelsPlaying     (out int channels)
+        public RESULT getChannelsPlaying     (out int channels, out int realchannels)
         {
-            return FMOD5_System_GetChannelsPlaying(rawPtr, out channels);
+            return FMOD5_System_GetChannelsPlaying(rawPtr, out channels, out realchannels);
         }
         public RESULT getCPUUsage            (out float dsp, out float stream, out float geometry, out float update, out float total)
         {
             return FMOD5_System_GetCPUUsage(rawPtr, out dsp, out stream, out geometry, out update, out total);
         }
+        public RESULT getFileUsage            (out Int64 sampleBytesRead, out Int64 streamBytesRead, out Int64 otherBytesRead)
+        {
+            return FMOD5_System_GetFileUsage(rawPtr, out sampleBytesRead, out streamBytesRead, out otherBytesRead);
+        }        
         public RESULT getSoundRAM            (out int currentalloced, out int maxalloced, out int total)
         {
             return FMOD5_System_GetSoundRAM(rawPtr, out currentalloced, out maxalloced, out total);
@@ -2352,6 +2383,10 @@ namespace FMOD
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_System_UnloadPlugin           (IntPtr system, uint handle);
         [DllImport(VERSION.dll)]
+        private static extern RESULT FMOD5_System_GetNumNestedPlugins    (IntPtr system, uint handle, out int count);
+        [DllImport(VERSION.dll)]
+        private static extern RESULT FMOD5_System_GetNestedPlugin        (IntPtr system, uint handle, int index, out uint nestedhandle);
+        [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_System_GetNumPlugins          (IntPtr system, PLUGINTYPE plugintype, out int numplugins);
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_System_GetPluginHandle        (IntPtr system, PLUGINTYPE plugintype, int index, out uint handle);
@@ -2418,9 +2453,11 @@ namespace FMOD
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_System_GetOutputHandle        (IntPtr system, out IntPtr handle);
         [DllImport(VERSION.dll)]
-        private static extern RESULT FMOD5_System_GetChannelsPlaying     (IntPtr system, out int channels);
+        private static extern RESULT FMOD5_System_GetChannelsPlaying     (IntPtr system, out int channels, out int realchannels);
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_System_GetCPUUsage            (IntPtr system, out float dsp, out float stream, out float geometry, out float update, out float total);
+        [DllImport(VERSION.dll)]
+        private static extern RESULT FMOD5_System_GetFileUsage            (IntPtr system, out Int64 sampleBytesRead, out Int64 streamBytesRead, out Int64 otherBytesRead);
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_System_GetSoundRAM            (IntPtr system, out int currentalloced, out int maxalloced, out int total);
         [DllImport(VERSION.dll)]
@@ -2572,12 +2609,7 @@ namespace FMOD
         {
             return FMOD5_Sound_Get3DCustomRolloff(rawPtr, out points, out numpoints);
         }
-        public RESULT setSubSound             (int index, Sound subsound)
-        {
-            IntPtr subsoundraw = subsound.getRaw();
 
-            return FMOD5_Sound_SetSubSound(rawPtr, index, subsoundraw);
-        }
         public RESULT getSubSound             (int index, out Sound subsound)
         {
             subsound = null;
@@ -2769,8 +2801,6 @@ namespace FMOD
         private static extern RESULT FMOD5_Sound_Set3DCustomRolloff      (IntPtr sound, ref VECTOR points, int numpoints);
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_Sound_Get3DCustomRolloff      (IntPtr sound, out IntPtr points, out int numpoints);
-        [DllImport(VERSION.dll)]
-        private static extern RESULT FMOD5_Sound_SetSubSound             (IntPtr sound, int index, IntPtr subsound);
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_Sound_GetSubSound             (IntPtr sound, int index, out IntPtr subsound);
         [DllImport(VERSION.dll)]
@@ -3415,9 +3445,16 @@ namespace FMOD
         }
 
         // Nested channel groups.
-        public RESULT addGroup               (ChannelGroup group)
+        public RESULT addGroup               (ChannelGroup group, bool propagatedspclock, out DSPConnection connection)
         {
-            return FMOD5_ChannelGroup_AddGroup(getRaw(), group.getRaw());
+            connection = null;
+
+            IntPtr connectionRaw;
+            RESULT result = FMOD5_ChannelGroup_AddGroup(getRaw(), group.getRaw(), propagatedspclock, out connectionRaw);
+            connection = new DSPConnection(connectionRaw);
+
+            return result;
+
         }
         public RESULT getNumGroups           (out int numgroups)
         {
@@ -3475,7 +3512,7 @@ namespace FMOD
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_ChannelGroup_Release          (IntPtr channelgroup);
         [DllImport(VERSION.dll)]
-        private static extern RESULT FMOD5_ChannelGroup_AddGroup         (IntPtr channelgroup, IntPtr group);
+        private static extern RESULT FMOD5_ChannelGroup_AddGroup         (IntPtr channelgroup, IntPtr group, bool propogatedspclocks, out IntPtr connection);
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_ChannelGroup_GetNumGroups     (IntPtr channelgroup, out int numgroups);
         [DllImport(VERSION.dll)]
@@ -3750,13 +3787,13 @@ namespace FMOD
         {
             return FMOD5_DSP_GetBypass(rawPtr, out bypass);
         }
-        public RESULT setWetDryMix(float wet, float dry)
+        public RESULT setWetDryMix(float prewet, float postwet, float dry)
         {
-            return FMOD5_DSP_SetWetDryMix(rawPtr, wet, dry);
+            return FMOD5_DSP_SetWetDryMix(rawPtr, prewet, postwet, dry);
         }
-        public RESULT getWetDryMix(out float wet, out float dry)
+        public RESULT getWetDryMix(out float prewet, out float postwet, out float dry)
         {
-            return FMOD5_DSP_GetWetDryMix(rawPtr, out wet, out dry);
+            return FMOD5_DSP_GetWetDryMix(rawPtr, out prewet, out postwet, out dry);
         }
         public RESULT setChannelFormat(CHANNELMASK channelmask, int numchannels, SPEAKERMODE source_speakermode)
         {
@@ -3880,9 +3917,9 @@ namespace FMOD
         }
 
         public RESULT getMeteringInfo(DSP_METERING_INFO inputInfo, DSP_METERING_INFO outputInfo)
-		{
+        {
 			return FMOD5_DSP_GetMeteringInfo(rawPtr, inputInfo, outputInfo);
-		}
+        }
 
         #region importfunctions
 
@@ -3913,9 +3950,9 @@ namespace FMOD
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_DSP_GetBypass                 (IntPtr dsp, out bool bypass);
         [DllImport(VERSION.dll)]
-        private static extern RESULT FMOD5_DSP_SetWetDryMix              (IntPtr dsp, float wet, float dry);
+        private static extern RESULT FMOD5_DSP_SetWetDryMix              (IntPtr dsp, float prewet, float postwet, float dry);
         [DllImport(VERSION.dll)]
-        private static extern RESULT FMOD5_DSP_GetWetDryMix              (IntPtr dsp, out float wet, out float dry);
+        private static extern RESULT FMOD5_DSP_GetWetDryMix              (IntPtr dsp, out float prewet, out float postwet, out float dry);
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_DSP_SetChannelFormat          (IntPtr dsp, CHANNELMASK channelmask, int numchannels, SPEAKERMODE source_speakermode);
         [DllImport(VERSION.dll)]
