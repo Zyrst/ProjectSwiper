@@ -1,3 +1,6 @@
+   
+   Note: Problems with FMOD
+   
     # ProjectSwiper
     class KlassNamn
     {
